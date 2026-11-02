@@ -354,7 +354,7 @@
       margin-bottom: 1rem;
     }
 
-    .calendar-header h3 { font-size: 1.1rem; font-weight: 700; }
+    .calendar-header h3 { font-size: 1.15rem; font-weight: 700; color: var(--accent-peach); }
 
     .cal-nav { display: flex; gap: 0.5rem; }
 
@@ -362,10 +362,13 @@
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       color: #fff;
-      padding: 0.3rem 0.75rem;
+      padding: 0.35rem 0.85rem;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.15s;
     }
+    .cal-nav-btn:hover { background: var(--bg-card-hover); }
 
     .calendar-grid {
       display: grid;
@@ -382,7 +385,7 @@
     }
 
     .calendar-cell {
-      min-height: 90px;
+      min-height: 95px;
       background: var(--bg-card);
       border: 1px solid transparent;
       border-radius: 8px;
@@ -406,7 +409,7 @@
     }
 
     .calendar-cell.has-event {
-      border-color: rgba(219, 82, 39, 0.6);
+      border-color: rgba(219, 82, 39, 0.7);
       background: rgba(219, 82, 39, 0.08);
     }
 
@@ -429,7 +432,7 @@
       background: var(--accent-blue);
       color: #fff;
       font-size: 0.65rem;
-      padding: 3px 6px;
+      padding: 3px 5px;
       border-radius: 4px;
       white-space: nowrap;
       overflow: hidden;
@@ -557,10 +560,10 @@
       border: 1px solid var(--border-subtle);
       border-radius: 14px;
       width: 100%;
-      max-width: 520px;
-      padding: 1.5rem;
+      max-width: 540px;
+      padding: 1.6rem;
       position: relative;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
 
     .modal-close-btn {
@@ -592,17 +595,17 @@
       margin-bottom: 0.75rem;
     }
 
-    .modal-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; }
+    .modal-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.3; }
     
     .modal-detail-row {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 12px;
       font-size: 0.9rem;
       margin-bottom: 0.75rem;
       color: var(--text-muted);
     }
-    .modal-detail-row strong { color: var(--text-main); }
+    .modal-detail-row strong { color: var(--text-main); min-width: 110px; }
 
     .maps-btn {
       display: inline-flex;
@@ -677,7 +680,7 @@
 
     <!-- CALENDAR SECTION -->
     <section>
-      <div class="section-title" id="ui-cal-title">Tournament Schedule</div>
+      <div class="section-title" id="ui-cal-title">Tournament Schedule 2026 - 2027</div>
       <div class="calendar-container">
         <div class="calendar-header">
           <h3 id="currentMonthYear">November 2026</h3>
@@ -723,7 +726,7 @@
       </div>
       <div class="modal-detail-row">
         <span>👥</span>
-        <div><strong id="ui-modal-teams-label">Participants / Teams:</strong> <span id="modalTeams">---</span></div>
+        <div><strong id="ui-modal-teams-label">Participants:</strong> <span id="modalTeams">---</span></div>
       </div>
       <div class="modal-detail-row">
         <span>📍</span>
@@ -754,7 +757,7 @@
         subtitle: 'Physical Education Directorate - Student Sports Teams',
         upcomingTitle: 'Upcoming Matches',
         pastTitle: 'Past Matches & Final Scores',
-        calTitle: 'Tournament Schedule',
+        calTitle: 'Tournament & Program Schedule (2026 - 2027)',
         mediaTitle: 'Match Highlights & Media',
         viewAll: 'View All Highlights',
         days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -762,9 +765,9 @@
         live: 'LIVE',
         ft: 'FINAL',
         openMap: 'Open in Google Maps',
-        dateLabel: 'Date:',
-        timeLabel: 'Time:',
-        teamsLabel: 'Teams / Stage:',
+        dateLabel: 'Date / Period:',
+        timeLabel: 'Timing:',
+        teamsLabel: 'Program / Teams:',
         venueLabel: 'Location:'
       },
       ar: {
@@ -774,7 +777,7 @@
         subtitle: 'إدارة التربية الرياضية - قسم المنتخبات الطلابية',
         upcomingTitle: 'المباريات القادمة',
         pastTitle: 'المباريات السابقة والنتائج النهائية',
-        calTitle: 'الجدول الزمني للبطولات والمسابقات',
+        calTitle: 'روزنامة البرامج والفعاليات الرياضية (2026 - 2027)',
         mediaTitle: 'أبرز لقطات المباريات والوسائط',
         viewAll: 'عرض جميع الفيديوهات',
         days: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
@@ -782,9 +785,9 @@
         live: 'مباشر',
         ft: 'انتهت',
         openMap: 'فتح الموقع في خرائط Google',
-        dateLabel: 'التاريخ:',
-        timeLabel: 'الوقت:',
-        teamsLabel: 'الفرق / المرحلة:',
+        dateLabel: 'التاريخ / الفترة:',
+        timeLabel: 'التوقيت:',
+        teamsLabel: 'البرنامج / المشاركون:',
         venueLabel: 'المكان:'
       }
     };
@@ -809,7 +812,7 @@
         time: '05:00 PM',
         venue_en: 'Ministry Sports Hall, Manama',
         venue_ar: 'صالة وزارة التربية والتعليم بالمنامة',
-        mapUrl: 'https://maps.google.com/?q=Manama+Sports+Hall+Bahrain'
+        mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Sports+Hall+Manama+Bahrain'
       },
       {
         sport_en: 'Basketball', sport_ar: 'كرة السلة',
@@ -865,47 +868,206 @@
       { sport: 'Football', live: false, team1: 'Budaiya Sec', score1: 0, team2: 'Hamad Town', score2: 2, status: 'FT' }
     ];
 
-    // CALENDAR EVENTS (Includes Schedule Data with Maps & Detailed Info)
+    // ALL 15 EVENTS FROM ROZNAMA DOC (Mapped 2026 - 2027)
     const calendarEvents = {
+      // 1. الأسبوع الأول من أكتوبر 2026: الحوكمة الرياضية
+      '2026-10-04': {
+        title_en: 'Sports Governance: Regulations & Eligibility Controls',
+        title_ar: 'الحوكمة الرياضية (اعتماد اللائحة الرياضية واللائحة التنفيذية وضوابط أهلية المشاركة)',
+        tag_en: 'Governance & Regulations',
+        tag_ar: 'حوكمة ولوائح رياضية',
+        time: '09:00 AM - 01:00 PM',
+        teams_en: 'Physical Education Directorate & School Representatives',
+        teams_ar: 'إدارة التربية الرياضية وممثلو المدارس واللجان التنفيذية',
+        venue_en: 'Ministry of Education Main Hall, Isa Town',
+        venue_ar: 'قاعة وزارة التربية والتعليم الرئيسية - مدينة عيسى',
+        mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Isa+Town+Bahrain'
+      },
+      // 2. الأسبوع الثاني من أكتوبر 2026: الانتقاء الرياضي
+      '2026-10-11': {
+        title_en: 'Sports Selection & Talent Scouting Camp',
+        title_ar: 'الانتقاء الرياضي للمنتخبات المدرسية',
+        tag_en: 'Talent Selection',
+        tag_ar: 'انتقاء المواهب',
+        time: '08:00 AM - 02:00 PM',
+        teams_en: 'Nominated Student Athletes (Primary & Intermediate)',
+        teams_ar: 'الطلبة المرشحون للمنتخبات من المدارس الابتدائية والإعدادية',
+        venue_en: 'Ministry Sports Hall, Manama',
+        venue_ar: 'صالة وزارة التربية والتعليم بالمنامة',
+        mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Sports+Hall+Manama+Bahrain'
+      },
+      // 3. أكتوبر 2026: البدء باكتشاف المواهب الطلابية الرياضية
+      '2026-10-18': {
+        title_en: 'Kick-off: Student Sports Talent Discovery Initiative',
+        title_ar: 'البدء باكتشاف المواهب الطلابية الرياضية',
+        tag_en: 'Talent Discovery',
+        tag_ar: 'اكتشاف المواهب',
+        time: 'Full-Day Comprehensive Testing',
+        teams_en: 'Government & Private Schools across Bahrain',
+        teams_ar: 'جميع المدارس الحكومية والخاصة بمملكة البحرين',
+        venue_en: 'Physical Education Training Centers, Isa Town',
+        venue_ar: 'مراكز تدريب التربية الرياضية - مدينة عيسى',
+        mapUrl: 'https://maps.google.com/?q=Isa+Town+Sports+City+Bahrain'
+      },
+      // 4. الأسبوع الرابع من أكتوبر 2026: كأس منتخبات المناطق التعليمية
+      '2026-10-25': {
+        title_en: 'Educational Zones Cup Championship',
+        title_ar: 'كأس منتخبات المناطق التعليمية',
+        tag_en: 'Tournament',
+        tag_ar: 'بطولة كروية',
+        time: '03:30 PM - 07:30 PM',
+        teams_en: 'Capital, Muharraq, Northern & Southern Educational Zones',
+        teams_ar: 'منتخبات محافظات: العاصمة، المحرق، الشمالية، والجنوبية',
+        venue_en: 'Khalifa Sports City Stadium, Isa Town',
+        venue_ar: 'مدينة خليفة الرياضية - مدينة عيسى',
+        mapUrl: 'https://maps.google.com/?q=Khalifa+Sports+City+Stadium+Isa+Town'
+      },
+      // 5. الأسبوع الأول من نوفمبر 2026: الشراكة الجامعية (ملتقى مسؤولي الرياضة)
       '2026-11-04': {
         title_en: 'University Partnership: Higher Education Sports Forum',
-        title_ar: 'الشراكة الجامعية: ملتقى مسؤولي الرياضة بالتعليم العالي',
-        tag_en: 'Forum',
-        tag_ar: 'ملتقى رياضي',
-        time: '09:00 AM - 01:00 PM',
-        teams_en: 'Higher Education Representatives & Ministry Delegates',
-        teams_ar: 'مسؤولو الرياضة بمؤسسات التعليم العالي ووفد الوزارة',
+        title_ar: 'الشراكة الجامعية (ملتقى مسؤولي الرياضة في مؤسسات التعليم العالي)',
+        tag_en: 'Collegiate Forum',
+        tag_ar: 'ملتقى جامعي',
+        time: '09:30 AM - 01:30 PM',
+        teams_en: 'Deans of Student Affairs & University Athletic Directors',
+        teams_ar: 'عمادات شؤون الطلبة ومسؤولو الرياضة بالجامعات والكليات',
         venue_en: 'University of Bahrain Sports Complex, Sakhir',
         venue_ar: 'مجمع الصالات الرياضية بجامعة البحرين - الصخير',
         mapUrl: 'https://maps.google.com/?q=University+of+Bahrain+Sakhir'
       },
-      '2026-11-10': {
-        title_en: 'Educational Zones Cup Finals',
-        title_ar: 'نهائي كأس منتخبات المناطق التعليمية',
-        tag_en: 'Championship',
-        tag_ar: 'بطولة كروية',
-        time: '04:00 PM - 07:00 PM',
-        teams_en: 'Capital Zone vs. Southern Zone',
-        teams_ar: 'منتخب منطقة العاصمة ضد منتخب المنطقة الجنوبية',
-        venue_en: 'Khalifa Sports City Stadium, Isa Town',
-        venue_ar: 'استاد مدينة خليفة الرياضية - مدينة عيسى',
-        mapUrl: 'https://maps.google.com/?q=Khalifa+Sports+City+Stadium+Isa+Town'
-      },
+      // 6. الأسبوع الثالث من نوفمبر 2026: الألعاب الجامعية (البطولة الجامعية للألعاب الإلكترونية)
       '2026-11-18': {
         title_en: 'Collegiate Esports Championship',
-        title_ar: 'الألعاب الجامعية: البطولة الجامعية للألعاب الإلكترونية',
+        title_ar: 'الألعاب الجامعية (البطولة الجامعية للألعاب الإلكترونية)',
         tag_en: 'Esports',
         tag_ar: 'ألعاب إلكترونية',
-        time: '10:00 AM - 04:00 PM',
-        teams_en: 'All Bahrain Universities & Colleges',
-        teams_ar: 'طلبة الجامعات والكليات الحكومية والخاصة بمملكة البحرين',
+        time: '10:00 AM - 05:00 PM',
+        teams_en: 'Bahrain University Students Collegiate Teams',
+        teams_ar: 'منتخبات طلبة جامعات مملكة البحرين',
         venue_en: 'Bahrain Polytechnic Esports Arena, Isa Town',
-        venue_ar: 'صالة الرياضات الإلكترونية ببوليتكنك البحرين - مدينة عيسى',
+        venue_ar: 'بوليتكنك البحرين - مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Bahrain+Polytechnic+Isa+Town'
+      },
+      // 7. الأسبوع الثاني 2027 (يناير): جائزة التميز الرياضي
+      '2027-01-12': {
+        title_en: 'Sports Excellence Award Ceremony 2027',
+        title_ar: 'جائزة التميز الرياضي',
+        tag_en: 'Awards Ceremony',
+        tag_ar: 'حفل تكريم وجوائز',
+        time: '10:00 AM - 12:30 PM',
+        teams_en: 'Honoring Outstanding Student Athletes & Schools',
+        teams_ar: 'تكريم المدارس والطلبة المتميزين رياضياً على مستوى المملكة',
+        venue_en: 'Ministry of Education Cultural Hall, Manama',
+        venue_ar: 'الصالة الثقافية - المنامة',
+        mapUrl: 'https://maps.google.com/?q=Cultural+Hall+Manama+Bahrain'
+      },
+      // 8. الأسبوع الثاني من فبراير 2027: المؤتمر الفني لدوري الجامعات
+      '2027-02-10': {
+        title_en: 'Technical Conference: Universities League',
+        title_ar: 'المؤتمر الفني لدوري الجامعات',
+        tag_en: 'Technical Meeting',
+        tag_ar: 'مؤتمر فني',
+        time: '11:00 AM - 02:00 PM',
+        teams_en: 'Team Captains, Referees & Technical Committee',
+        teams_ar: 'اللجنة الفنية وحكام الدوري ومدربو المنتخبات الجامعية',
+        venue_en: 'Higher Education Council Hall, Riffa',
+        venue_ar: 'مجلس التعليم العالي - الرفاع',
+        mapUrl: 'https://maps.google.com/?q=Higher+Education+Council+Bahrain'
+      },
+      // 9. مارس 2027: معسكرات النخبة الرياضية
+      '2027-03-08': {
+        title_en: 'Sports Elite Training Camps',
+        title_ar: 'معسكرات النخبة الرياضية',
+        tag_en: 'Elite Camp',
+        tag_ar: 'معسكر تدريبي',
+        time: 'Full Intensive Program',
+        teams_en: 'National Student Elite Teams in Core Sports',
+        teams_ar: 'منتخبات النخبة الطلابية لألعاب القوى والألعاب الجماعية',
+        venue_en: 'Bahrain Olympic Committee Training Facilities, Riffa',
+        venue_ar: 'منشآت تدريب اللجنة الأولمبية البحرينية - الرفاع',
+        mapUrl: 'https://maps.google.com/?q=Bahrain+Olympic+Committee+Riffa'
+      },
+      // 10. مارس 2027: الألعاب الجامعية (البطولة الجامعية للشطرنج)
+      '2027-03-22': {
+        title_en: 'Collegiate Chess Championship',
+        title_ar: 'الألعاب الجامعية (البطولة الجامعية للشطرنج)',
+        tag_en: 'Mind Sports',
+        tag_ar: 'شطرنج وألعاب ذهنية',
+        time: '09:00 AM - 03:00 PM',
+        teams_en: 'Men & Women University Chess Champions',
+        teams_ar: 'أبطال وبطلات الشطرنج بمؤسسات التعليم العالي',
+        venue_en: 'Applied Science University (ASU), East Al Eker',
+        venue_ar: 'جامعة العلوم التطبيقية - العكر الشرقي',
+        mapUrl: 'https://maps.google.com/?q=Applied+Science+University+Bahrain'
+      },
+      // 11. الأسبوع الأول من أبريل 2027: الألعاب الجامعية (البطولة الجامعية لكرة الطاولة)
+      '2027-04-05': {
+        title_en: 'Collegiate Table Tennis Championship',
+        title_ar: 'الألعاب الجامعية (البطولة الجامعية لكرة الطاولة)',
+        tag_en: 'Racket Sports',
+        tag_ar: 'كرة طاولة',
+        time: '04:00 PM - 08:30 PM',
+        teams_en: 'University Table Tennis Delegates (Singles & Doubles)',
+        teams_ar: 'منتخبات الجامعات لكرة الطاولة (فردي وزوجي)',
+        venue_en: 'Bahrain Table Tennis Association Arena, Riffa',
+        venue_ar: 'صالة الاتحاد البحريني لكرة الطاولة - الرفاع',
+        mapUrl: 'https://maps.google.com/?q=Bahrain+Table+Tennis+Association+Riffa'
+      },
+      // 12. أبريل 2027: الألعاب الجامعية (البطولة الجامعية لكرة القدم)
+      '2027-04-14': {
+        title_en: 'Collegiate Football Championship (Final Stages)',
+        title_ar: 'الألعاب الجامعية (البطولة الجامعية لكرة القدم)',
+        tag_en: 'Football Finals',
+        tag_ar: 'نهائيات القدم',
+        time: '04:30 PM - 08:00 PM',
+        teams_en: 'Collegiate Football Finalists',
+        teams_ar: 'المتأهلون لنهائيات دوري الجامعات لكرة القدم',
+        venue_en: 'Ahli Club Stadium, Mahooz',
+        venue_ar: 'استاد النادي الأهلي - الماحوز',
+        mapUrl: 'https://maps.google.com/?q=Al+Ahli+Club+Stadium+Manama'
+      },
+      // 13. أبريل 2027: البطولة الخليجية المدرسية
+      '2027-04-20': {
+        title_en: 'Gulf School Games Championship (GCC)',
+        title_ar: 'البطولة الخليجية المدرسية',
+        tag_en: 'GCC Championship',
+        tag_ar: 'بطولة خليجية',
+        time: 'Multi-Day Tournament',
+        teams_en: 'GCC National School Teams (Bahrain, KSA, UAE, Kuwait, Qatar, Oman)',
+        teams_ar: 'المنتخبات المدرسية لدول مجلس التعاون الخليجي',
+        venue_en: 'Bahrain National Stadium & Khalifa Sports City',
+        venue_ar: 'استاد البحرين الوطني ومدينة خليفة الرياضية',
+        mapUrl: 'https://maps.google.com/?q=Bahrain+National+Stadium+Isa+Town'
+      },
+      // 14. أبريل 2027: نهاية اكتشاف المواهب الطلابية الرياضية
+      '2027-04-28': {
+        title_en: 'Conclusion: Student Sports Talent Discovery Program',
+        title_ar: 'نهاية اكتشاف المواهب الطلابية الرياضية',
+        tag_en: 'Program Conclusion',
+        tag_ar: 'ختام البرنامج السنوي',
+        time: '09:00 AM - 12:00 PM',
+        teams_en: 'Scouting Evaluation Committee & Final Squad Rosters',
+        teams_ar: 'لجنة التقييم وإعلان القوائم المعتمدة للمنتخبات الوطنية الطلابية',
+        venue_en: 'Ministry of Education Hall, Isa Town',
+        venue_ar: 'وزارة التربية والتعليم - مدينة عيسى',
+        mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Isa+Town+Bahrain'
+      },
+      // 15. الأسبوع الثاني من مايو 2027: ملتقيات جامعية (ملتقى تطوير الرياضة الجامعية)
+      '2027-05-11': {
+        title_en: 'University Forums: Collegiate Sports Development Forum',
+        title_ar: 'ملتقيات جامعية (ملتقى تطوير الرياضة الجامعية)',
+        tag_en: 'Development Forum',
+        tag_ar: 'ملتقى تطويري',
+        time: '09:00 AM - 02:00 PM',
+        teams_en: 'Higher Education Sports Deans, Coaches & Strategic Partners',
+        teams_ar: 'عمداء كليات التربية الرياضية ومسؤولو الاتحادات والشركاء',
+        venue_en: 'Gulf University Conference Center, Sanad',
+        venue_ar: 'مركز مؤتمرات الجامعة الخليجية - سند',
+        mapUrl: 'https://maps.google.com/?q=Gulf+University+Sanad+Bahrain'
       }
     };
 
-    // HIGHLIGHTS (All wired to the specified YouTube link)
+    // HIGHLIGHTS (All wired to your requested video link)
     const targetYoutubeId = 'NuiAsW_0fOM';
     const highlights = [
       {
@@ -934,6 +1096,7 @@
       }
     ];
 
+    // Calendar state initialized to current month (November 2026)
     let currentYear = 2026;
     let currentMonth = 10; // 0-indexed: 10 = November 2026
 
