@@ -21,6 +21,7 @@
       --accent-peach: #f9b17a;
       --accent-blue: #023661;
       --live-red: #ef4444;
+      --success-green: #22c55e;
       --font-en: 'Inter', system-ui, -apple-system, sans-serif;
       --font-ar: 'Cairo', system-ui, -apple-system, sans-serif;
     }
@@ -248,6 +249,96 @@
       display: inline-block;
     }
 
+    /* MATCHES SPLIT SECTION (UPCOMING & PAST) */
+    .matches-dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .matches-dual-grid { grid-template-columns: 1fr; }
+    }
+
+    .matches-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .matches-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .match-fixture-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .match-fixture-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-peach);
+    }
+
+    .fixture-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .fixture-tag {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.7rem;
+    }
+    .tag-past { background: rgba(34, 197, 94, 0.15); color: var(--success-green); }
+    .tag-upcoming { background: rgba(249, 177, 122, 0.15); color: var(--accent-peach); }
+
+    .fixture-teams-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .team-name { font-weight: 700; font-size: 0.95rem; flex: 1; }
+    .team-name.winner { color: var(--accent-peach); }
+    .fixture-score {
+      font-size: 1.15rem;
+      font-weight: 800;
+      background: var(--bg-surface);
+      padding: 0.3rem 0.85rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      letter-spacing: 2px;
+    }
+    .fixture-time-badge {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-orange);
+      background: rgba(219, 82, 39, 0.15);
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+    }
+    .fixture-venue {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     /* CALENDAR */
     .calendar-container {
       background: var(--bg-surface);
@@ -291,11 +382,11 @@
     }
 
     .calendar-cell {
-      min-height: 85px;
+      min-height: 90px;
       background: var(--bg-card);
       border: 1px solid transparent;
       border-radius: 8px;
-      padding: 0.4rem;
+      padding: 0.5rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -314,7 +405,10 @@
       border: none;
     }
 
-    .calendar-cell.has-event { border-color: rgba(219, 82, 39, 0.5); }
+    .calendar-cell.has-event {
+      border-color: rgba(219, 82, 39, 0.6);
+      background: rgba(219, 82, 39, 0.08);
+    }
 
     .cell-top {
       display: flex;
@@ -322,11 +416,11 @@
       align-items: center;
     }
 
-    .cell-num { font-size: 0.8rem; font-weight: 700; }
+    .cell-num { font-size: 0.85rem; font-weight: 700; }
 
     .event-indicator {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--accent-peach);
     }
@@ -335,15 +429,16 @@
       background: var(--accent-blue);
       color: #fff;
       font-size: 0.65rem;
-      padding: 2px 4px;
+      padding: 3px 6px;
       border-radius: 4px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       margin-top: 4px;
+      font-weight: 600;
     }
 
-    /* MEDIA & HIGHLIGHTS */
+    /* MEDIA */
     .highlights-header {
       display: flex;
       justify-content: space-between;
@@ -394,25 +489,28 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      pointer-events: none;
     }
 
     .thumb-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      pointer-events: none;
     }
 
     .play-badge {
       position: absolute;
       background: rgba(219, 82, 39, 0.9);
       color: #fff;
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.2rem;
+      pointer-events: none;
     }
 
     .card-content {
@@ -420,6 +518,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+      pointer-events: none;
     }
 
     .card-tag {
@@ -440,6 +539,86 @@
       color: var(--text-muted);
       margin-top: 4px;
     }
+
+    /* MODALS */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 520px;
+      padding: 1.5rem;
+      position: relative;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    html[dir="rtl"] .modal-close-btn { right: auto; left: 14px; }
+
+    .modal-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: var(--accent-orange);
+      color: #fff;
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; }
+    
+    .modal-detail-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+    }
+    .modal-detail-row strong { color: var(--text-main); }
+
+    .maps-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-blue);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.65rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 1rem;
+      transition: opacity 0.15s;
+    }
+    .maps-btn:hover { opacity: 0.9; }
   </style>
 </head>
 <body>
@@ -476,6 +655,26 @@
 
   <!-- MAIN CONTENT -->
   <main>
+    
+    <!-- DUAL SECTION: UPCOMING MATCHES & PAST MATCHES -->
+    <div class="matches-dual-grid">
+      <!-- UPCOMING MATCHES -->
+      <section class="matches-panel">
+        <div class="section-title" id="ui-upcoming-title">Upcoming Matches</div>
+        <div class="matches-card-list" id="upcomingMatchesList">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- PAST MATCHES WITH SCORES -->
+      <section class="matches-panel">
+        <div class="section-title" id="ui-past-title">Past Matches & Final Scores</div>
+        <div class="matches-card-list" id="pastMatchesList">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+    </div>
+
     <!-- CALENDAR SECTION -->
     <section>
       <div class="section-title" id="ui-cal-title">Tournament Schedule</div>
@@ -508,10 +707,38 @@
     </section>
   </main>
 
-  <!-- VIDEO MODAL POPUP -->
-  <div id="videoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000; align-items:center; justify-content:center; padding:20px;" onclick="closeOnBackdrop(event)">
-    <div style="position:relative; width:100%; max-width:800px; aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden;">
-      <button onclick="closeVideoModal()" style="position:absolute; top:12px; right:12px; z-index:10; background:rgba(0,0,0,0.7); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:18px; font-weight:bold;">✕</button>
+  <!-- EVENT DETAILS MODAL (POPUP WITH MAP & DETAILS) -->
+  <div id="eventModal" class="modal-overlay" onclick="closeOnBackdrop(event, 'eventModal')">
+    <div class="modal-content-card">
+      <button class="modal-close-btn" onclick="closeEventModal()">✕</button>
+      <span class="modal-badge" id="modalTag">Sports</span>
+      <h2 class="modal-title" id="modalTitle">Event Title</h2>
+      <div class="modal-detail-row">
+        <span>📅</span>
+        <div><strong id="ui-modal-date-label">Date:</strong> <span id="modalDate">---</span></div>
+      </div>
+      <div class="modal-detail-row">
+        <span>⏰</span>
+        <div><strong id="ui-modal-time-label">Time:</strong> <span id="modalTime">---</span></div>
+      </div>
+      <div class="modal-detail-row">
+        <span>👥</span>
+        <div><strong id="ui-modal-teams-label">Participants / Teams:</strong> <span id="modalTeams">---</span></div>
+      </div>
+      <div class="modal-detail-row">
+        <span>📍</span>
+        <div><strong id="ui-modal-venue-label">Location:</strong> <span id="modalVenue">---</span></div>
+      </div>
+      <a href="#" target="_blank" id="modalMapLink" class="maps-btn">
+        🗺️ <span id="ui-modal-map-btn">Open in Google Maps</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- VIDEO MODAL POPUP (YOUTUBE) -->
+  <div id="videoModal" class="modal-overlay" onclick="closeOnBackdrop(event, 'videoModal')">
+    <div style="position:relative; width:100%; max-width:850px; aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden;">
+      <button class="modal-close-btn" onclick="closeVideoModal()">✕</button>
       <iframe id="videoIframe" src="" style="width:100%; height:100%; border:none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
@@ -525,72 +752,190 @@
         langBtn: 'العربية',
         title: 'Sports Calendar & Match Highlights',
         subtitle: 'Physical Education Directorate - Student Sports Teams',
+        upcomingTitle: 'Upcoming Matches',
+        pastTitle: 'Past Matches & Final Scores',
         calTitle: 'Tournament Schedule',
         mediaTitle: 'Match Highlights & Media',
         viewAll: 'View All Highlights',
         days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         live: 'LIVE',
-        ft: 'FINAL'
+        ft: 'FINAL',
+        openMap: 'Open in Google Maps',
+        dateLabel: 'Date:',
+        timeLabel: 'Time:',
+        teamsLabel: 'Teams / Stage:',
+        venueLabel: 'Location:'
       },
       ar: {
         dir: 'rtl',
         langBtn: 'English',
         title: 'جدول الفعاليات والأنشطة الرياضية',
         subtitle: 'إدارة التربية الرياضية - قسم المنتخبات الطلابية',
+        upcomingTitle: 'المباريات القادمة',
+        pastTitle: 'المباريات السابقة والنتائج النهائية',
         calTitle: 'الجدول الزمني للبطولات والمسابقات',
         mediaTitle: 'أبرز لقطات المباريات والوسائط',
         viewAll: 'عرض جميع الفيديوهات',
         days: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
         monthNames: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
         live: 'مباشر',
-        ft: 'انتهت'
+        ft: 'انتهت',
+        openMap: 'فتح الموقع في خرائط Google',
+        dateLabel: 'التاريخ:',
+        timeLabel: 'الوقت:',
+        teamsLabel: 'الفرق / المرحلة:',
+        venueLabel: 'المكان:'
       }
     };
 
-    const matches = [
+    // UPCOMING FIXTURES
+    const upcomingMatches = [
+      {
+        sport_en: 'Football', sport_ar: 'كرة القدم',
+        team1_en: 'Riffa Intermediate', team1_ar: 'الرفاع الإعدادية',
+        team2_en: 'Isa Town Intermediate', team2_ar: 'مدينة عيسى الإعدادية',
+        date: '2026-11-04',
+        time: '04:30 PM',
+        venue_en: 'Isa Town National Stadium',
+        venue_ar: 'استاد مدينة عيسى الوطني',
+        mapUrl: 'https://maps.google.com/?q=Bahrain+National+Stadium+Isa+Town'
+      },
+      {
+        sport_en: 'Volleyball', sport_ar: 'الكرة الطائرة',
+        team1_en: 'Muharraq Secondary', team1_ar: 'المحرق الثانوية',
+        team2_en: 'Saar Secondary', team2_ar: 'سار الثانوية',
+        date: '2026-11-06',
+        time: '05:00 PM',
+        venue_en: 'Ministry Sports Hall, Manama',
+        venue_ar: 'صالة وزارة التربية والتعليم بالمنامة',
+        mapUrl: 'https://maps.google.com/?q=Manama+Sports+Hall+Bahrain'
+      },
+      {
+        sport_en: 'Basketball', sport_ar: 'كرة السلة',
+        team1_en: 'Hidd Secondary', team1_ar: 'الحد الثانوية',
+        team2_en: 'Hamad Town Secondary', team2_ar: 'مدينة حمد الثانوية',
+        date: '2026-11-09',
+        time: '04:00 PM',
+        venue_en: 'Zain Basketball Arena, Um Al Hassam',
+        venue_ar: 'صالة زين لكرة السلة بأم الحصم',
+        mapUrl: 'https://maps.google.com/?q=Zain+Basketball+Arena+Bahrain'
+      }
+    ];
+
+    // PAST MATCHES WITH SCORES
+    const pastMatches = [
+      {
+        sport_en: 'Football', sport_ar: 'كرة القدم',
+        team1_en: 'Budaiya Secondary', team1_ar: 'البديع الثانوية',
+        score1: 3,
+        team2_en: 'Manama Secondary', team2_ar: 'المنامة الثانوية',
+        score2: 1,
+        date: '2026-10-30',
+        venue_en: 'Muharraq Stadium',
+        venue_ar: 'استاد المحرق'
+      },
+      {
+        sport_en: 'Volleyball', sport_ar: 'الكرة الطائرة',
+        team1_en: 'Sanabis Intermediate', team1_ar: 'سنابس الإعدادية',
+        score1: 2,
+        team2_en: 'Riffa Intermediate', team2_ar: 'الرفاع الإعدادية',
+        score2: 3,
+        date: '2026-10-28',
+        venue_en: 'Riffa Club Gym',
+        venue_ar: 'صالة نادي الرفاع'
+      },
+      {
+        sport_en: 'Basketball', sport_ar: 'كرة السلة',
+        team1_en: 'East Riffa Sec', team1_ar: 'الرفاع الشرقي الثانوية',
+        score1: 68,
+        team2_en: 'Isa Town Sec', team2_ar: 'مدينة عيسى الثانوية',
+        score2: 74,
+        date: '2026-10-26',
+        venue_en: 'Um Al Hassam Hall',
+        venue_ar: 'صالة أم الحصم'
+      }
+    ];
+
+    // TICKER DATA
+    const tickerMatches = [
       { sport: 'Football', live: true, team1: 'Riffa Sec', score1: 2, team2: 'Muharraq Sec', score2: 1, minute: '78\'' },
       { sport: 'Volleyball', live: false, team1: 'Isa Town Int', score1: 3, team2: 'Saar Int', score2: 0, status: 'FT' },
       { sport: 'Basketball', live: true, team1: 'Hidd Sec', score1: 54, team2: 'Manama Sec', score2: 58, minute: 'Q4' },
       { sport: 'Football', live: false, team1: 'Budaiya Sec', score1: 0, team2: 'Hamad Town', score2: 2, status: 'FT' }
     ];
 
+    // CALENDAR EVENTS (Includes Schedule Data with Maps & Detailed Info)
     const calendarEvents = {
-      '2026-11-04': { title_en: 'Football Semis', title_ar: 'نصف نهائي القدم' },
-      '2026-11-10': { title_en: 'Volleyball Final', title_ar: 'نهائي الطائرة' },
-      '2026-11-18': { title_en: 'Track & Field Day', title_ar: 'سباق القوى المفتوح' }
+      '2026-11-04': {
+        title_en: 'University Partnership: Higher Education Sports Forum',
+        title_ar: 'الشراكة الجامعية: ملتقى مسؤولي الرياضة بالتعليم العالي',
+        tag_en: 'Forum',
+        tag_ar: 'ملتقى رياضي',
+        time: '09:00 AM - 01:00 PM',
+        teams_en: 'Higher Education Representatives & Ministry Delegates',
+        teams_ar: 'مسؤولو الرياضة بمؤسسات التعليم العالي ووفد الوزارة',
+        venue_en: 'University of Bahrain Sports Complex, Sakhir',
+        venue_ar: 'مجمع الصالات الرياضية بجامعة البحرين - الصخير',
+        mapUrl: 'https://maps.google.com/?q=University+of+Bahrain+Sakhir'
+      },
+      '2026-11-10': {
+        title_en: 'Educational Zones Cup Finals',
+        title_ar: 'نهائي كأس منتخبات المناطق التعليمية',
+        tag_en: 'Championship',
+        tag_ar: 'بطولة كروية',
+        time: '04:00 PM - 07:00 PM',
+        teams_en: 'Capital Zone vs. Southern Zone',
+        teams_ar: 'منتخب منطقة العاصمة ضد منتخب المنطقة الجنوبية',
+        venue_en: 'Khalifa Sports City Stadium, Isa Town',
+        venue_ar: 'استاد مدينة خليفة الرياضية - مدينة عيسى',
+        mapUrl: 'https://maps.google.com/?q=Khalifa+Sports+City+Stadium+Isa+Town'
+      },
+      '2026-11-18': {
+        title_en: 'Collegiate Esports Championship',
+        title_ar: 'الألعاب الجامعية: البطولة الجامعية للألعاب الإلكترونية',
+        tag_en: 'Esports',
+        tag_ar: 'ألعاب إلكترونية',
+        time: '10:00 AM - 04:00 PM',
+        teams_en: 'All Bahrain Universities & Colleges',
+        teams_ar: 'طلبة الجامعات والكليات الحكومية والخاصة بمملكة البحرين',
+        venue_en: 'Bahrain Polytechnic Esports Arena, Isa Town',
+        venue_ar: 'صالة الرياضات الإلكترونية ببوليتكنك البحرين - مدينة عيسى',
+        mapUrl: 'https://maps.google.com/?q=Bahrain+Polytechnic+Isa+Town'
+      }
     };
 
-    // YouTube IDs configured here
+    // HIGHLIGHTS (All wired to the specified YouTube link)
+    const targetYoutubeId = 'NuiAsW_0fOM';
     const highlights = [
       {
         tag_en: 'Football', tag_ar: 'كرة القدم',
-        title_en: 'Secondary Schools Championship: Best Goals of Round 1',
-        title_ar: 'أجمل أهداف الجولة الأولى لدوري المدارس الثانوية',
+        title_en: 'Secondary Schools Championship: Match Highlights & Best Plays',
+        title_ar: 'دوري المدارس الثانوية: ملخص اللقاء وأبرز الأهداف',
         date: '2026-11-01',
         img: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80',
-        youtubeId: 'ScMzIvxBSi4'
+        youtubeId: targetYoutubeId
       },
       {
         tag_en: 'Volleyball', tag_ar: 'الكرة الطائرة',
-        title_en: 'Highlights: Thrilling 5-Set Match Between Riffa & Muharraq',
-        title_ar: 'ملخص الشوط الحاسم المثير بين فريقي الرفاع والمحرق',
+        title_en: 'Highlights: Thrilling Final Moments and Winning Set',
+        title_ar: 'ملخص الشوط الحاسم المثير واحتفال التتويج',
         date: '2026-10-29',
         img: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=600&q=80',
-        youtubeId: 'kJQP7kiw5Fk'
+        youtubeId: targetYoutubeId
       },
       {
         tag_en: 'Athletics', tag_ar: 'ألعاب القوى',
-        title_en: '100m Sprint Final: New Student Record Set',
-        title_ar: 'رقم قياسي جديد في نهائي سباق 100 متر للمرحلة الإعدادية',
+        title_en: '100m Sprint Final: Student Record Race Highlights',
+        title_ar: 'نهائي سباق 100 متر: رقم قياسي طلابي وتغطية شاملة',
         date: '2026-10-25',
         img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80',
-        youtubeId: 'ScMzIvxBSi4'
+        youtubeId: targetYoutubeId
       }
     ];
 
     let currentYear = 2026;
-    let currentMonth = 10; // 0-indexed (10 = November)
+    let currentMonth = 10; // 0-indexed: 10 = November 2026
 
     function updateClock() {
       const now = new Date();
@@ -605,7 +950,7 @@
       track.innerHTML = '';
       const t = translations[currentLang];
 
-      matches.forEach(m => {
+      tickerMatches.forEach(m => {
         const card = document.createElement('div');
         card.className = 'match-ticker-card';
         card.innerHTML = `
@@ -630,6 +975,57 @@
       const track = document.getElementById('tickerTrack');
       const shift = 230 * direction;
       track.scrollBy({ left: shift, behavior: 'smooth' });
+    }
+
+    function renderMatchesSections() {
+      // Upcoming
+      const upList = document.getElementById('upcomingMatchesList');
+      upList.innerHTML = '';
+      upcomingMatches.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'match-fixture-card';
+        card.innerHTML = `
+          <div class="fixture-top">
+            <span class="fixture-tag tag-upcoming">${currentLang === 'ar' ? m.sport_ar : m.sport_en}</span>
+            <span>📅 ${m.date}</span>
+          </div>
+          <div class="fixture-teams-box">
+            <div class="team-name">${currentLang === 'ar' ? m.team1_ar : m.team1_en}</div>
+            <span class="fixture-time-badge">${m.time}</span>
+            <div class="team-name" style="text-align: end;">${currentLang === 'ar' ? m.team2_ar : m.team2_en}</div>
+          </div>
+          <div class="fixture-venue">
+            <span>📍 ${currentLang === 'ar' ? m.venue_ar : m.venue_en}</span>
+            <a href="${m.mapUrl}" target="_blank" style="color:var(--accent-peach); text-decoration:none; margin-inline-start: auto; font-weight:700;">🗺️ Maps</a>
+          </div>
+        `;
+        upList.appendChild(card);
+      });
+
+      // Past Matches
+      const pastList = document.getElementById('pastMatchesList');
+      pastList.innerHTML = '';
+      pastMatches.forEach(m => {
+        const isTeam1Winner = m.score1 > m.score2;
+        const isTeam2Winner = m.score2 > m.score1;
+        const card = document.createElement('div');
+        card.className = 'match-fixture-card';
+        card.innerHTML = `
+          <div class="fixture-top">
+            <span class="fixture-tag tag-past">${currentLang === 'ar' ? m.sport_ar : m.sport_en}</span>
+            <span>📅 ${m.date} (${translations[currentLang].ft})</span>
+          </div>
+          <div class="fixture-teams-box">
+            <div class="team-name ${isTeam1Winner ? 'winner' : ''}">${currentLang === 'ar' ? m.team1_ar : m.team1_en}</div>
+            <div class="fixture-score">${m.score1} - ${m.score2}</div>
+            <div class="team-name ${isTeam2Winner ? 'winner' : ''}" style="text-align: end;">${currentLang === 'ar' ? m.team2_ar : m.team2_en}</div>
+          </div>
+          <div class="fixture-venue">
+            <span>📍 ${currentLang === 'ar' ? m.venue_ar : m.venue_en}</span>
+          </div>
+        `;
+        pastList.appendChild(card);
+      });
     }
 
     function renderCalendar() {
@@ -659,6 +1055,12 @@
         const ev = calendarEvents[dateString];
 
         cell.className = `calendar-cell ${ev ? 'has-event' : ''}`;
+        cell.onclick = () => {
+          if (ev) {
+            openEventModal(dateString, ev);
+          }
+        };
+
         cell.innerHTML = `
           <div class="cell-top">
             <span class="cell-num">${day}</span>
@@ -676,6 +1078,8 @@
       highlights.forEach(h => {
         const card = document.createElement('div');
         card.className = 'highlight-card';
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
         card.onclick = () => openVideoModal(h.youtubeId);
         card.innerHTML = `
           <div class="thumb-wrapper">
@@ -692,23 +1096,42 @@
       });
     }
 
-    function openVideoModal(youtubeId) {
+    // EVENT MODAL CONTROLS
+    function openEventModal(dateStr, ev) {
+      const modal = document.getElementById('eventModal');
+      document.getElementById('modalTag').textContent = currentLang === 'ar' ? ev.tag_ar : ev.tag_en;
+      document.getElementById('modalTitle').textContent = currentLang === 'ar' ? ev.title_ar : ev.title_en;
+      document.getElementById('modalDate').textContent = dateStr;
+      document.getElementById('modalTime').textContent = ev.time;
+      document.getElementById('modalTeams').textContent = currentLang === 'ar' ? ev.teams_ar : ev.teams_en;
+      document.getElementById('modalVenue').textContent = currentLang === 'ar' ? ev.venue_ar : ev.venue_en;
+      document.getElementById('modalMapLink').href = ev.mapUrl;
+      modal.style.display = 'flex';
+    }
+
+    function closeEventModal() {
+      document.getElementById('eventModal').style.display = 'none';
+    }
+
+    // VIDEO MODAL CONTROLS
+    window.openVideoModal = function(youtubeId) {
       const modal = document.getElementById('videoModal');
       const iframe = document.getElementById('videoIframe');
       iframe.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
       modal.style.display = 'flex';
-    }
+    };
 
-    function closeVideoModal() {
+    window.closeVideoModal = function() {
       const modal = document.getElementById('videoModal');
       const iframe = document.getElementById('videoIframe');
       iframe.src = '';
       modal.style.display = 'none';
-    }
+    };
 
-    function closeOnBackdrop(e) {
-      if (e.target.id === 'videoModal') {
-        closeVideoModal();
+    function closeOnBackdrop(e, modalId) {
+      if (e.target.id === modalId) {
+        if (modalId === 'videoModal') closeVideoModal();
+        if (modalId === 'eventModal') closeEventModal();
       }
     }
 
@@ -734,18 +1157,28 @@
 
       document.getElementById('ui-title').textContent = t.title;
       document.getElementById('ui-subtitle').textContent = t.subtitle;
+      document.getElementById('ui-upcoming-title').textContent = t.upcomingTitle;
+      document.getElementById('ui-past-title').textContent = t.pastTitle;
       document.getElementById('ui-cal-title').textContent = t.calTitle;
       document.getElementById('ui-media-title').textContent = t.mediaTitle;
       document.getElementById('ui-view-all').textContent = t.viewAll;
       document.getElementById('langToggle').textContent = t.langBtn;
 
+      document.getElementById('ui-modal-date-label').textContent = t.dateLabel;
+      document.getElementById('ui-modal-time-label').textContent = t.timeLabel;
+      document.getElementById('ui-modal-teams-label').textContent = t.teamsLabel;
+      document.getElementById('ui-modal-venue-label').textContent = t.venueLabel;
+      document.getElementById('ui-modal-map-btn').textContent = t.openMap;
+
       renderTicker();
+      renderMatchesSections();
       renderCalendar();
       renderHighlights();
     }
 
     // Initial render
     renderTicker();
+    renderMatchesSections();
     renderCalendar();
     renderHighlights();
   </script>
