@@ -1347,3 +1347,14 @@
   </script>
 </body>
 </html>
+<script>
+  function notifyParent() {
+    const height = document.body.scrollHeight || document.documentElement.scrollHeight;
+    window.parent.postMessage({ frameHeight: height }, '*');
+  }
+  window.addEventListener('load', notifyParent);
+  window.addEventListener('resize', notifyParent);
+  // Run again after dynamic renders/images load
+  setTimeout(notifyParent, 500);
+  setTimeout(notifyParent, 1500);
+</script>
