@@ -622,6 +622,23 @@
       transition: opacity 0.15s;
     }
     .maps-btn:hover { opacity: 0.9; }
+    html, body {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+@media screen and (max-width: 768px) {
+  body {
+    padding: 8px !important;
+  }
+  .container, .calendar-container, table, .match-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
   </style>
 </head>
 <body>
