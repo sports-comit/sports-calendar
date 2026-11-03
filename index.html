@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr" id="root-html">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Sports Calendar & Match Highlights</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,15 +26,16 @@
       --font-ar: 'Cairo', system-ui, -apple-system, sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-      max-width: 100vw;
-      overflow-x: hidden;
-      box-sizing: border-box;
+    *, *:before, *:after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
     }
 
-    body {
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
       background-color: var(--bg-base);
       color: var(--text-main);
       font-family: var(--font-en);
@@ -53,6 +54,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      width: 100%;
     }
 
     .header-inner {
@@ -140,13 +142,14 @@
       display: flex;
       align-items: center;
       width: 100%;
+      overflow: hidden;
     }
 
     .ticker-scroll-btn {
       background: rgba(15, 19, 29, 0.9);
       border: none;
       color: var(--text-muted);
-      width: 36px;
+      width: 32px;
       height: 100%;
       position: absolute;
       z-index: 10;
@@ -167,7 +170,7 @@
       overflow-x: auto;
       scroll-behavior: smooth;
       scrollbar-width: none;
-      padding: 0.6rem 2.5rem;
+      padding: 0.5rem 2.2rem;
       gap: 0.75rem;
       width: 100%;
     }
@@ -175,15 +178,15 @@
     .ticker-track::-webkit-scrollbar { display: none; }
 
     .match-ticker-card {
-      flex: 0 0 220px;
+      flex: 0 0 210px;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 8px;
-      padding: 0.6rem 0.75rem;
-      font-size: 0.8rem;
+      padding: 0.5rem 0.65rem;
+      font-size: 0.75rem;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.3rem;
       cursor: pointer;
       transition: transform 0.15s, border-color 0.15s;
     }
@@ -231,17 +234,17 @@
     main {
       max-width: 1400px;
       width: 100%;
-      margin: 1.5rem auto;
+      margin: 1.25rem auto;
       padding: 0 1rem;
       display: flex;
       flex-direction: column;
-      gap: 2.5rem;
+      gap: 2rem;
     }
 
     .section-title {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 800;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -250,7 +253,7 @@
     .section-title::before {
       content: '';
       width: 4px;
-      height: 18px;
+      height: 16px;
       background: var(--accent-orange);
       border-radius: 2px;
       display: inline-block;
@@ -260,35 +263,42 @@
     .matches-dual-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      gap: 1.25rem;
+      width: 100%;
     }
 
     .matches-panel {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
-      padding: 1.25rem;
+      padding: 1.1rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.85rem;
+      width: 100%;
+      min-width: 0;
     }
 
     .matches-card-list {
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
+      gap: 0.75rem;
+      width: 100%;
     }
 
     .match-fixture-card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 10px;
-      padding: 1rem;
+      padding: 0.85rem;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.5rem;
+      width: 100%;
+      min-width: 0;
       transition: transform 0.15s, border-color 0.15s;
     }
+
     .match-fixture-card:hover {
       transform: translateY(-2px);
       border-color: var(--accent-peach);
@@ -300,13 +310,17 @@
       align-items: center;
       font-size: 0.75rem;
       color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 4px;
     }
+
     .fixture-tag {
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 4px;
       font-weight: 700;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
     }
+
     .tag-past { background: rgba(34, 197, 94, 0.15); color: var(--success-green); }
     .tag-upcoming { background: rgba(249, 177, 122, 0.15); color: var(--accent-peach); }
 
@@ -314,33 +328,51 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 0.5rem;
+      width: 100%;
+      min-width: 0;
     }
-    .team-name { font-weight: 700; font-size: 0.95rem; flex: 1; }
+
+    .team-name { 
+      font-weight: 700; 
+      font-size: 0.85rem; 
+      flex: 1; 
+      min-width: 0;
+      word-break: break-word;
+    }
+
     .team-name.winner { color: var(--accent-peach); }
+
     .fixture-score {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 800;
       background: var(--bg-surface);
-      padding: 0.3rem 0.85rem;
+      padding: 0.25rem 0.65rem;
       border-radius: 6px;
       border: 1px solid var(--border-subtle);
-      letter-spacing: 2px;
+      letter-spacing: 1px;
+      flex-shrink: 0;
     }
+
     .fixture-time-badge {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--accent-orange);
       background: rgba(219, 82, 39, 0.15);
-      padding: 0.3rem 0.65rem;
+      padding: 0.25rem 0.5rem;
       border-radius: 6px;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
+
     .fixture-venue {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 6px;
+      flex-wrap: wrap;
     }
 
     /* CALENDAR */
@@ -348,63 +380,67 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
-      padding: 1.25rem;
+      padding: 1.1rem;
       width: 100%;
-      overflow-x: auto;
+      box-sizing: border-box;
     }
 
     .calendar-wrapper {
-      min-width: 600px;
+      width: 100%;
     }
 
     .calendar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
     }
 
-    .calendar-header h3 { font-size: 1.15rem; font-weight: 700; color: var(--accent-peach); }
+    .calendar-header h3 { font-size: 1.05rem; font-weight: 700; color: var(--accent-peach); }
 
-    .cal-nav { display: flex; gap: 0.5rem; }
+    .cal-nav { display: flex; gap: 0.4rem; }
 
     .cal-nav-btn {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       color: #fff;
-      padding: 0.35rem 0.85rem;
+      padding: 0.3rem 0.7rem;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 0.9rem;
       transition: background 0.15s;
     }
     .cal-nav-btn:hover { background: var(--bg-card-hover); }
 
     .calendar-grid {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 4px;
+      width: 100%;
     }
 
     .calendar-day-header {
       text-align: center;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
       color: var(--text-muted);
-      padding: 0.5rem 0;
+      padding: 0.35rem 0;
+      text-transform: uppercase;
     }
 
     .calendar-cell {
-      min-height: 95px;
+      min-height: 80px;
       background: var(--bg-card);
       border: 1px solid transparent;
-      border-radius: 8px;
-      padding: 0.5rem;
+      border-radius: 6px;
+      padding: 0.35rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
       transition: all 0.15s ease;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .calendar-cell:hover {
@@ -420,35 +456,39 @@
 
     .calendar-cell.has-event {
       border-color: rgba(219, 82, 39, 0.7);
-      background: rgba(219, 82, 39, 0.08);
+      background: rgba(219, 82, 39, 0.12);
     }
 
     .cell-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
     }
 
-    .cell-num { font-size: 0.85rem; font-weight: 700; }
+    .cell-num { font-size: 0.75rem; font-weight: 700; }
 
     .event-indicator {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--accent-peach);
+      flex-shrink: 0;
     }
 
     .cell-event-pill {
       background: var(--accent-blue);
       color: #fff;
-      font-size: 0.65rem;
-      padding: 3px 5px;
-      border-radius: 4px;
+      font-size: 0.58rem;
+      padding: 2px 4px;
+      border-radius: 3px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 4px;
+      margin-top: 2px;
       font-weight: 600;
+      display: block;
+      width: 100%;
     }
 
     /* MEDIA */
@@ -456,30 +496,30 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
     }
 
     .all-media-btn {
       background: transparent;
       border: 1px solid var(--accent-orange);
       color: var(--accent-orange);
-      padding: 0.4rem 0.9rem;
+      padding: 0.35rem 0.75rem;
       border-radius: 6px;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       font-weight: 700;
       cursor: pointer;
     }
 
     .highlights-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
     }
 
     .highlight-card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -489,14 +529,14 @@
     }
 
     .highlight-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       border-color: var(--accent-peach);
     }
 
     .thumb-wrapper {
       position: relative;
       width: 100%;
-      height: 180px;
+      height: 160px;
       background: #111520;
       display: flex;
       align-items: center;
@@ -516,41 +556,40 @@
       position: absolute;
       background: rgba(219, 82, 39, 0.9);
       color: #fff;
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       pointer-events: none;
     }
 
     .card-content {
-      padding: 1rem;
+      padding: 0.75rem;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.35rem;
       pointer-events: none;
     }
 
     .card-tag {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--accent-peach);
       text-transform: uppercase;
       font-weight: 700;
     }
 
     .card-title {
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 700;
       line-height: 1.35;
     }
 
     .card-meta {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
-      margin-top: 4px;
     }
 
     /* MODALS */
@@ -562,7 +601,7 @@
       z-index: 1000;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 14px;
     }
 
     .modal-content-card {
@@ -570,93 +609,200 @@
       border: 1px solid var(--border-subtle);
       border-radius: 14px;
       width: 100%;
-      max-width: 540px;
-      padding: 1.6rem;
+      max-width: 480px;
+      padding: 1.25rem;
       position: relative;
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
 
     .modal-close-btn {
       position: absolute;
-      top: 14px;
-      right: 14px;
+      top: 12px;
+      right: 12px;
       background: rgba(255,255,255,0.08);
       color: #fff;
       border: none;
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    html[dir="rtl"] .modal-close-btn { right: auto; left: 14px; }
+    html[dir="rtl"] .modal-close-btn { right: auto; left: 12px; }
 
     .modal-badge {
       display: inline-block;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 0.7rem;
       font-weight: 700;
       background: var(--accent-orange);
       color: #fff;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
     }
 
-    .modal-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.3; }
+    .modal-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.85rem; line-height: 1.3; }
     
     .modal-detail-row {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      font-size: 0.9rem;
-      margin-bottom: 0.75rem;
+      gap: 8px;
+      font-size: 0.82rem;
+      margin-bottom: 0.6rem;
       color: var(--text-muted);
     }
-    .modal-detail-row strong { color: var(--text-main); min-width: 110px; }
+    .modal-detail-row strong { color: var(--text-main); min-width: 95px; }
 
     .maps-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: var(--accent-blue);
       color: #fff;
       text-decoration: none;
-      padding: 0.65rem 1.2rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
+      padding: 0.55rem 1rem;
+      border-radius: 7px;
+      font-size: 0.8rem;
       font-weight: 700;
-      margin-top: 1rem;
+      margin-top: 0.75rem;
       transition: opacity 0.15s;
     }
     .maps-btn:hover { opacity: 0.9; }
 
-    /* RESPONSIVE OVERRIDES FOR MOBILE */
+    /* =========================================
+       SPECIFIC MOBILE-ONLY ADJUSTMENTS (PHONE)
+       ========================================= */
     @media screen and (max-width: 768px) {
+      body {
+        font-size: 13px;
+      }
+
+      /* Header compression */
       header {
-        padding: 0.75rem 1rem;
+        padding: 0.5rem 0.75rem;
       }
       .header-inner {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+      .brand-section {
+        gap: 0.6rem;
+      }
+      .moe-logo {
+        height: 38px;
+        max-width: 90px;
+      }
+      .brand-titles h1 {
+        font-size: 0.95rem;
+      }
+      .brand-titles p {
+        font-size: 0.65rem;
       }
       .header-actions {
         width: 100%;
+        display: flex;
         justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
       }
+      .live-clock-badge {
+        padding: 0.25rem 0.6rem;
+      }
+      .live-clock-badge .time {
+        font-size: 0.85rem;
+      }
+      .live-clock-badge .date {
+        font-size: 0.62rem;
+      }
+      .lang-btn {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.75rem;
+      }
+
+      /* Main layout */
       main {
         padding: 0 0.5rem;
-        gap: 1.5rem;
+        margin: 0.85rem auto;
+        gap: 1.25rem;
       }
+
+      /* Upcoming & Past Matches strictly fitting screen */
       .matches-dual-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
       }
+      .matches-panel {
+        padding: 0.75rem;
+      }
+      .match-fixture-card {
+        padding: 0.65rem;
+      }
+      .team-name {
+        font-size: 0.78rem;
+      }
+      .fixture-time-badge {
+        font-size: 0.68rem;
+        padding: 0.2rem 0.4rem;
+      }
+      .fixture-score {
+        font-size: 0.95rem;
+        padding: 0.2rem 0.5rem;
+      }
+      .fixture-venue {
+        font-size: 0.65rem;
+      }
+
+      /* Calendar fitted 100% horizontally */
       .calendar-container {
-        padding: 0.75rem 0.5rem;
+        padding: 0.65rem 0.4rem;
+        border-radius: 8px;
+      }
+      .calendar-header h3 {
+        font-size: 0.92rem;
+      }
+      .cal-nav-btn {
+        padding: 0.25rem 0.55rem;
+        font-size: 0.8rem;
+      }
+      .calendar-grid {
+        gap: 2px;
+      }
+      .calendar-day-header {
+        font-size: 0.62rem;
+        padding: 0.2rem 0;
+      }
+      .calendar-cell {
+        min-height: 48px;
+        padding: 0.2rem;
+        border-radius: 4px;
+      }
+      .cell-num {
+        font-size: 0.68rem;
+      }
+      .event-indicator {
+        width: 5px;
+        height: 5px;
+      }
+      .cell-event-pill {
+        font-size: 0.5rem;
+        padding: 1px 2px;
+        line-height: 1.1;
+      }
+
+      /* Highlights & video cards */
+      .highlights-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      .thumb-wrapper {
+        height: 140px;
+      }
+      .card-title {
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -687,9 +833,7 @@
   <!-- MATCH TICKER -->
   <div class="ticker-container">
     <button class="ticker-scroll-btn prev" onclick="scrollTicker(-1)">&#8249;</button>
-    <div class="ticker-track" id="tickerTrack">
-      <!-- Populated by JS -->
-    </div>
+    <div class="ticker-track" id="tickerTrack"></div>
     <button class="ticker-scroll-btn next" onclick="scrollTicker(1)">&#8250;</button>
   </div>
 
@@ -701,17 +845,13 @@
       <!-- UPCOMING MATCHES -->
       <section class="matches-panel">
         <div class="section-title" id="ui-upcoming-title">Upcoming Matches</div>
-        <div class="matches-card-list" id="upcomingMatchesList">
-          <!-- Populated by JS -->
-        </div>
+        <div class="matches-card-list" id="upcomingMatchesList"></div>
       </section>
 
       <!-- PAST MATCHES WITH SCORES -->
       <section class="matches-panel">
         <div class="section-title" id="ui-past-title">Past Matches & Final Scores</div>
-        <div class="matches-card-list" id="pastMatchesList">
-          <!-- Populated by JS -->
-        </div>
+        <div class="matches-card-list" id="pastMatchesList"></div>
       </section>
     </div>
 
@@ -727,12 +867,8 @@
               <button class="cal-nav-btn" onclick="nextMonth()">&#8250;</button>
             </div>
           </div>
-          <div class="calendar-grid" id="calendarDaysHeaders">
-            <!-- Populated by JS -->
-          </div>
-          <div class="calendar-grid" id="calendarGrid" style="margin-top: 6px;">
-            <!-- Populated by JS -->
-          </div>
+          <div class="calendar-grid" id="calendarDaysHeaders"></div>
+          <div class="calendar-grid" id="calendarGrid" style="margin-top: 4px;"></div>
         </div>
       </div>
     </section>
@@ -743,13 +879,11 @@
         <div class="section-title" style="margin-bottom: 0;" id="ui-media-title">Match Highlights & Media</div>
         <button class="all-media-btn" id="ui-view-all">View All Highlights</button>
       </div>
-      <div class="highlights-grid" id="highlightsGrid">
-        <!-- Populated by JS -->
-      </div>
+      <div class="highlights-grid" id="highlightsGrid"></div>
     </section>
   </main>
 
-  <!-- EVENT DETAILS MODAL (POPUP WITH MAP & DETAILS) -->
+  <!-- EVENT DETAILS MODAL -->
   <div id="eventModal" class="modal-overlay" onclick="closeOnBackdrop(event, 'eventModal')">
     <div class="modal-content-card">
       <button class="modal-close-btn" onclick="closeEventModal()">✕</button>
@@ -777,7 +911,7 @@
     </div>
   </div>
 
-  <!-- VIDEO MODAL POPUP (YOUTUBE) -->
+  <!-- VIDEO MODAL POPUP -->
   <div id="videoModal" class="modal-overlay" onclick="closeOnBackdrop(event, 'videoModal')">
     <div style="position:relative; width:100%; max-width:850px; aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden;">
       <button class="modal-close-btn" onclick="closeVideoModal()">✕</button>
@@ -792,41 +926,41 @@
       en: {
         dir: 'ltr',
         langBtn: 'العربية',
-        title: 'Sports Calendar & Match Highlights',
+        title: 'Sports Calendar & Highlights',
         subtitle: 'Physical Education Directorate - Student Sports Teams',
         upcomingTitle: 'Upcoming Matches',
-        pastTitle: 'Past Matches & Final Scores',
-        calTitle: 'Tournament & Program Schedule (2026 - 2027)',
-        mediaTitle: 'Match Highlights & Media',
-        viewAll: 'View All Highlights',
-        days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        pastTitle: 'Past Matches & Scores',
+        calTitle: 'Tournament Schedule 2026-2027',
+        mediaTitle: 'Match Highlights',
+        viewAll: 'View All',
+        days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         live: 'LIVE',
         ft: 'FINAL',
-        openMap: 'Open in Google Maps',
-        dateLabel: 'Date / Period:',
-        timeLabel: 'Timing:',
-        teamsLabel: 'Program / Teams:',
+        openMap: 'Open in Maps',
+        dateLabel: 'Date:',
+        timeLabel: 'Time:',
+        teamsLabel: 'Teams:',
         venueLabel: 'Location:'
       },
       ar: {
         dir: 'rtl',
         langBtn: 'English',
-        title: 'جدول الفعاليات والأنشطة الرياضية',
+        title: 'جدول الفعاليات الرياضية',
         subtitle: 'إدارة التربية الرياضية - قسم المنتخبات الطلابية',
         upcomingTitle: 'المباريات القادمة',
-        pastTitle: 'المباريات السابقة والنتائج النهائية',
-        calTitle: 'روزنامة البرامج والفعاليات الرياضية (2026 - 2027)',
-        mediaTitle: 'أبرز لقطات المباريات والوسائط',
-        viewAll: 'عرض جميع الفيديوهات',
-        days: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+        pastTitle: 'النتائج النهائية',
+        calTitle: 'روزنامة الفعاليات 2026-2027',
+        mediaTitle: 'أبرز اللقطات والوسائط',
+        viewAll: 'عرض الكل',
+        days: ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'],
         monthNames: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
         live: 'مباشر',
         ft: 'انتهت',
-        openMap: 'فتح الموقع في خرائط Google',
-        dateLabel: 'التاريخ / الفترة:',
+        openMap: 'الموقع في الخرائط',
+        dateLabel: 'التاريخ:',
         timeLabel: 'التوقيت:',
-        teamsLabel: 'البرنامج / المشاركون:',
+        teamsLabel: 'المشاركون:',
         venueLabel: 'المكان:'
       }
     };
@@ -838,8 +972,8 @@
         team2_en: 'Isa Town Intermediate', team2_ar: 'مدينة عيسى الإعدادية',
         date: '2026-11-04',
         time: '04:30 PM',
-        venue_en: 'Isa Town National Stadium',
-        venue_ar: 'استاد مدينة عيسى الوطني',
+        venue_en: 'Isa Town Stadium',
+        venue_ar: 'استاد مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Bahrain+National+Stadium+Isa+Town'
       },
       {
@@ -848,8 +982,8 @@
         team2_en: 'Saar Secondary', team2_ar: 'سار الثانوية',
         date: '2026-11-06',
         time: '05:00 PM',
-        venue_en: 'Ministry Sports Hall, Manama',
-        venue_ar: 'صالة وزارة التربية والتعليم بالمنامة',
+        venue_en: 'Ministry Hall, Manama',
+        venue_ar: 'صالة الوزارة بالمنامة',
         mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Sports+Hall+Manama+Bahrain'
       },
       {
@@ -858,8 +992,8 @@
         team2_en: 'Hamad Town Secondary', team2_ar: 'مدينة حمد الثانوية',
         date: '2026-11-09',
         time: '04:00 PM',
-        venue_en: 'Zain Basketball Arena, Um Al Hassam',
-        venue_ar: 'صالة زين لكرة السلة بأم الحصم',
+        venue_en: 'Zain Arena, Um Al Hassam',
+        venue_ar: 'صالة زين بأم الحصم',
         mapUrl: 'https://maps.google.com/?q=Zain+Basketball+Arena+Bahrain'
       }
     ];
@@ -867,9 +1001,9 @@
     const pastMatches = [
       {
         sport_en: 'Football', sport_ar: 'كرة القدم',
-        team1_en: 'Budaiya Secondary', team1_ar: 'البديع الثانوية',
+        team1_en: 'Budaiya Sec', team1_ar: 'البديع الثانوية',
         score1: 3,
-        team2_en: 'Manama Secondary', team2_ar: 'المنامة الثانوية',
+        team2_en: 'Manama Sec', team2_ar: 'المنامة الثانوية',
         score2: 1,
         date: '2026-10-30',
         venue_en: 'Muharraq Stadium',
@@ -877,9 +1011,9 @@
       },
       {
         sport_en: 'Volleyball', sport_ar: 'الكرة الطائرة',
-        team1_en: 'Sanabis Intermediate', team1_ar: 'سنابس الإعدادية',
+        team1_en: 'Sanabis Int', team1_ar: 'سنابس الإعدادية',
         score1: 2,
-        team2_en: 'Riffa Intermediate', team2_ar: 'الرفاع الإعدادية',
+        team2_en: 'Riffa Int', team2_ar: 'الرفاع الإعدادية',
         score2: 3,
         date: '2026-10-28',
         venue_en: 'Riffa Club Gym',
@@ -906,39 +1040,39 @@
 
     const calendarEvents = {
       '2026-10-04': {
-        title_en: 'Sports Governance: Regulations & Eligibility Controls',
-        title_ar: 'الحوكمة الرياضية (اعتماد اللائحة الرياضية واللائحة التنفيذية وضوابط أهلية المشاركة)',
-        tag_en: 'Governance & Regulations',
-        tag_ar: 'حوكمة ولوائح رياضية',
+        title_en: 'Sports Governance: Regulations & Eligibility',
+        title_ar: 'الحوكمة الرياضية واعتماد اللوائح',
+        tag_en: 'Governance',
+        tag_ar: 'حوكمة ولوائح',
         time: '09:00 AM - 01:00 PM',
-        teams_en: 'Physical Education Directorate & School Representatives',
-        teams_ar: 'إدارة التربية الرياضية وممثلو المدارس واللجان التنفيذية',
-        venue_en: 'Ministry of Education Main Hall, Isa Town',
-        venue_ar: 'قاعة وزارة التربية والتعليم الرئيسية - مدينة عيسى',
+        teams_en: 'Directorate & School Reps',
+        teams_ar: 'إدارة التربية الرياضية وممثلو المدارس',
+        venue_en: 'MoE Hall, Isa Town',
+        venue_ar: 'قاعة الوزارة - مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Isa+Town+Bahrain'
       },
       '2026-10-11': {
         title_en: 'Sports Selection & Talent Scouting Camp',
         title_ar: 'الانتقاء الرياضي للمنتخبات المدرسية',
-        tag_en: 'Talent Selection',
+        tag_en: 'Scouting',
         tag_ar: 'انتقاء المواهب',
         time: '08:00 AM - 02:00 PM',
-        teams_en: 'Nominated Student Athletes (Primary & Intermediate)',
-        teams_ar: 'الطلبة المرشحون للمنتخبات من المدارس الابتدائية والإعدادية',
+        teams_en: 'Nominated Student Athletes',
+        teams_ar: 'الطلبة المرشحون للمنتخبات',
         venue_en: 'Ministry Sports Hall, Manama',
-        venue_ar: 'صالة وزارة التربية والتعليم بالمنامة',
+        venue_ar: 'صالة الوزارة بالمنامة',
         mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Sports+Hall+Manama+Bahrain'
       },
       '2026-10-18': {
-        title_en: 'Kick-off: Student Sports Talent Discovery Initiative',
-        title_ar: 'البدء باكتشاف المواهب الطلابية الرياضية',
-        tag_en: 'Talent Discovery',
+        title_en: 'Kick-off: Student Sports Talent Discovery',
+        title_ar: 'البدء باكتشاف المواهب الطلابية',
+        tag_en: 'Discovery',
         tag_ar: 'اكتشاف المواهب',
-        time: 'Full-Day Comprehensive Testing',
-        teams_en: 'Government & Private Schools across Bahrain',
-        teams_ar: 'جميع المدارس الحكومية والخاصة بمملكة البحرين',
-        venue_en: 'Physical Education Training Centers, Isa Town',
-        venue_ar: 'مراكز تدريب التربية الرياضية - مدينة عيسى',
+        time: 'Full-Day Testing',
+        teams_en: 'All Bahrain Schools',
+        teams_ar: 'جميع المدارس الحكومية والخاصة',
+        venue_en: 'Training Centers, Isa Town',
+        venue_ar: 'مراكز التدريب - مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Isa+Town+Sports+City+Bahrain'
       },
       '2026-10-25': {
@@ -947,57 +1081,57 @@
         tag_en: 'Tournament',
         tag_ar: 'بطولة كروية',
         time: '03:30 PM - 07:30 PM',
-        teams_en: 'Capital, Muharraq, Northern & Southern Educational Zones',
-        teams_ar: 'منتخبات محافظات: العاصمة، المحرق، الشمالية، والجنوبية',
-        venue_en: 'Khalifa Sports City Stadium, Isa Town',
-        venue_ar: 'مدينة خليفة الرياضية - مدينة عيسى',
+        teams_en: '4 Educational Zones',
+        teams_ar: 'منتخبات المحافظات الأربع',
+        venue_en: 'Khalifa Sports City, Isa Town',
+        venue_ar: 'مدينة خليفة الرياضية',
         mapUrl: 'https://maps.google.com/?q=Khalifa+Sports+City+Stadium+Isa+Town'
       },
       '2026-11-04': {
-        title_en: 'University Partnership: Higher Education Sports Forum',
-        title_ar: 'الشراكة الجامعية (ملتقى مسؤولي الرياضة في مؤسسات التعليم العالي)',
+        title_en: 'Higher Education Sports Forum',
+        title_ar: 'ملتقى مسؤولي الرياضة في التعليم العالي',
         tag_en: 'Collegiate Forum',
         tag_ar: 'ملتقى جامعي',
         time: '09:30 AM - 01:30 PM',
-        teams_en: 'Deans of Student Affairs & University Athletic Directors',
-        teams_ar: 'عمادات شؤون الطلبة ومسؤولو الرياضة بالجامعات والكليات',
-        venue_en: 'University of Bahrain Sports Complex, Sakhir',
-        venue_ar: 'مجمع الصالات الرياضية بجامعة البحرين - الصخير',
+        teams_en: 'University Athletic Directors',
+        teams_ar: 'مسؤولو الرياضة بالجامعات',
+        venue_en: 'UoB Sports Complex, Sakhir',
+        venue_ar: 'جامعة البحرين - الصخير',
         mapUrl: 'https://maps.google.com/?q=University+of+Bahrain+Sakhir'
       },
       '2026-11-18': {
         title_en: 'Collegiate Esports Championship',
-        title_ar: 'الألعاب الجامعية (البطولة الجامعية للألعاب الإلكترونية)',
+        title_ar: 'البطولة الجامعية للألعاب الإلكترونية',
         tag_en: 'Esports',
         tag_ar: 'ألعاب إلكترونية',
         time: '10:00 AM - 05:00 PM',
-        teams_en: 'Bahrain University Students Collegiate Teams',
-        teams_ar: 'منتخبات طلبة جامعات مملكة البحرين',
-        venue_en: 'Bahrain Polytechnic Esports Arena, Isa Town',
+        teams_en: 'University Esports Teams',
+        teams_ar: 'منتخبات الجامعات',
+        venue_en: 'Bahrain Polytechnic, Isa Town',
         venue_ar: 'بوليتكنك البحرين - مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Bahrain+Polytechnic+Isa+Town'
       },
       '2027-01-12': {
-        title_en: 'Sports Excellence Award Ceremony 2027',
+        title_en: 'Sports Excellence Award 2027',
         title_ar: 'جائزة التميز الرياضي',
-        tag_en: 'Awards Ceremony',
-        tag_ar: 'حفل تكريم وجوائز',
+        tag_en: 'Awards',
+        tag_ar: 'حفل تكريم',
         time: '10:00 AM - 12:30 PM',
-        teams_en: 'Honoring Outstanding Student Athletes & Schools',
-        teams_ar: 'تكريم المدارس والطلبة المتميزين رياضياً على مستوى المملكة',
-        venue_en: 'Ministry of Education Cultural Hall, Manama',
+        teams_en: 'Outstanding Student Athletes',
+        teams_ar: 'تكريم المدارس والطلبة المتميزين',
+        venue_en: 'Cultural Hall, Manama',
         venue_ar: 'الصالة الثقافية - المنامة',
         mapUrl: 'https://maps.google.com/?q=Cultural+Hall+Manama+Bahrain'
       },
       '2027-02-10': {
-        title_en: 'Technical Conference: Universities League',
+        title_en: 'Technical Meeting: Universities League',
         title_ar: 'المؤتمر الفني لدوري الجامعات',
-        tag_en: 'Technical Meeting',
+        tag_en: 'Technical',
         tag_ar: 'مؤتمر فني',
         time: '11:00 AM - 02:00 PM',
-        teams_en: 'Team Captains, Referees & Technical Committee',
-        teams_ar: 'اللجنة الفنية وحكام الدوري ومدربو المنتخبات الجامعية',
-        venue_en: 'Higher Education Council Hall, Riffa',
+        teams_en: 'Referees & Technical Committee',
+        teams_ar: 'اللجنة الفنية وحكام الدوري',
+        venue_en: 'Higher Education Council, Riffa',
         venue_ar: 'مجلس التعليم العالي - الرفاع',
         mapUrl: 'https://maps.google.com/?q=Higher+Education+Council+Bahrain'
       },
@@ -1006,83 +1140,83 @@
         title_ar: 'معسكرات النخبة الرياضية',
         tag_en: 'Elite Camp',
         tag_ar: 'معسكر تدريبي',
-        time: 'Full Intensive Program',
-        teams_en: 'National Student Elite Teams in Core Sports',
-        teams_ar: 'منتخبات النخبة الطلابية لألعاب القوى والألعاب الجماعية',
-        venue_en: 'Bahrain Olympic Committee Training Facilities, Riffa',
-        venue_ar: 'منشآت تدريب اللجنة الأولمبية البحرينية - الرفاع',
+        time: 'Intensive Schedule',
+        teams_en: 'National Student Elite Teams',
+        teams_ar: 'منتخبات النخبة الطلابية',
+        venue_en: 'BOC Facilities, Riffa',
+        venue_ar: 'اللجنة الأولمبية - الرفاع',
         mapUrl: 'https://maps.google.com/?q=Bahrain+Olympic+Committee+Riffa'
       },
       '2027-03-22': {
         title_en: 'Collegiate Chess Championship',
-        title_ar: 'الألعاب الجامعية (البطولة الجامعية للشطرنج)',
+        title_ar: 'البطولة الجامعية للشطرنج',
         tag_en: 'Mind Sports',
-        tag_ar: 'شطرنج وألعاب ذهنية',
+        tag_ar: 'ألعاب ذهنية',
         time: '09:00 AM - 03:00 PM',
-        teams_en: 'Men & Women University Chess Champions',
-        teams_ar: 'أبطال وبطلات الشطرنج بمؤسسات التعليم العالي',
-        venue_en: 'Applied Science University (ASU), East Al Eker',
-        venue_ar: 'جامعة العلوم التطبيقية - العكر الشرقي',
+        teams_en: 'University Chess Players',
+        teams_ar: 'أبطال الشطرنج بالجامعات',
+        venue_en: 'Applied Science Univ, Eker',
+        venue_ar: 'جامعة العلوم التطبيقية',
         mapUrl: 'https://maps.google.com/?q=Applied+Science+University+Bahrain'
       },
       '2027-04-05': {
-        title_en: 'Collegiate Table Tennis Championship',
-        title_ar: 'الألعاب الجامعية (البطولة الجامعية لكرة الطاولة)',
-        tag_en: 'Racket Sports',
+        title_en: 'Collegiate Table Tennis',
+        title_ar: 'البطولة الجامعية لكرة الطاولة',
+        tag_en: 'Table Tennis',
         tag_ar: 'كرة طاولة',
         time: '04:00 PM - 08:30 PM',
-        teams_en: 'University Table Tennis Delegates (Singles & Doubles)',
-        teams_ar: 'منتخبات الجامعات لكرة الطاولة (فردي وزوجي)',
-        venue_en: 'Bahrain Table Tennis Association Arena, Riffa',
-        venue_ar: 'صالة الاتحاد البحريني لكرة الطاولة - الرفاع',
+        teams_en: 'University Table Tennis Delegates',
+        teams_ar: 'منتخبات الجامعات',
+        venue_en: 'Table Tennis Arena, Riffa',
+        venue_ar: 'اتحاد كرة الطاولة - الرفاع',
         mapUrl: 'https://maps.google.com/?q=Bahrain+Table+Tennis+Association+Riffa'
       },
       '2027-04-14': {
-        title_en: 'Collegiate Football Championship (Final Stages)',
-        title_ar: 'الألعاب الجامعية (البطولة الجامعية لكرة القدم)',
-        tag_en: 'Football Finals',
+        title_en: 'Collegiate Football Finals',
+        title_ar: 'نهائيات دوري الجامعات لكرة القدم',
+        tag_en: 'Football',
         tag_ar: 'نهائيات القدم',
         time: '04:30 PM - 08:00 PM',
-        teams_en: 'Collegiate Football Finalists',
-        teams_ar: 'المتأهلون لنهائيات دوري الجامعات لكرة القدم',
+        teams_en: 'University Finalists',
+        teams_ar: 'المتأهلون لنهائيات الجامعات',
         venue_en: 'Ahli Club Stadium, Mahooz',
-        venue_ar: 'استاد النادي الأهلي - الماحوز',
+        venue_ar: 'النادي الأهلي - الماحوز',
         mapUrl: 'https://maps.google.com/?q=Al+Ahli+Club+Stadium+Manama'
       },
       '2027-04-20': {
         title_en: 'Gulf School Games Championship (GCC)',
         title_ar: 'البطولة الخليجية المدرسية',
-        tag_en: 'GCC Championship',
+        tag_en: 'GCC Games',
         tag_ar: 'بطولة خليجية',
-        time: 'Multi-Day Tournament',
-        teams_en: 'GCC National School Teams (Bahrain, KSA, UAE, Kuwait, Qatar, Oman)',
-        teams_ar: 'المنتخبات المدرسية لدول مجلس التعاون الخليجي',
-        venue_en: 'Bahrain National Stadium & Khalifa Sports City',
-        venue_ar: 'استاد البحرين الوطني ومدينة خليفة الرياضية',
+        time: 'Multi-Day',
+        teams_en: 'GCC National School Teams',
+        teams_ar: 'المنتخبات المدرسية الخليجية',
+        venue_en: 'Bahrain National Stadium',
+        venue_ar: 'استاد البحرين الوطني',
         mapUrl: 'https://maps.google.com/?q=Bahrain+National+Stadium+Isa+Town'
       },
       '2027-04-28': {
-        title_en: 'Conclusion: Student Sports Talent Discovery Program',
-        title_ar: 'نهاية اكتشاف المواهب الطلابية الرياضية',
-        tag_en: 'Program Conclusion',
-        tag_ar: 'ختام البرنامج السنوي',
+        title_en: 'Conclusion: Talent Discovery Program',
+        title_ar: 'ختام اكتشاف المواهب الطلابية',
+        tag_en: 'Conclusion',
+        tag_ar: 'ختام البرنامج',
         time: '09:00 AM - 12:00 PM',
-        teams_en: 'Scouting Evaluation Committee & Final Squad Rosters',
-        teams_ar: 'لجنة التقييم وإعلان القوائم المعتمدة للمنتخبات الوطنية الطلابية',
-        venue_en: 'Ministry of Education Hall, Isa Town',
-        venue_ar: 'وزارة التربية والتعليم - مدينة عيسى',
+        teams_en: 'Evaluation Committee',
+        teams_ar: 'إعلان القوائم المعتمدة للمنتخبات',
+        venue_en: 'MoE Hall, Isa Town',
+        venue_ar: 'وزارة التربية - مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Isa+Town+Bahrain'
       },
       '2027-05-11': {
-        title_en: 'University Forums: Collegiate Sports Development Forum',
-        title_ar: 'ملتقيات جامعية (ملتقى تطوير الرياضة الجامعية)',
-        tag_en: 'Development Forum',
+        title_en: 'Collegiate Sports Development Forum',
+        title_ar: 'ملتقى تطوير الرياضة الجامعية',
+        tag_en: 'Forum',
         tag_ar: 'ملتقى تطويري',
         time: '09:00 AM - 02:00 PM',
-        teams_en: 'Higher Education Sports Deans, Coaches & Strategic Partners',
-        teams_ar: 'عمداء كليات التربية الرياضية ومسؤولو الاتحادات والشركاء',
-        venue_en: 'Gulf University Conference Center, Sanad',
-        venue_ar: 'مركز مؤتمرات الجامعة الخليجية - سند',
+        teams_en: 'Sports Deans & Coaches',
+        teams_ar: 'عمداء كليات التربية الرياضية والمدربون',
+        venue_en: 'Gulf University, Sanad',
+        venue_ar: 'الجامعة الخليجية - سند',
         mapUrl: 'https://maps.google.com/?q=Gulf+University+Sanad+Bahrain'
       }
     };
@@ -1091,7 +1225,7 @@
     const highlights = [
       {
         tag_en: 'Football', tag_ar: 'كرة القدم',
-        title_en: 'Secondary Schools Championship: Match Highlights & Best Plays',
+        title_en: 'Secondary Schools Championship: Match Highlights',
         title_ar: 'دوري المدارس الثانوية: ملخص اللقاء وأبرز الأهداف',
         date: '2026-11-01',
         img: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80',
@@ -1099,7 +1233,7 @@
       },
       {
         tag_en: 'Volleyball', tag_ar: 'الكرة الطائرة',
-        title_en: 'Highlights: Thrilling Final Moments and Winning Set',
+        title_en: 'Highlights: Final Moments and Winning Set',
         title_ar: 'ملخص الشوط الحاسم المثير واحتفال التتويج',
         date: '2026-10-29',
         img: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=600&q=80',
@@ -1107,8 +1241,8 @@
       },
       {
         tag_en: 'Athletics', tag_ar: 'ألعاب القوى',
-        title_en: '100m Sprint Final: Student Record Race Highlights',
-        title_ar: 'نهائي سباق 100 متر: رقم قياسي طلابي وتغطية شاملة',
+        title_en: '100m Sprint Final: Student Record Race',
+        title_ar: 'نهائي سباق 100 متر: رقم قياسي وتغطية شاملة',
         date: '2026-10-25',
         img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80',
         youtubeId: targetYoutubeId
@@ -1154,7 +1288,7 @@
 
     function scrollTicker(direction) {
       const track = document.getElementById('tickerTrack');
-      const shift = 230 * direction;
+      const shift = 210 * direction;
       track.scrollBy({ left: shift, behavior: 'smooth' });
     }
 
@@ -1365,8 +1499,8 @@
     }
     window.addEventListener('load', notifyParent);
     window.addEventListener('resize', notifyParent);
-    setTimeout(notifyParent, 500);
-    setTimeout(notifyParent, 1500);
+    setTimeout(notifyParent, 400);
+    setTimeout(notifyParent, 1200);
   </script>
 </body>
 </html>
