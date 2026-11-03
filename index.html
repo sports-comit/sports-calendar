@@ -28,6 +28,12 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
     body {
       background-color: var(--bg-base);
       color: var(--text-main);
@@ -35,7 +41,6 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
     }
 
     html[dir="rtl"] body { font-family: var(--font-ar); }
@@ -48,16 +53,17 @@
       position: sticky;
       top: 0;
       z-index: 100;
-   .header-inner {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-     
+    }
+
+    .header-inner {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
 
     .brand-section {
       display: flex;
@@ -133,6 +139,7 @@
       position: relative;
       display: flex;
       align-items: center;
+      width: 100%;
     }
 
     .ticker-scroll-btn {
@@ -255,9 +262,6 @@
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
-    @media (max-width: 900px) {
-      .matches-dual-grid { grid-template-columns: 1fr; }
-    }
 
     .matches-panel {
       background: var(--bg-surface);
@@ -345,6 +349,12 @@
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
       padding: 1.25rem;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .calendar-wrapper {
+      min-width: 600px;
     }
 
     .calendar-header {
@@ -462,7 +472,7 @@
 
     .highlights-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.25rem;
     }
 
@@ -622,25 +632,34 @@
       transition: opacity 0.15s;
     }
     .maps-btn:hover { opacity: 0.9; }
-    html, body {
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-  box-sizing: border-box;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-@media screen and (max-width: 768px) {
-  body {
-    padding: 8px !important;
-  }
-  .container, .calendar-container, table, .match-card {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-}
+
+    /* RESPONSIVE OVERRIDES FOR MOBILE */
+    @media screen and (max-width: 768px) {
+      header {
+        padding: 0.75rem 1rem;
+      }
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      main {
+        padding: 0 0.5rem;
+        gap: 1.5rem;
+      }
+      .matches-dual-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .calendar-container {
+        padding: 0.75rem 0.5rem;
+      }
+    }
   </style>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -700,18 +719,20 @@
     <section>
       <div class="section-title" id="ui-cal-title">Tournament Schedule 2026 - 2027</div>
       <div class="calendar-container">
-        <div class="calendar-header">
-          <h3 id="currentMonthYear">November 2026</h3>
-          <div class="cal-nav">
-            <button class="cal-nav-btn" onclick="prevMonth()">&#8249;</button>
-            <button class="cal-nav-btn" onclick="nextMonth()">&#8250;</button>
+        <div class="calendar-wrapper">
+          <div class="calendar-header">
+            <h3 id="currentMonthYear">November 2026</h3>
+            <div class="cal-nav">
+              <button class="cal-nav-btn" onclick="prevMonth()">&#8249;</button>
+              <button class="cal-nav-btn" onclick="nextMonth()">&#8250;</button>
+            </div>
           </div>
-        </div>
-        <div class="calendar-grid" id="calendarDaysHeaders">
-          <!-- Populated by JS -->
-        </div>
-        <div class="calendar-grid" id="calendarGrid" style="margin-top: 6px;">
-          <!-- Populated by JS -->
+          <div class="calendar-grid" id="calendarDaysHeaders">
+            <!-- Populated by JS -->
+          </div>
+          <div class="calendar-grid" id="calendarGrid" style="margin-top: 6px;">
+            <!-- Populated by JS -->
+          </div>
         </div>
       </div>
     </section>
@@ -810,7 +831,6 @@
       }
     };
 
-    // UPCOMING FIXTURES
     const upcomingMatches = [
       {
         sport_en: 'Football', sport_ar: 'كرة القدم',
@@ -844,7 +864,6 @@
       }
     ];
 
-    // PAST MATCHES WITH SCORES
     const pastMatches = [
       {
         sport_en: 'Football', sport_ar: 'كرة القدم',
@@ -878,7 +897,6 @@
       }
     ];
 
-    // TICKER DATA
     const tickerMatches = [
       { sport: 'Football', live: true, team1: 'Riffa Sec', score1: 2, team2: 'Muharraq Sec', score2: 1, minute: '78\'' },
       { sport: 'Volleyball', live: false, team1: 'Isa Town Int', score1: 3, team2: 'Saar Int', score2: 0, status: 'FT' },
@@ -886,9 +904,7 @@
       { sport: 'Football', live: false, team1: 'Budaiya Sec', score1: 0, team2: 'Hamad Town', score2: 2, status: 'FT' }
     ];
 
-    // ALL 15 EVENTS FROM ROZNAMA DOC (Mapped 2026 - 2027)
     const calendarEvents = {
-      // 1. الأسبوع الأول من أكتوبر 2026: الحوكمة الرياضية
       '2026-10-04': {
         title_en: 'Sports Governance: Regulations & Eligibility Controls',
         title_ar: 'الحوكمة الرياضية (اعتماد اللائحة الرياضية واللائحة التنفيذية وضوابط أهلية المشاركة)',
@@ -901,7 +917,6 @@
         venue_ar: 'قاعة وزارة التربية والتعليم الرئيسية - مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Isa+Town+Bahrain'
       },
-      // 2. الأسبوع الثاني من أكتوبر 2026: الانتقاء الرياضي
       '2026-10-11': {
         title_en: 'Sports Selection & Talent Scouting Camp',
         title_ar: 'الانتقاء الرياضي للمنتخبات المدرسية',
@@ -914,7 +929,6 @@
         venue_ar: 'صالة وزارة التربية والتعليم بالمنامة',
         mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Sports+Hall+Manama+Bahrain'
       },
-      // 3. أكتوبر 2026: البدء باكتشاف المواهب الطلابية الرياضية
       '2026-10-18': {
         title_en: 'Kick-off: Student Sports Talent Discovery Initiative',
         title_ar: 'البدء باكتشاف المواهب الطلابية الرياضية',
@@ -927,7 +941,6 @@
         venue_ar: 'مراكز تدريب التربية الرياضية - مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Isa+Town+Sports+City+Bahrain'
       },
-      // 4. الأسبوع الرابع من أكتوبر 2026: كأس منتخبات المناطق التعليمية
       '2026-10-25': {
         title_en: 'Educational Zones Cup Championship',
         title_ar: 'كأس منتخبات المناطق التعليمية',
@@ -940,7 +953,6 @@
         venue_ar: 'مدينة خليفة الرياضية - مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Khalifa+Sports+City+Stadium+Isa+Town'
       },
-      // 5. الأسبوع الأول من نوفمبر 2026: الشراكة الجامعية (ملتقى مسؤولي الرياضة)
       '2026-11-04': {
         title_en: 'University Partnership: Higher Education Sports Forum',
         title_ar: 'الشراكة الجامعية (ملتقى مسؤولي الرياضة في مؤسسات التعليم العالي)',
@@ -953,7 +965,6 @@
         venue_ar: 'مجمع الصالات الرياضية بجامعة البحرين - الصخير',
         mapUrl: 'https://maps.google.com/?q=University+of+Bahrain+Sakhir'
       },
-      // 6. الأسبوع الثالث من نوفمبر 2026: الألعاب الجامعية (البطولة الجامعية للألعاب الإلكترونية)
       '2026-11-18': {
         title_en: 'Collegiate Esports Championship',
         title_ar: 'الألعاب الجامعية (البطولة الجامعية للألعاب الإلكترونية)',
@@ -966,7 +977,6 @@
         venue_ar: 'بوليتكنك البحرين - مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Bahrain+Polytechnic+Isa+Town'
       },
-      // 7. الأسبوع الثاني 2027 (يناير): جائزة التميز الرياضي
       '2027-01-12': {
         title_en: 'Sports Excellence Award Ceremony 2027',
         title_ar: 'جائزة التميز الرياضي',
@@ -979,7 +989,6 @@
         venue_ar: 'الصالة الثقافية - المنامة',
         mapUrl: 'https://maps.google.com/?q=Cultural+Hall+Manama+Bahrain'
       },
-      // 8. الأسبوع الثاني من فبراير 2027: المؤتمر الفني لدوري الجامعات
       '2027-02-10': {
         title_en: 'Technical Conference: Universities League',
         title_ar: 'المؤتمر الفني لدوري الجامعات',
@@ -992,7 +1001,6 @@
         venue_ar: 'مجلس التعليم العالي - الرفاع',
         mapUrl: 'https://maps.google.com/?q=Higher+Education+Council+Bahrain'
       },
-      // 9. مارس 2027: معسكرات النخبة الرياضية
       '2027-03-08': {
         title_en: 'Sports Elite Training Camps',
         title_ar: 'معسكرات النخبة الرياضية',
@@ -1005,7 +1013,6 @@
         venue_ar: 'منشآت تدريب اللجنة الأولمبية البحرينية - الرفاع',
         mapUrl: 'https://maps.google.com/?q=Bahrain+Olympic+Committee+Riffa'
       },
-      // 10. مارس 2027: الألعاب الجامعية (البطولة الجامعية للشطرنج)
       '2027-03-22': {
         title_en: 'Collegiate Chess Championship',
         title_ar: 'الألعاب الجامعية (البطولة الجامعية للشطرنج)',
@@ -1018,7 +1025,6 @@
         venue_ar: 'جامعة العلوم التطبيقية - العكر الشرقي',
         mapUrl: 'https://maps.google.com/?q=Applied+Science+University+Bahrain'
       },
-      // 11. الأسبوع الأول من أبريل 2027: الألعاب الجامعية (البطولة الجامعية لكرة الطاولة)
       '2027-04-05': {
         title_en: 'Collegiate Table Tennis Championship',
         title_ar: 'الألعاب الجامعية (البطولة الجامعية لكرة الطاولة)',
@@ -1031,7 +1037,6 @@
         venue_ar: 'صالة الاتحاد البحريني لكرة الطاولة - الرفاع',
         mapUrl: 'https://maps.google.com/?q=Bahrain+Table+Tennis+Association+Riffa'
       },
-      // 12. أبريل 2027: الألعاب الجامعية (البطولة الجامعية لكرة القدم)
       '2027-04-14': {
         title_en: 'Collegiate Football Championship (Final Stages)',
         title_ar: 'الألعاب الجامعية (البطولة الجامعية لكرة القدم)',
@@ -1044,7 +1049,6 @@
         venue_ar: 'استاد النادي الأهلي - الماحوز',
         mapUrl: 'https://maps.google.com/?q=Al+Ahli+Club+Stadium+Manama'
       },
-      // 13. أبريل 2027: البطولة الخليجية المدرسية
       '2027-04-20': {
         title_en: 'Gulf School Games Championship (GCC)',
         title_ar: 'البطولة الخليجية المدرسية',
@@ -1057,7 +1061,6 @@
         venue_ar: 'استاد البحرين الوطني ومدينة خليفة الرياضية',
         mapUrl: 'https://maps.google.com/?q=Bahrain+National+Stadium+Isa+Town'
       },
-      // 14. أبريل 2027: نهاية اكتشاف المواهب الطلابية الرياضية
       '2027-04-28': {
         title_en: 'Conclusion: Student Sports Talent Discovery Program',
         title_ar: 'نهاية اكتشاف المواهب الطلابية الرياضية',
@@ -1070,7 +1073,6 @@
         venue_ar: 'وزارة التربية والتعليم - مدينة عيسى',
         mapUrl: 'https://maps.google.com/?q=Ministry+of+Education+Isa+Town+Bahrain'
       },
-      // 15. الأسبوع الثاني من مايو 2027: ملتقيات جامعية (ملتقى تطوير الرياضة الجامعية)
       '2027-05-11': {
         title_en: 'University Forums: Collegiate Sports Development Forum',
         title_ar: 'ملتقيات جامعية (ملتقى تطوير الرياضة الجامعية)',
@@ -1085,7 +1087,6 @@
       }
     };
 
-    // HIGHLIGHTS (All wired to your requested video link)
     const targetYoutubeId = 'NuiAsW_0fOM';
     const highlights = [
       {
@@ -1114,9 +1115,8 @@
       }
     ];
 
-    // Calendar state initialized to current month (November 2026)
     let currentYear = 2026;
-    let currentMonth = 10; // 0-indexed: 10 = November 2026
+    let currentMonth = 10;
 
     function updateClock() {
       const now = new Date();
@@ -1159,7 +1159,6 @@
     }
 
     function renderMatchesSections() {
-      // Upcoming
       const upList = document.getElementById('upcomingMatchesList');
       upList.innerHTML = '';
       upcomingMatches.forEach(m => {
@@ -1183,7 +1182,6 @@
         upList.appendChild(card);
       });
 
-      // Past Matches
       const pastList = document.getElementById('pastMatchesList');
       pastList.innerHTML = '';
       pastMatches.forEach(m => {
@@ -1277,7 +1275,6 @@
       });
     }
 
-    // EVENT MODAL CONTROLS
     function openEventModal(dateStr, ev) {
       const modal = document.getElementById('eventModal');
       document.getElementById('modalTag').textContent = currentLang === 'ar' ? ev.tag_ar : ev.tag_en;
@@ -1294,7 +1291,6 @@
       document.getElementById('eventModal').style.display = 'none';
     }
 
-    // VIDEO MODAL CONTROLS
     window.openVideoModal = function(youtubeId) {
       const modal = document.getElementById('videoModal');
       const iframe = document.getElementById('videoIframe');
@@ -1362,17 +1358,15 @@
     renderMatchesSections();
     renderCalendar();
     renderHighlights();
+
+    function notifyParent() {
+      const height = document.body.scrollHeight || document.documentElement.scrollHeight;
+      window.parent.postMessage({ frameHeight: height }, '*');
+    }
+    window.addEventListener('load', notifyParent);
+    window.addEventListener('resize', notifyParent);
+    setTimeout(notifyParent, 500);
+    setTimeout(notifyParent, 1500);
   </script>
 </body>
 </html>
-<script>
-  function notifyParent() {
-    const height = document.body.scrollHeight || document.documentElement.scrollHeight;
-    window.parent.postMessage({ frameHeight: height }, '*');
-  }
-  window.addEventListener('load', notifyParent);
-  window.addEventListener('resize', notifyParent);
-  // Run again after dynamic renders/images load
-  setTimeout(notifyParent, 500);
-  setTimeout(notifyParent, 1500);
-</script>
