@@ -10,15 +10,15 @@
   
   <style>
     :root {
-      --bg-base: #0a0c12;
+      --bg-base: #0A0C12;
       --bg-surface: #141824;
       --bg-card: #1c2233;
       --bg-card-hover: #262e45;
       --border-subtle: #2d354d;
       --text-main: #ffffff;
       --text-muted: #8e9bb0;
-      --accent-orange: #db5227;
-      --accent-peach: #f9b17a;
+      --accent-orange: #DB5227;
+      --accent-peach: #F9B17A;
       --accent-blue: #023661;
       --live-red: #ef4444;
       --success-green: #22c55e;
@@ -259,7 +259,7 @@
       display: inline-block;
     }
 
-    /* MATCHES SPLIT SECTION (UPCOMING & PAST) */
+    /* MATCHES SPLIT SECTION */
     .matches-dual-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -385,9 +385,7 @@
       box-sizing: border-box;
     }
 
-    .calendar-wrapper {
-      width: 100%;
-    }
+    .calendar-wrapper { width: 100%; }
 
     .calendar-header {
       display: flex;
@@ -491,29 +489,22 @@
       width: 100%;
     }
 
-    /* MEDIA */
-    .highlights-header {
+    /* MATCH HIGHLIGHTS & VIDEOS (INDIVIDUAL CARDS, NO SCROLLBAR) */
+    .highlights-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.1rem;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.85rem;
-    }
-
-    .all-media-btn {
-      background: transparent;
-      border: 1px solid var(--accent-orange);
-      color: var(--accent-orange);
-      padding: 0.35rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
+      flex-direction: column;
+      gap: 0.85rem;
     }
 
     .highlights-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.15rem;
+      width: 100%;
     }
 
     .highlight-card {
@@ -542,28 +533,31 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      pointer-events: none;
     }
 
     .thumb-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      pointer-events: none;
     }
 
     .play-badge {
       position: absolute;
-      background: rgba(219, 82, 39, 0.9);
+      background: var(--accent-orange);
       color: #fff;
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
-      pointer-events: none;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      transition: transform 0.15s;
+    }
+
+    .highlight-card:hover .play-badge {
+      transform: scale(1.1);
     }
 
     .card-content {
@@ -571,7 +565,6 @@
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
-      pointer-events: none;
     }
 
     .card-tag {
@@ -591,6 +584,204 @@
       font-size: 0.7rem;
       color: var(--text-muted);
     }
+
+    /* SHARED PHOTOS & MEDIA GALLERY */
+    .shared-photos-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.85rem;
+      width: 100%;
+    }
+
+    .photo-tile {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .photo-tile:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-orange);
+    }
+
+    .photo-thumb {
+      width: 100%;
+      height: 140px;
+      background: #0f131d;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-info {
+      padding: 0.5rem 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .photo-tag {
+      font-size: 0.62rem;
+      color: var(--accent-peach);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .photo-caption {
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .photo-date {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    /* FULLSCREEN PHOTO LIGHTBOX */
+    .photo-lightbox-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      touch-action: pan-y;
+    }
+
+    .lightbox-container {
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-img-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      max-height: 75vh;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      user-select: none;
+    }
+
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--accent-orange);
+      color: #fff;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s, background-color 0.15s;
+      z-index: 10;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+
+    .lightbox-nav-btn:hover {
+      background: #c54219;
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .lightbox-nav-btn.prev { left: -22px; }
+    .lightbox-nav-btn.next { right: -22px; }
+
+    html[dir="rtl"] .lightbox-nav-btn.prev { left: auto; right: -22px; }
+    html[dir="rtl"] .lightbox-nav-btn.next { right: auto; left: -22px; }
+
+    .lightbox-footer {
+      width: 100%;
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-size: 0.85rem;
+      padding: 0 4px;
+    }
+
+    .lightbox-caption-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .lightbox-title {
+      font-weight: 700;
+      color: var(--accent-peach);
+    }
+
+    .lightbox-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .lightbox-counter {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .lightbox-close-btn:hover { background: var(--accent-orange); }
+    html[dir="rtl"] .lightbox-close-btn { right: auto; left: 0; }
 
     /* MODALS */
     .modal-overlay {
@@ -674,31 +865,19 @@
 
     /* MOBILE-ONLY ADJUSTMENTS */
     @media screen and (max-width: 768px) {
-      body {
-        font-size: 13px;
-      }
+      body { font-size: 13px; }
 
-      header {
-        padding: 0.5rem 0.75rem;
-      }
+      header { padding: 0.5rem 0.75rem; }
       .header-inner {
         flex-direction: column;
         align-items: stretch;
         gap: 0.5rem;
       }
-      .brand-section {
-        gap: 0.6rem;
-      }
-      .moe-logo {
-        height: 38px;
-        max-width: 90px;
-      }
-      .brand-titles h1 {
-        font-size: 0.95rem;
-      }
-      .brand-titles p {
-        font-size: 0.65rem;
-      }
+      .brand-section { gap: 0.6rem; }
+      .moe-logo { height: 38px; max-width: 90px; }
+      .brand-titles h1 { font-size: 0.95rem; }
+      .brand-titles p { font-size: 0.65rem; }
+
       .header-actions {
         width: 100%;
         display: flex;
@@ -706,19 +885,10 @@
         align-items: center;
         gap: 0.5rem;
       }
-      .live-clock-badge {
-        padding: 0.25rem 0.6rem;
-      }
-      .live-clock-badge .time {
-        font-size: 0.85rem;
-      }
-      .live-clock-badge .date {
-        font-size: 0.62rem;
-      }
-      .lang-btn {
-        padding: 0.35rem 0.75rem;
-        font-size: 0.75rem;
-      }
+      .live-clock-badge { padding: 0.25rem 0.6rem; }
+      .live-clock-badge .time { font-size: 0.85rem; }
+      .live-clock-badge .date { font-size: 0.62rem; }
+      .lang-btn { padding: 0.35rem 0.75rem; font-size: 0.75rem; }
 
       main {
         padding: 0 0.5rem;
@@ -726,77 +896,36 @@
         gap: 1.25rem;
       }
 
-      .matches-dual-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      .matches-panel {
-        padding: 0.75rem;
-      }
-      .match-fixture-card {
-        padding: 0.65rem;
-      }
-      .team-name {
-        font-size: 0.78rem;
-      }
-      .fixture-time-badge {
-        font-size: 0.68rem;
-        padding: 0.2rem 0.4rem;
-      }
-      .fixture-score {
-        font-size: 0.95rem;
-        padding: 0.2rem 0.5rem;
-      }
-      .fixture-venue {
-        font-size: 0.65rem;
-      }
+      .matches-dual-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .matches-panel { padding: 0.75rem; }
+      .match-fixture-card { padding: 0.65rem; }
+      .team-name { font-size: 0.78rem; }
+      .fixture-time-badge { font-size: 0.68rem; padding: 0.2rem 0.4rem; }
+      .fixture-score { font-size: 0.95rem; padding: 0.2rem 0.5rem; }
+      .fixture-venue { font-size: 0.65rem; }
 
-      .calendar-container {
-        padding: 0.65rem 0.4rem;
-        border-radius: 8px;
-      }
-      .calendar-header h3 {
-        font-size: 0.92rem;
-      }
-      .cal-nav-btn {
-        padding: 0.25rem 0.55rem;
-        font-size: 0.8rem;
-      }
-      .calendar-grid {
-        gap: 2px;
-      }
-      .calendar-day-header {
-        font-size: 0.62rem;
-        padding: 0.2rem 0;
-      }
-      .calendar-cell {
-        min-height: 48px;
-        padding: 0.2rem;
-        border-radius: 4px;
-      }
-      .cell-num {
-        font-size: 0.68rem;
-      }
-      .event-indicator {
-        width: 5px;
-        height: 5px;
-      }
-      .cell-event-pill {
-        font-size: 0.5rem;
-        padding: 1px 2px;
-        line-height: 1.1;
-      }
+      .calendar-container { padding: 0.65rem 0.4rem; border-radius: 8px; }
+      .calendar-header h3 { font-size: 0.92rem; }
+      .cal-nav-btn { padding: 0.25rem 0.55rem; font-size: 0.8rem; }
+      .calendar-grid { gap: 2px; }
+      .calendar-day-header { font-size: 0.62rem; padding: 0.2rem 0; }
+      .calendar-cell { min-height: 48px; padding: 0.2rem; border-radius: 4px; }
+      .cell-num { font-size: 0.68rem; }
+      .event-indicator { width: 5px; height: 5px; }
+      .cell-event-pill { font-size: 0.5rem; padding: 1px 2px; line-height: 1.1; }
 
-      .highlights-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-      }
-      .thumb-wrapper {
-        height: 140px;
-      }
-      .card-title {
-        font-size: 0.8rem;
-      }
+      .highlights-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+      .thumb-wrapper { height: 140px; }
+      .card-title { font-size: 0.8rem; }
+
+      .photos-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+      .photo-thumb { height: 110px; }
+
+      .lightbox-nav-btn { width: 38px; height: 38px; font-size: 1.2rem; }
+      .lightbox-nav-btn.prev { left: 4px; }
+      .lightbox-nav-btn.next { right: 4px; }
+      html[dir="rtl"] .lightbox-nav-btn.prev { right: 4px; left: auto; }
+      html[dir="rtl"] .lightbox-nav-btn.next { left: 4px; right: auto; }
     }
   </style>
 </head>
@@ -866,14 +995,21 @@
       </div>
     </section>
 
-    <!-- HIGHLIGHTS / MEDIA SECTION -->
-    <section>
-      <div class="highlights-header">
-        <div class="section-title" style="margin-bottom: 0;" id="ui-media-title">Match Highlights & Media</div>
-        <button class="all-media-btn" id="ui-view-all">View All Highlights</button>
-      </div>
+    <!-- HIGHLIGHTS / VIDEOS SECTION (INDIVIDUAL CARDS) -->
+    <section class="highlights-section">
+      <div class="section-title" style="margin-bottom: 0;" id="ui-media-title">Match Highlights & Videos</div>
       <div class="highlights-grid" id="highlightsGrid"></div>
     </section>
+
+    <!-- SHARED PHOTOS & MEDIA GALLERY -->
+    <section class="shared-photos-section" id="sharedPhotosSection">
+      <div class="highlights-header">
+        <div class="section-title" style="margin-bottom: 0;" id="ui-shared-photos-title">Shared Photos & Media</div>
+        <span style="font-size:0.75rem; color:var(--text-muted);" id="ui-photo-count"></span>
+      </div>
+      <div class="photos-grid" id="photosGrid"></div>
+    </section>
+
   </main>
 
   <!-- EVENT DETAILS MODAL -->
@@ -904,11 +1040,32 @@
     </div>
   </div>
 
-  <!-- VIDEO MODAL POPUP -->
+  <!-- UNIVERSAL VIDEO MODAL (YOUTUBE & GOOGLE DRIVE VIDEOS) -->
   <div id="videoModal" class="modal-overlay" onclick="closeOnBackdrop(event, 'videoModal')">
     <div style="position:relative; width:100%; max-width:850px; aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden;">
       <button class="modal-close-btn" onclick="closeVideoModal()">✕</button>
       <iframe id="videoIframe" src="" style="width:100%; height:100%; border:none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN PHOTO LIGHTBOX WITH BRAND ORANGE CONTROLS -->
+  <div id="photoLightbox" class="photo-lightbox-modal" onclick="closeLightboxOnBackdrop(event)">
+    <div class="lightbox-container">
+      <button class="lightbox-close-btn" onclick="closePhotoLightbox()">✕</button>
+      
+      <div class="lightbox-img-wrapper">
+        <button class="lightbox-nav-btn prev" onclick="navigatePhoto(-1)" aria-label="Previous Photo">&#8249;</button>
+        <img src="" alt="Enlarged View" id="lightboxImg" class="lightbox-img">
+        <button class="lightbox-nav-btn next" onclick="navigatePhoto(1)" aria-label="Next Photo">&#8250;</button>
+      </div>
+
+      <div class="lightbox-footer">
+        <div class="lightbox-caption-box">
+          <div class="lightbox-title" id="lightboxTitle"></div>
+          <div class="lightbox-sub" id="lightboxMeta"></div>
+        </div>
+        <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
+      </div>
     </div>
   </div>
 
@@ -924,8 +1081,8 @@
         upcomingTitle: 'Upcoming Matches',
         pastTitle: 'Past Matches & Scores',
         calTitle: 'Tournament Schedule 2026-2027',
-        mediaTitle: 'Match Highlights',
-        viewAll: 'View All',
+        mediaTitle: 'Match Highlights & Videos',
+        sharedPhotosTitle: 'Shared Photos & Media',
         days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         live: 'LIVE',
@@ -934,7 +1091,8 @@
         dateLabel: 'Date:',
         timeLabel: 'Time:',
         teamsLabel: 'Teams:',
-        venueLabel: 'Location:'
+        venueLabel: 'Location:',
+        noPhotos: 'No approved media yet'
       },
       ar: {
         dir: 'rtl',
@@ -944,8 +1102,8 @@
         upcomingTitle: 'المباريات القادمة',
         pastTitle: 'النتائج النهائية',
         calTitle: 'روزنامة الفعاليات 2026-2027',
-        mediaTitle: 'أبرز اللقطات والوسائط',
-        viewAll: 'عرض الكل',
+        mediaTitle: 'أبرز الفيديوهات واللقطات',
+        sharedPhotosTitle: 'الصور والوسائط المشتركة',
         days: ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'],
         monthNames: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
         live: 'مباشر',
@@ -954,7 +1112,8 @@
         dateLabel: 'التاريخ:',
         timeLabel: 'التوقيت:',
         teamsLabel: 'المشاركون:',
-        venueLabel: 'المكان:'
+        venueLabel: 'المكان:',
+        noPhotos: 'لا توجد صور معتمدة حالياً'
       }
     };
 
@@ -1215,14 +1374,15 @@
     };
 
     const targetYoutubeId = 'NuiAsW_0fOM';
-    const highlights = [
+    const defaultHighlights = [
       {
         tag_en: 'Football', tag_ar: 'كرة القدم',
         title_en: 'Secondary Schools Championship: Match Highlights',
         title_ar: 'دوري المدارس الثانوية: ملخص اللقاء وأبرز الأهداف',
         date: '2026-11-01',
         img: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80',
-        youtubeId: targetYoutubeId
+        videoType: 'youtube',
+        videoSrc: targetYoutubeId
       },
       {
         tag_en: 'Volleyball', tag_ar: 'الكرة الطائرة',
@@ -1230,7 +1390,8 @@
         title_ar: 'ملخص الشوط الحاسم المثير واحتفال التتويج',
         date: '2026-10-29',
         img: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=600&q=80',
-        youtubeId: targetYoutubeId
+        videoType: 'youtube',
+        videoSrc: targetYoutubeId
       },
       {
         tag_en: 'Athletics', tag_ar: 'ألعاب القوى',
@@ -1238,9 +1399,14 @@
         title_ar: 'نهائي سباق 100 متر: رقم قياسي وتغطية شاملة',
         date: '2026-10-25',
         img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80',
-        youtubeId: targetYoutubeId
+        videoType: 'youtube',
+        videoSrc: targetYoutubeId
       }
     ];
+
+    let dynamicVideoHighlights = [];
+    let sharedPhotos = [];
+    let currentPhotoIndex = 0;
 
     let currentYear = 2026;
     let currentMonth = 10;
@@ -1378,23 +1544,26 @@
       }
     }
 
+    // RENDER INDIVIDUAL HIGHLIGHT CARDS (NO SCROLL BUTTONS)
     function renderHighlights() {
       const grid = document.getElementById('highlightsGrid');
       grid.innerHTML = '';
-      highlights.forEach(h => {
+      
+      const combinedHighlights = [...dynamicVideoHighlights, ...defaultHighlights];
+
+      combinedHighlights.forEach(h => {
         const card = document.createElement('div');
         card.className = 'highlight-card';
-        card.setAttribute('role', 'button');
-        card.setAttribute('tabindex', '0');
-        card.onclick = () => openVideoModal(h.youtubeId);
+        card.onclick = () => openUniversalVideo(h.videoType, h.videoSrc);
+        
         card.innerHTML = `
           <div class="thumb-wrapper">
-            <img src="${h.img}" alt="${h.title_en}">
+            <img src="${h.img}" alt="${h.title_en}" onerror="this.src='https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80'">
             <div class="play-badge">&#9658;</div>
           </div>
           <div class="card-content">
-            <span class="card-tag">${currentLang === 'ar' ? h.tag_ar : h.tag_en}</span>
-            <div class="card-title">${currentLang === 'ar' ? h.title_ar : h.title_en}</div>
+            <span class="card-tag">${currentLang === 'ar' ? (h.tag_ar || h.tag_en) : h.tag_en}</span>
+            <div class="card-title">${currentLang === 'ar' ? (h.title_ar || h.title_en) : h.title_en}</div>
             <div class="card-meta">📅 ${h.date}</div>
           </div>
         `;
@@ -1402,6 +1571,117 @@
       });
     }
 
+    // RENDER SHARED PHOTOS GRID
+    function renderSharedPhotos() {
+      const grid = document.getElementById('photosGrid');
+      const counterEl = document.getElementById('ui-photo-count');
+      const t = translations[currentLang];
+
+      grid.innerHTML = '';
+      if (!sharedPhotos || sharedPhotos.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1 / -1; font-size: 0.8rem; color: var(--text-muted); padding: 1rem 0;">${t.noPhotos}</div>`;
+        if (counterEl) counterEl.textContent = '';
+        return;
+      }
+
+      if (counterEl) counterEl.textContent = `(${sharedPhotos.length})`;
+
+      sharedPhotos.forEach((item, index) => {
+        const tile = document.createElement('div');
+        tile.className = 'photo-tile';
+        tile.onclick = () => openPhotoLightbox(index);
+        tile.innerHTML = `
+          <img src="${item.img}" class="photo-thumb" alt="${item.title_en}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=500&q=80'">
+          <div class="photo-info">
+            <span class="photo-tag">${item.tag}</span>
+            <span class="photo-caption">${item.title_en}</span>
+            <span class="photo-date">📅 ${item.date}</span>
+          </div>
+        `;
+        grid.appendChild(tile);
+      });
+    }
+
+    // FULLSCREEN PHOTO LIGHTBOX
+    function openPhotoLightbox(index) {
+      if (!sharedPhotos || sharedPhotos.length === 0) return;
+      currentPhotoIndex = (index + sharedPhotos.length) % sharedPhotos.length;
+      updateLightboxContent();
+      const modal = document.getElementById('photoLightbox');
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightboxContent() {
+      const item = sharedPhotos[currentPhotoIndex];
+      if (!item) return;
+
+      const imgEl = document.getElementById('lightboxImg');
+      const titleEl = document.getElementById('lightboxTitle');
+      const metaEl = document.getElementById('lightboxMeta');
+      const counterEl = document.getElementById('lightboxCounter');
+
+      imgEl.src = item.img;
+      titleEl.textContent = item.title_en || 'Shared Photo';
+      metaEl.textContent = `${item.tag || 'Sports'} • ${item.date || ''}`;
+      counterEl.textContent = `${currentPhotoIndex + 1} / ${sharedPhotos.length}`;
+    }
+
+    function navigatePhoto(direction) {
+      if (!sharedPhotos || sharedPhotos.length <= 1) return;
+      currentPhotoIndex = (currentPhotoIndex + direction + sharedPhotos.length) % sharedPhotos.length;
+      updateLightboxContent();
+    }
+
+    function closePhotoLightbox() {
+      const modal = document.getElementById('photoLightbox');
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function closeLightboxOnBackdrop(e) {
+      if (e.target.id === 'photoLightbox') {
+        closePhotoLightbox();
+      }
+    }
+
+    // Keyboard navigation (Esc to close, Left/Right arrows to flip)
+    window.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('photoLightbox');
+      if (modal && modal.style.display === 'flex') {
+        if (e.key === 'Escape') closePhotoLightbox();
+        if (e.key === 'ArrowLeft') navigatePhoto(currentLang === 'rtl' ? 1 : -1);
+        if (e.key === 'ArrowRight') navigatePhoto(currentLang === 'rtl' ? -1 : 1);
+      }
+    });
+
+    // Touch Swipe for Mobile Lightbox
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const lightboxEl = document.getElementById('photoLightbox');
+    if (lightboxEl) {
+      lightboxEl.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      lightboxEl.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipeGesture();
+      }, { passive: true });
+    }
+
+    function handleSwipeGesture() {
+      const swipeDistance = touchEndX - touchStartX;
+      if (Math.abs(swipeDistance) > 40) {
+        if (swipeDistance > 0) {
+          navigatePhoto(-1);
+        } else {
+          navigatePhoto(1);
+        }
+      }
+    }
+
+    // MODAL CONTROLS
     function openEventModal(dateStr, ev) {
       const modal = document.getElementById('eventModal');
       document.getElementById('modalTag').textContent = currentLang === 'ar' ? ev.tag_ar : ev.tag_en;
@@ -1418,11 +1698,20 @@
       document.getElementById('eventModal').style.display = 'none';
     }
 
-    window.openVideoModal = function(youtubeId) {
+    // UNIVERSAL VIDEO VIEWER
+    window.openUniversalVideo = function(type, src) {
       const modal = document.getElementById('videoModal');
       const iframe = document.getElementById('videoIframe');
-      iframe.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
+      
+      if (type === 'drive') {
+        iframe.src = `https://drive.google.com/file/d/${src}/preview`;
+      } else if (type === 'youtube') {
+        iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1`;
+      } else {
+        iframe.src = src;
+      }
       modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     };
 
     window.closeVideoModal = function() {
@@ -1430,6 +1719,7 @@
       const iframe = document.getElementById('videoIframe');
       iframe.src = '';
       modal.style.display = 'none';
+      document.body.style.overflow = '';
     };
 
     function closeOnBackdrop(e, modalId) {
@@ -1465,7 +1755,7 @@
       document.getElementById('ui-past-title').textContent = t.pastTitle;
       document.getElementById('ui-cal-title').textContent = t.calTitle;
       document.getElementById('ui-media-title').textContent = t.mediaTitle;
-      document.getElementById('ui-view-all').textContent = t.viewAll;
+      document.getElementById('ui-shared-photos-title').textContent = t.sharedPhotosTitle;
       document.getElementById('langToggle').textContent = t.langBtn;
 
       document.getElementById('ui-modal-date-label').textContent = t.dateLabel;
@@ -1478,27 +1768,26 @@
       renderMatchesSections();
       renderCalendar();
       renderHighlights();
+      renderSharedPhotos();
     }
 
-    // Initial render
+    // INITIAL RENDERS
     renderTicker();
     renderMatchesSections();
     renderCalendar();
     renderHighlights();
+    renderSharedPhotos();
 
-    // LIVE GOOGLE SHEET SYNC FOR APPROVED MEDIA
+    // DYNAMIC SHEET SYNC WITH AUTOMATIC VIDEO DETECTION
     const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzaz5nQ6lBjDYfXFICtoT8WKEepIbQJg6a1W9SRwq8dV3rltw97NVLVx-nzvxz3GY737Uuzv7loLOV/pub?gid=1583810314&single=true&output=csv';
 
-    function formatDriveUrl(url) {
+    function extractDriveId(url) {
       if (!url) return '';
       const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) {
-        return `https://lh3.googleusercontent.com/d/${match[1]}`;
-      }
-      return url;
+      return (match && match[1]) ? match[1] : '';
     }
 
-    async function loadDynamicHighlights() {
+    async function loadDynamicMedia() {
       try {
         const response = await fetch(SHEET_CSV_URL);
         const csvText = await response.text();
@@ -1510,10 +1799,13 @@
         const fileIdx = headers.findIndex(h => h.includes('upload') || h.includes('file'));
         const titleIdx = headers.findIndex(h => h.includes('media title') || h.includes('title'));
         const sportIdx = headers.findIndex(h => h.includes('sport'));
+        const typeIdx = headers.findIndex(h => h.includes('type'));
 
         if (fileIdx === -1 || statusIdx === -1) return;
 
-        const approvedCards = [];
+        const approvedPhotos = [];
+        const approvedVideos = [];
+
         for (let i = 1; i < rows.length; i++) {
           const row = rows[i];
           if (!row[statusIdx]) continue;
@@ -1521,33 +1813,55 @@
           const status = row[statusIdx].trim().toLowerCase();
           if (status === 'approved') {
             const rawFileLink = row[fileIdx] ? row[fileIdx].trim() : '';
-            const directImg = formatDriveUrl(rawFileLink);
-            const mediaTitle = (titleIdx !== -1 && row[titleIdx]) ? row[titleIdx].trim() : 'Event Highlight';
+            const driveId = extractDriveId(rawFileLink);
+            const mediaTitle = (titleIdx !== -1 && row[titleIdx]) ? row[titleIdx].trim() : 'Event Media';
             const sportTag = (sportIdx !== -1 && row[sportIdx]) ? row[sportIdx].trim() : 'Sports';
+            const rawType = (typeIdx !== -1 && row[typeIdx]) ? row[typeIdx].trim().toLowerCase() : '';
             const submissionDate = row[0] ? row[0].split(' ')[0] : '2026-11-04';
 
-            approvedCards.push({
-              tag_en: sportTag,
-              tag_ar: sportTag,
-              title_en: mediaTitle,
-              title_ar: mediaTitle,
-              date: submissionDate,
-              img: directImg,
-              youtubeId: 'NuiAsW_0fOM'
-            });
+            const isVideo = rawType.includes('video') || rawFileLink.includes('video') || rawFileLink.endsWith('.mp4') || rawFileLink.endsWith('.mov');
+
+            if (isVideo) {
+              // APPROVED VIDEO: routed to Highlights & Videos section
+              approvedVideos.push({
+                tag_en: sportTag,
+                tag_ar: sportTag,
+                title_en: mediaTitle,
+                title_ar: mediaTitle,
+                date: submissionDate,
+                img: driveId ? `https://lh3.googleusercontent.com/d/${driveId}` : 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80',
+                videoType: driveId ? 'drive' : 'direct',
+                videoSrc: driveId || rawFileLink
+              });
+            } else {
+              // APPROVED PHOTO: routed to Shared Photos section
+              if (driveId) {
+                approvedPhotos.push({
+                  tag: sportTag,
+                  title_en: mediaTitle,
+                  date: submissionDate,
+                  img: `https://lh3.googleusercontent.com/d/${driveId}`
+                });
+              }
+            }
           }
         }
 
-        if (approvedCards.length > 0) {
-          highlights.unshift(...approvedCards);
+        if (approvedVideos.length > 0) {
+          dynamicVideoHighlights = approvedVideos;
           renderHighlights();
+        }
+
+        if (approvedPhotos.length > 0) {
+          sharedPhotos = approvedPhotos;
+          renderSharedPhotos();
         }
       } catch (err) {
         console.error('Error fetching highlights sheet:', err);
       }
     }
 
-    loadDynamicHighlights();
+    loadDynamicMedia();
 
     function notifyParent() {
       const height = document.body.scrollHeight || document.documentElement.scrollHeight;
