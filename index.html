@@ -489,7 +489,7 @@
       width: 100%;
     }
 
-    /* MATCH HIGHLIGHTS & VIDEOS (INDIVIDUAL CARDS, NO SCROLLBAR) */
+    /* MATCH HIGHLIGHTS & VIDEOS */
     .highlights-section {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
@@ -527,32 +527,46 @@
     .thumb-wrapper {
       position: relative;
       width: 100%;
-      height: 160px;
-      background: #111520;
+      height: 180px;
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
     }
 
-    .thumb-wrapper img {
+    .video-preview-iframe {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      border: none;
+      pointer-events: none;
+    }
+
+    .video-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .highlight-card:hover .video-card-overlay {
+      background: rgba(0,0,0,0.1);
     }
 
     .play-badge {
-      position: absolute;
       background: var(--accent-orange);
       color: #fff;
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.15rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      font-size: 1.25rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
       transition: transform 0.15s;
     }
 
@@ -863,7 +877,7 @@
     }
     .maps-btn:hover { opacity: 0.9; }
 
-    /* MOBILE-ONLY ADJUSTMENTS */
+    /* MOBILE ADJUSTMENTS */
     @media screen and (max-width: 768px) {
       body { font-size: 13px; }
 
@@ -915,7 +929,7 @@
       .cell-event-pill { font-size: 0.5rem; padding: 1px 2px; line-height: 1.1; }
 
       .highlights-grid { grid-template-columns: 1fr; gap: 0.75rem; }
-      .thumb-wrapper { height: 140px; }
+      .thumb-wrapper { height: 160px; }
       .card-title { font-size: 0.8rem; }
 
       .photos-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
@@ -995,7 +1009,7 @@
       </div>
     </section>
 
-    <!-- HIGHLIGHTS / VIDEOS SECTION (INDIVIDUAL CARDS) -->
+    <!-- HIGHLIGHTS / VIDEOS SECTION -->
     <section class="highlights-section">
       <div class="section-title" style="margin-bottom: 0;" id="ui-media-title">Match Highlights & Videos</div>
       <div class="highlights-grid" id="highlightsGrid"></div>
@@ -1040,7 +1054,7 @@
     </div>
   </div>
 
-  <!-- UNIVERSAL VIDEO MODAL (YOUTUBE & GOOGLE DRIVE VIDEOS) -->
+  <!-- UNIVERSAL VIDEO MODAL -->
   <div id="videoModal" class="modal-overlay" onclick="closeOnBackdrop(event, 'videoModal')">
     <div style="position:relative; width:100%; max-width:850px; aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden;">
       <button class="modal-close-btn" onclick="closeVideoModal()">✕</button>
@@ -1048,7 +1062,7 @@
     </div>
   </div>
 
-  <!-- FULLSCREEN PHOTO LIGHTBOX WITH BRAND ORANGE CONTROLS -->
+  <!-- FULLSCREEN PHOTO LIGHTBOX -->
   <div id="photoLightbox" class="photo-lightbox-modal" onclick="closeLightboxOnBackdrop(event)">
     <div class="lightbox-container">
       <button class="lightbox-close-btn" onclick="closePhotoLightbox()">✕</button>
@@ -1373,37 +1387,6 @@
       }
     };
 
-    const targetYoutubeId = 'NuiAsW_0fOM';
-    const defaultHighlights = [
-      {
-        tag_en: 'Football', tag_ar: 'كرة القدم',
-        title_en: 'Secondary Schools Championship: Match Highlights',
-        title_ar: 'دوري المدارس الثانوية: ملخص اللقاء وأبرز الأهداف',
-        date: '2026-11-01',
-        img: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80',
-        videoType: 'youtube',
-        videoSrc: targetYoutubeId
-      },
-      {
-        tag_en: 'Volleyball', tag_ar: 'الكرة الطائرة',
-        title_en: 'Highlights: Final Moments and Winning Set',
-        title_ar: 'ملخص الشوط الحاسم المثير واحتفال التتويج',
-        date: '2026-10-29',
-        img: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=600&q=80',
-        videoType: 'youtube',
-        videoSrc: targetYoutubeId
-      },
-      {
-        tag_en: 'Athletics', tag_ar: 'ألعاب القوى',
-        title_en: '100m Sprint Final: Student Record Race',
-        title_ar: 'نهائي سباق 100 متر: رقم قياسي وتغطية شاملة',
-        date: '2026-10-25',
-        img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80',
-        videoType: 'youtube',
-        videoSrc: targetYoutubeId
-      }
-    ];
-
     let dynamicVideoHighlights = [];
     let sharedPhotos = [];
     let currentPhotoIndex = 0;
@@ -1500,66 +1483,38 @@
       });
     }
 
-    function renderCalendar() {
-      const t = translations[currentLang];
-      document.getElementById('currentMonthYear').textContent = `${t.monthNames[currentMonth]} ${currentYear}`;
-      
-      const dayHeaders = document.getElementById('calendarDaysHeaders');
-      dayHeaders.innerHTML = t.days.map(d => `<div class="calendar-day-header">${d}</div>`).join('');
-
-      const grid = document.getElementById('calendarGrid');
-      grid.innerHTML = '';
-
-      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-      const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-      for (let i = 0; i < firstDay; i++) {
-        const emptyCell = document.createElement('div');
-        emptyCell.className = 'calendar-cell empty';
-        grid.appendChild(emptyCell);
-      }
-
-      for (let day = 1; day <= totalDays; day++) {
-        const cell = document.createElement('div');
-        const mKey = String(currentMonth + 1).padStart(2, '0');
-        const dKey = String(day).padStart(2, '0');
-        const dateString = `${currentYear}-${mKey}-${dKey}`;
-        const ev = calendarEvents[dateString];
-
-        cell.className = `calendar-cell ${ev ? 'has-event' : ''}`;
-        cell.onclick = () => {
-          if (ev) {
-            openEventModal(dateString, ev);
-          }
-        };
-
-        cell.innerHTML = `
-          <div class="cell-top">
-            <span class="cell-num">${day}</span>
-            ${ev ? '<div class="event-indicator"></div>' : ''}
-          </div>
-          ${ev ? `<div class="cell-event-pill">${currentLang === 'ar' ? ev.title_ar : ev.title_en}</div>` : ''}
-        `;
-        grid.appendChild(cell);
-      }
-    }
-
-    // RENDER INDIVIDUAL HIGHLIGHT CARDS (NO SCROLL BUTTONS)
+    // RENDER INDIVIDUAL VIDEO HIGHLIGHTS
     function renderHighlights() {
       const grid = document.getElementById('highlightsGrid');
       grid.innerHTML = '';
       
-      const combinedHighlights = [...dynamicVideoHighlights, ...defaultHighlights];
+      const combinedHighlights = [...dynamicVideoHighlights];
+
+      if (combinedHighlights.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1 / -1; font-size: 0.8rem; color: var(--text-muted); padding: 1rem 0;">${translations[currentLang].noPhotos}</div>`;
+        return;
+      }
 
       combinedHighlights.forEach(h => {
         const card = document.createElement('div');
         card.className = 'highlight-card';
         card.onclick = () => openUniversalVideo(h.videoType, h.videoSrc);
         
+        let previewHtml = '';
+        if (h.videoType === 'drive') {
+          previewHtml = `<iframe src="https://drive.google.com/file/d/${h.videoSrc}/preview" class="video-preview-iframe" tabindex="-1"></iframe>`;
+        } else if (h.videoType === 'youtube') {
+          previewHtml = `<iframe src="https://www.youtube.com/embed/${h.videoSrc}?controls=0&mute=1" class="video-preview-iframe" tabindex="-1"></iframe>`;
+        } else {
+          previewHtml = `<video src="${h.videoSrc}" class="video-preview-iframe" preload="metadata"></video>`;
+        }
+
         card.innerHTML = `
           <div class="thumb-wrapper">
-            <img src="${h.img}" alt="${h.title_en}" onerror="this.src='https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80'">
-            <div class="play-badge">&#9658;</div>
+            ${previewHtml}
+            <div class="video-card-overlay">
+              <div class="play-badge">&#9658;</div>
+            </div>
           </div>
           <div class="card-content">
             <span class="card-tag">${currentLang === 'ar' ? (h.tag_ar || h.tag_en) : h.tag_en}</span>
@@ -1602,7 +1557,50 @@
       });
     }
 
-    // FULLSCREEN PHOTO LIGHTBOX
+    // CALENDAR
+    function renderCalendar() {
+      const t = translations[currentLang];
+      document.getElementById('currentMonthYear').textContent = `${t.monthNames[currentMonth]} ${currentYear}`;
+      
+      const dayHeaders = document.getElementById('calendarDaysHeaders');
+      dayHeaders.innerHTML = t.days.map(d => `<div class="calendar-day-header">${d}</div>`).join('');
+
+      const grid = document.getElementById('calendarGrid');
+      grid.innerHTML = '';
+
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+      for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'calendar-cell empty';
+        grid.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= totalDays; day++) {
+        const cell = document.createElement('div');
+        const mKey = String(currentMonth + 1).padStart(2, '0');
+        const dKey = String(day).padStart(2, '0');
+        const dateString = `${currentYear}-${mKey}-${dKey}`;
+        const ev = calendarEvents[dateString];
+
+        cell.className = `calendar-cell ${ev ? 'has-event' : ''}`;
+        cell.onclick = () => {
+          if (ev) openEventModal(dateString, ev);
+        };
+
+        cell.innerHTML = `
+          <div class="cell-top">
+            <span class="cell-num">${day}</span>
+            ${ev ? '<div class="event-indicator"></div>' : ''}
+          </div>
+          ${ev ? `<div class="cell-event-pill">${currentLang === 'ar' ? ev.title_ar : ev.title_en}</div>` : ''}
+        `;
+        grid.appendChild(cell);
+      }
+    }
+
+    // LIGHTBOX CONTROLS
     function openPhotoLightbox(index) {
       if (!sharedPhotos || sharedPhotos.length === 0) return;
       currentPhotoIndex = (index + sharedPhotos.length) % sharedPhotos.length;
@@ -1640,12 +1638,9 @@
     }
 
     function closeLightboxOnBackdrop(e) {
-      if (e.target.id === 'photoLightbox') {
-        closePhotoLightbox();
-      }
+      if (e.target.id === 'photoLightbox') closePhotoLightbox();
     }
 
-    // Keyboard navigation (Esc to close, Left/Right arrows to flip)
     window.addEventListener('keydown', (e) => {
       const modal = document.getElementById('photoLightbox');
       if (modal && modal.style.display === 'flex') {
@@ -1655,7 +1650,7 @@
       }
     });
 
-    // Touch Swipe for Mobile Lightbox
+    // Touch Swipe for Mobile
     let touchStartX = 0;
     let touchEndX = 0;
     const lightboxEl = document.getElementById('photoLightbox');
@@ -1666,22 +1661,14 @@
 
       lightboxEl.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
-        handleSwipeGesture();
+        const swipeDistance = touchEndX - touchStartX;
+        if (Math.abs(swipeDistance) > 40) {
+          navigatePhoto(swipeDistance > 0 ? -1 : 1);
+        }
       }, { passive: true });
     }
 
-    function handleSwipeGesture() {
-      const swipeDistance = touchEndX - touchStartX;
-      if (Math.abs(swipeDistance) > 40) {
-        if (swipeDistance > 0) {
-          navigatePhoto(-1);
-        } else {
-          navigatePhoto(1);
-        }
-      }
-    }
-
-    // MODAL CONTROLS
+    // MODAL POPUPS
     function openEventModal(dateStr, ev) {
       const modal = document.getElementById('eventModal');
       document.getElementById('modalTag').textContent = currentLang === 'ar' ? ev.tag_ar : ev.tag_en;
@@ -1778,7 +1765,7 @@
     renderHighlights();
     renderSharedPhotos();
 
-    // DYNAMIC SHEET SYNC WITH AUTOMATIC VIDEO DETECTION
+    // DYNAMIC SHEET SYNC
     const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzaz5nQ6lBjDYfXFICtoT8WKEepIbQJg6a1W9SRwq8dV3rltw97NVLVx-nzvxz3GY737Uuzv7loLOV/pub?gid=1583810314&single=true&output=csv';
 
     function extractDriveId(url) {
@@ -1822,19 +1809,16 @@
             const isVideo = rawType.includes('video') || rawFileLink.includes('video') || rawFileLink.endsWith('.mp4') || rawFileLink.endsWith('.mov');
 
             if (isVideo) {
-              // APPROVED VIDEO: routed to Highlights & Videos section
               approvedVideos.push({
                 tag_en: sportTag,
                 tag_ar: sportTag,
                 title_en: mediaTitle,
                 title_ar: mediaTitle,
                 date: submissionDate,
-                img: driveId ? `https://lh3.googleusercontent.com/d/${driveId}` : 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80',
                 videoType: driveId ? 'drive' : 'direct',
                 videoSrc: driveId || rawFileLink
               });
             } else {
-              // APPROVED PHOTO: routed to Shared Photos section
               if (driveId) {
                 approvedPhotos.push({
                   tag: sportTag,
@@ -1847,15 +1831,11 @@
           }
         }
 
-        if (approvedVideos.length > 0) {
-          dynamicVideoHighlights = approvedVideos;
-          renderHighlights();
-        }
+        dynamicVideoHighlights = approvedVideos;
+        renderHighlights();
 
-        if (approvedPhotos.length > 0) {
-          sharedPhotos = approvedPhotos;
-          renderSharedPhotos();
-        }
+        sharedPhotos = approvedPhotos;
+        renderSharedPhotos();
       } catch (err) {
         console.error('Error fetching highlights sheet:', err);
       }
