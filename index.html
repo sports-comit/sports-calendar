@@ -672,15 +672,12 @@
     }
     .maps-btn:hover { opacity: 0.9; }
 
-    /* =========================================
-       SPECIFIC MOBILE-ONLY ADJUSTMENTS (PHONE)
-       ========================================= */
+    /* MOBILE-ONLY ADJUSTMENTS */
     @media screen and (max-width: 768px) {
       body {
         font-size: 13px;
       }
 
-      /* Header compression */
       header {
         padding: 0.5rem 0.75rem;
       }
@@ -723,14 +720,12 @@
         font-size: 0.75rem;
       }
 
-      /* Main layout */
       main {
         padding: 0 0.5rem;
         margin: 0.85rem auto;
         gap: 1.25rem;
       }
 
-      /* Upcoming & Past Matches strictly fitting screen */
       .matches-dual-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -756,7 +751,6 @@
         font-size: 0.65rem;
       }
 
-      /* Calendar fitted 100% horizontally */
       .calendar-container {
         padding: 0.65rem 0.4rem;
         border-radius: 8px;
@@ -793,7 +787,6 @@
         line-height: 1.1;
       }
 
-      /* Highlights & video cards */
       .highlights-grid {
         grid-template-columns: 1fr;
         gap: 0.75rem;
@@ -1492,6 +1485,69 @@
     renderMatchesSections();
     renderCalendar();
     renderHighlights();
+
+    // LIVE GOOGLE SHEET SYNC FOR APPROVED MEDIA
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzaz5nQ6lBjDYfXFICtoT8WKEepIbQJg6a1W9SRwq8dV3rltw97NVLVx-nzvxz3GY737Uuzv7loLOV/pub?gid=1583810314&single=true&output=csv';
+
+    function formatDriveUrl(url) {
+      if (!url) return '';
+      const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        return `https://lh3.googleusercontent.com/d/${match[1]}`;
+      }
+      return url;
+    }
+
+    async function loadDynamicHighlights() {
+      try {
+        const response = await fetch(SHEET_CSV_URL);
+        const csvText = await response.text();
+        const rows = csvText.split('\n').map(r => r.split(','));
+        if (rows.length < 2) return;
+
+        const headers = rows[0].map(h => h.trim().toLowerCase());
+        const statusIdx = headers.findIndex(h => h.includes('status'));
+        const fileIdx = headers.findIndex(h => h.includes('upload') || h.includes('file'));
+        const titleIdx = headers.findIndex(h => h.includes('media title') || h.includes('title'));
+        const sportIdx = headers.findIndex(h => h.includes('sport'));
+
+        if (fileIdx === -1 || statusIdx === -1) return;
+
+        const approvedCards = [];
+        for (let i = 1; i < rows.length; i++) {
+          const row = rows[i];
+          if (!row[statusIdx]) continue;
+
+          const status = row[statusIdx].trim().toLowerCase();
+          if (status === 'approved') {
+            const rawFileLink = row[fileIdx] ? row[fileIdx].trim() : '';
+            const directImg = formatDriveUrl(rawFileLink);
+            const mediaTitle = (titleIdx !== -1 && row[titleIdx]) ? row[titleIdx].trim() : 'Event Highlight';
+            const sportTag = (sportIdx !== -1 && row[sportIdx]) ? row[sportIdx].trim() : 'Sports';
+            const submissionDate = row[0] ? row[0].split(' ')[0] : '2026-11-04';
+
+            approvedCards.push({
+              tag_en: sportTag,
+              tag_ar: sportTag,
+              title_en: mediaTitle,
+              title_ar: mediaTitle,
+              date: submissionDate,
+              img: directImg,
+              youtubeId: 'NuiAsW_0fOM'
+            });
+          }
+        }
+
+        if (approvedCards.length > 0) {
+          highlights.unshift(...approvedCards);
+          renderHighlights();
+        }
+      } catch (err) {
+        console.error('Error fetching highlights sheet:', err);
+      }
+    }
+
+    loadDynamicHighlights();
 
     function notifyParent() {
       const height = document.body.scrollHeight || document.documentElement.scrollHeight;
