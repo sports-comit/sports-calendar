@@ -55,7 +55,6 @@
       text-align: left;
     }
 
-    /* Responsive Header */
     header {
       background: rgba(10, 12, 18, 0.96);
       backdrop-filter: blur(12px);
@@ -146,7 +145,6 @@
       .btn-lang { padding: 0.35rem 0.55rem; font-size: 0.7rem; }
     }
 
-    /* Master Layout */
     .dashboard-layout {
       display: flex;
       flex-direction: column;
@@ -167,7 +165,6 @@
       }
     }
 
-    /* Sidebar Area */
     .sidebar-area {
       width: 100%;
       display: flex;
@@ -263,7 +260,6 @@
       border-inline-start: 3px solid var(--color-accent-orange);
     }
 
-    /* Venue Links */
     .venue-links-group {
       display: flex;
       flex-direction: column;
@@ -285,7 +281,6 @@
       color: var(--color-accent-orange);
     }
 
-    /* Main Area */
     .main-area {
       flex: 1;
       min-width: 0;
@@ -328,7 +323,6 @@
       flex-wrap: wrap;
     }
 
-    /* Upcoming Matches Flow */
     .upcoming-matches-flow {
       display: grid;
       grid-template-columns: 1fr;
@@ -393,7 +387,6 @@
       text-overflow: ellipsis;
     }
 
-    /* 12-Month Selector */
     .month-scroll-track {
       display: flex;
       gap: 0.3rem;
@@ -426,7 +419,6 @@
       color: #fff;
     }
 
-    /* Calendar Grid Matrix */
     .calendar-wrapper {
       width: 100%;
       max-width: 100%;
@@ -518,7 +510,6 @@
     .chip-es { background: #37333a; border-inline-start: 2px solid #a855f7; }
     .chip-ex { background: #134e4a; border-inline-start: 2px solid #14b8a6; }
 
-    /* Tables Container (Smooth Sideways Scroll) */
     .table-responsive-box {
       width: 100%;
       max-width: 100%;
@@ -570,7 +561,6 @@
       white-space: nowrap;
     }
 
-    /* Modal Engine */
     .modal-backdrop {
       position: fixed;
       top: 0;
@@ -644,7 +634,6 @@
       min-width: 0;
     }
 
-    /* Individual Match Box */
     .individual-event-card {
       background: #161e30;
       border: 1px solid #23304a;
@@ -750,14 +739,13 @@
       gap: 0.35rem;
     }
 
-    /* Lightbox Modal for Full Image View */
     .lightbox-modal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.92);
+      background: rgba(0, 0, 0, 0.94);
       backdrop-filter: blur(10px);
       display: none;
       align-items: center;
@@ -788,7 +776,6 @@
       <div class="brand-sub" id="t-brand-sub">وزارة التربية والتعليم - مملكة البحرين</div>
     </div>
     <div class="header-actions">
-      <!-- Direct Functional Google Form link -->
       <a href="https://docs.google.com/forms/d/1lZHjiN_uzkPByu0bfIARRFyUx3oAFLdUne0uXE-tk6Q/viewform" target="_blank" class="btn-upload-top" id="t-btn-upload">
         <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
         <span>رفع صور وفيديوهات</span>
@@ -1038,7 +1025,6 @@
   </div>
 
   <script>
-    // Master Datasets
     const VENUES = {
       isaClub: { nameAr: "نادي مدينة عيسى", nameEn: "Isa Town Club Ground", map: "https://maps.google.com/?cid=9845700810332841646" },
       ettihadClub: { nameAr: "نادي الاتحاد الرياضي", nameEn: "Al Ettihad Club Ground", map: "https://maps.google.com/?cid=3545199616238861163" },
@@ -1199,7 +1185,6 @@
         lblWhen: "التوقيت (When)",
         lblWhere: "المكان والملعب (Where)",
         lblStage: "المرحلة / الدور",
-        // Table Headers
         thNum: "رقم",
         thDate: "التاريخ",
         thDay: "اليوم",
@@ -1249,7 +1234,6 @@
         lblWhen: "Timing (When)",
         lblWhere: "Venue (Where)",
         lblStage: "Stage / Group",
-        // Table Headers
         thNum: "No.",
         thDate: "Date",
         thDay: "Day",
@@ -1319,7 +1303,6 @@
       document.getElementById('t-btn-refresh-all').textContent = t.mediaRefreshBtn;
 
       // Translate Table Headers
-      // Football
       document.getElementById('th-fb-num').textContent = t.thNum;
       document.getElementById('th-fb-date').textContent = t.thDate;
       document.getElementById('th-fb-time').textContent = t.thTime;
@@ -1328,7 +1311,6 @@
       document.getElementById('th-fb-group').textContent = t.thGroup;
       document.getElementById('th-fb-action').textContent = t.thAction;
 
-      // Basketball
       document.getElementById('th-bb-num').textContent = t.thNum;
       document.getElementById('th-bb-date').textContent = t.thDate;
       document.getElementById('th-bb-day').textContent = t.thDay;
@@ -1336,7 +1318,6 @@
       document.getElementById('th-bb-hall').textContent = t.thHall;
       document.getElementById('th-bb-action').textContent = t.thAction;
 
-      // Esports
       document.getElementById('th-es-num').textContent = t.thNum;
       document.getElementById('th-es-stage').textContent = t.thStage;
       document.getElementById('th-es-date').textContent = t.thDate;
@@ -1344,14 +1325,12 @@
       document.getElementById('th-es-venue').textContent = t.thVenue;
       document.getElementById('th-es-action').textContent = t.thAction;
 
-      // Excellence
       document.getElementById('th-ex-date').textContent = t.thDate;
       document.getElementById('th-ex-target').textContent = t.thTarget;
       document.getElementById('th-ex-time').textContent = t.thTime;
       document.getElementById('th-ex-prog').textContent = t.thProgram;
       document.getElementById('th-ex-action').textContent = t.thAction;
 
-      // Official Venues
       document.getElementById('t-venue-1').textContent = VENUES.bbaArena[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
       document.getElementById('t-venue-2').textContent = VENUES.moeHall[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
       document.getElementById('t-venue-3').textContent = VENUES.isaClub[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
@@ -1657,12 +1636,10 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // MULTI-CARD MODAL ENGINE (Fixes the overlapping bug)
     function openMultiCardModalForDay(dateStr, fb, bb, es, ex) {
       const items = [];
       const isAr = currentLang === 'ar';
 
-      // 1. Separate Card for EACH Football Match
       fb.forEach(m => {
         const v = VENUES[m.venueKey];
         items.push({
@@ -1676,7 +1653,6 @@
         });
       });
 
-      // 2. Separate Card for Basketball
       bb.forEach(m => {
         const v = VENUES[m.venueKey];
         items.push({
@@ -1690,7 +1666,6 @@
         });
       });
 
-      // 3. Separate Card for E-Sports
       es.forEach(m => {
         const v = VENUES[m.venueKey];
         items.push({
@@ -1704,7 +1679,6 @@
         });
       });
 
-      // 4. Separate Card for Excellence Award
       ex.forEach(m => {
         const v = VENUES[m.venueKey];
         items.push({
@@ -1790,7 +1764,6 @@
       }
     }
 
-    // Lightbox Controls
     function openLightbox(url) {
       document.getElementById('lightbox-full-img').src = url;
       document.getElementById('lightbox-modal').classList.add('open');
@@ -1800,7 +1773,6 @@
       document.getElementById('lightbox-modal').classList.remove('open');
     }
 
-    // Google Apps Script Live Sync Engine
     const MEDIA_API_URL = "https://script.google.com/macros/s/AKfycbx9jMFzhOjEryxl3zEgXrkBwBb93sK2woyFMAuzd1I4wf5s7V_ROjG4-gUUsIEUqa9l/exec";
 
     async function fetchLiveMedia() {
@@ -1832,31 +1804,38 @@
 
         const reversedData = data.slice().reverse();
 
-        // 1. Populate dedicated Media Gallery
+        function createPhotoCard(item) {
+          const fileId = item.fileId || (item.imageUrl ? item.imageUrl.match(/[-\w]{25,}/)[0] : "");
+          if (!fileId) return null;
+
+          const primaryUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+          const fallbackUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+
+          const card = document.createElement('div');
+          card.style.cssText = 'background:#131a2c; border:1px solid #1c263c; border-radius:10px; overflow:hidden; aspect-ratio:1; position:relative; cursor:pointer;';
+          card.onclick = () => openLightbox(primaryUrl);
+          
+          card.innerHTML = `
+            <img src="${primaryUrl}" 
+                 style="width:100%; height:100%; object-fit:cover; display:block;" 
+                 loading="lazy" 
+                 onerror="this.onerror=null; this.src='${fallbackUrl}';" 
+                 alt="Uploaded Match Photo" />
+          `;
+          return card;
+        }
+
         if (allGrid) {
           reversedData.forEach(item => {
-            if (!item.imageUrl) return;
-            const card = document.createElement('div');
-            card.style.cssText = 'background:#131a2c; border:1px solid #1c263c; border-radius:10px; overflow:hidden; aspect-ratio:1; position:relative; cursor:pointer;';
-            card.onclick = () => openLightbox(item.imageUrl);
-            card.innerHTML = `
-              <img src="${item.imageUrl}" style="width:100%; height:100%; object-fit:cover; display:block;" loading="lazy" onerror="this.onerror=null; this.src='https://drive.google.com/thumbnail?id='+('${item.imageUrl}'.split('/').pop())+'&sz=w1000';" alt="Uploaded Photo" />
-            `;
-            allGrid.appendChild(card);
+            const el = createPhotoCard(item);
+            if (el) allGrid.appendChild(el);
           });
         }
 
-        // 2. Populate Home Page Feed (latest 8 uploads)
         if (homeGrid) {
           reversedData.slice(0, 8).forEach(item => {
-            if (!item.imageUrl) return;
-            const card = document.createElement('div');
-            card.style.cssText = 'background:#131a2c; border:1px solid #1c263c; border-radius:10px; overflow:hidden; aspect-ratio:1; position:relative; cursor:pointer;';
-            card.onclick = () => openLightbox(item.imageUrl);
-            card.innerHTML = `
-              <img src="${item.imageUrl}" style="width:100%; height:100%; object-fit:cover; display:block;" loading="lazy" onerror="this.onerror=null; this.src='https://drive.google.com/thumbnail?id='+('${item.imageUrl}'.split('/').pop())+'&sz=w1000';" alt="Uploaded Photo" />
-            `;
-            homeGrid.appendChild(card);
+            const el = createPhotoCard(item);
+            if (el) homeGrid.appendChild(el);
           });
         }
       } catch (err) {
