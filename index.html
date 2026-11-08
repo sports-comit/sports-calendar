@@ -3,843 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>قسم الأنشطة الرياضية - جدول الفعاليات والبطولات</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-dark: #070d19;
-      --bg-card: #0d172a;
-      --bg-card-hover: #13223f;
-      --primary: #1d4ed8;
-      --primary-light: #3b82f6;
-      --accent: #06b6d4;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #1e293b;
-      --border-glow: rgba(59, 130, 246, 0.25);
-      --font-cairo: 'Cairo', 'Tajawal', sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-variant-numeric: lining-nums;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: var(--font-cairo);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-    }
-
-    /* Header */
-    header {
-      background: rgba(13, 23, 42, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .brand-section {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-
-    .brand-section h1 {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.5px;
-    }
-
-    .brand-section span {
-      display: block;
-      font-size: 0.82rem;
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .upload-action-btn {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: #fff;
-      border: none;
-      padding: 0.65rem 1.4rem;
-      border-radius: 9999px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-    }
-
-    .upload-action-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
-    }
-
-    /* Main Layout */
-    .dashboard-container {
-      display: flex;
-      flex: 1;
-      max-width: 1600px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 1.5rem;
-      gap: 1.5rem;
-    }
-
-    /* Sidebar / Tournament Selector */
-    .sidebar {
-      width: 310px;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .sidebar-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 1.25rem;
-    }
-
-    .sidebar-title {
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-pill {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      padding: 0.85rem 1rem;
-      border-radius: 12px;
-      background: transparent;
-      color: var(--text-muted);
-      cursor: pointer;
-      margin-bottom: 0.4rem;
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
-      text-align: right;
-      width: 100%;
-      font-family: inherit;
-      font-weight: 600;
-      font-size: 0.92rem;
-    }
-
-    .nav-pill:hover {
-      background: var(--bg-card-hover);
-      color: #fff;
-    }
-
-    .nav-pill.active {
-      background: rgba(37, 99, 235, 0.18);
-      border-color: var(--primary-light);
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .nav-pill .icon-badge {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: #1e293b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-
-    .nav-pill.active .icon-badge {
-      background: var(--primary);
-    }
-
-    /* Main Content Area */
-    .main-view {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      min-width: 0;
-    }
-
-    .view-panel {
-      display: none;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .view-panel.active {
-      display: flex;
-    }
-
-    /* Card Panels */
-    .content-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 1.5rem;
-    }
-
-    .box-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.25rem;
-    }
-
-    .box-title {
-      font-size: 1.2rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    /* Horizontal Match Scroll */
-    .upcoming-matches-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-
-    .match-item-card {
-      background: #0f1c35;
-      border: 1px solid #1e2e4f;
-      border-radius: 14px;
-      padding: 1rem 1.15rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .match-item-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--accent);
-    }
-
-    .match-meta-tag {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 0.4rem;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .match-title-row {
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      line-height: 1.4;
-    }
-
-    .match-details-row {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    .venue-link {
-      color: var(--primary-light);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
-    .venue-link:hover {
-      text-decoration: underline;
-    }
-
-    /* Schedule Table */
-    .table-container {
-      overflow-x: auto;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: right;
-    }
-
-    th {
-      background: #0a1120;
-      color: var(--text-muted);
-      padding: 0.9rem 1rem;
-      font-size: 0.85rem;
-      font-weight: 700;
-      border-bottom: 1px solid var(--border);
-    }
-
-    td {
-      padding: 0.9rem 1rem;
-      font-size: 0.88rem;
-      border-bottom: 1px solid #142036;
-    }
-
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .badge-stage {
-      background: rgba(6, 182, 212, 0.15);
-      color: var(--accent);
-      padding: 0.2rem 0.6rem;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 700;
-    }
-
-    /* Media Grid */
-    .media-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1rem;
-    }
-
-    .media-card {
-      background: #0c1527;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      aspect-ratio: 16/10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      position: relative;
-    }
-
-    .media-card iframe, .media-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border: none;
-    }
-
-    /* Calendar Grid */
-    .calendar-matrix {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.5rem;
-      text-align: center;
-    }
-
-    .cal-day-header {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      padding: 0.5rem 0;
-    }
-
-    .cal-day-cell {
-      background: #0f1c35;
-      border-radius: 10px;
-      aspect-ratio: 1;
-      padding: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border: 1px solid #182849;
-      font-size: 0.85rem;
-      font-weight: 700;
-    }
-
-    .cal-day-cell.active-event {
-      border-color: var(--primary-light);
-      background: rgba(37, 99, 235, 0.15);
-    }
-
-    .cal-pill {
-      font-size: 0.65rem;
-      background: var(--primary);
-      color: #fff;
-      border-radius: 4px;
-      padding: 2px 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    @media (max-width: 992px) {
-      .dashboard-container {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Top Navbar -->
-  <header>
-    <div class="brand-section">
-      <div>
-        <h1>قسم الأنشطة الرياضية</h1>
-        <span>وزارة التربية والتعليم - مملكة البحرين</span>
-      </div>
-    </div>
-    <!-- Replace with your actual Google Form URL -->
-    <a href="https://forms.google.com" target="_blank" class="upload-action-btn">
-      <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-      رفع صور وفيديوهات
-    </a>
-  </header>
-
-  <div class="dashboard-container">
-    
-    <!-- Sidebar: Tournament & Views Switcher -->
-    <aside class="sidebar">
-      <div class="sidebar-card">
-        <div class="sidebar-title">القائمة والبطولات</div>
-        <button class="nav-pill active" onclick="switchView('home-view')">
-          <span class="icon-badge">🏠</span>
-          <span>الرئيسية والتقويم</span>
-        </button>
-        <button class="nav-pill" onclick="switchView('football-view')">
-          <span class="icon-badge">⚽</span>
-          <span>بطولة ناصر بن حمد الثانوية</span>
-        </button>
-        <button class="nav-pill" onclick="switchView('basketball-view')">
-          <span class="icon-badge">🏀</span>
-          <span>دوري كرة السلة للصالات</span>
-        </button>
-        <button class="nav-pill" onclick="switchView('esports-view')">
-          <span class="icon-badge">🎮</span>
-          <span>بطولة الألعاب الإلكترونية</span>
-        </button>
-        <button class="nav-pill" onclick="switchView('all-media-view')">
-          <span class="icon-badge">📸</span>
-          <span>معرض الوسائط الكامل</span>
-        </button>
-      </div>
-
-      <div class="sidebar-card">
-        <div class="sidebar-title">مواقع الملاعب الرسمية</div>
-        <div style="font-size:0.85rem; line-height: 1.8; color: var(--text-muted);">
-          <div>📍 <a href="https://maps.google.com/?cid=13083863488950478055" target="_blank" class="venue-link">صالة اتحاد السلة (الماحوز)</a></div>
-          <div>📍 <a href="https://maps.google.com/?cid=12361665426147690921" target="_blank" class="venue-link">صالة وزارة التربية (مدينة عيسى)</a></div>
-          <div>📍 <a href="https://maps.google.com/?cid=9845700810332841646" target="_blank" class="venue-link">ملعب نادي مدينة عيسى</a></div>
-          <div>📍 <a href="https://maps.google.com/?cid=3545199616238861163" target="_blank" class="venue-link">ملعب نادي الاتحاد (البلاد القديم)</a></div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Main View Section -->
-    <main class="main-view">
-      
-      <!-- ================= 1. HOME VIEW ================= -->
-      <section id="home-view" class="view-panel active">
-        <!-- Upcoming Games -->
-        <div class="content-box">
-          <div class="box-header">
-            <h2 class="box-title">⚡ المباريات والفعاليات القادمة اليوم وغداً</h2>
-          </div>
-          <div class="upcoming-matches-grid">
-            <div class="match-item-card">
-              <div class="match-meta-tag">
-                <span>كرة قدم ثانوية</span>
-                <span>8:30 AM</span>
-              </div>
-              <div class="match-title-row">مدرسة مدينة عيسى vs مركز ناصر العلمي</div>
-              <div class="match-details-row">
-                <span>نادي مدينة عيسى</span>
-                <span>• الجولة 1</span>
-              </div>
-            </div>
-            <div class="match-item-card">
-              <div class="match-meta-tag">
-                <span>كرة قدم ثانوية</span>
-                <span>8:30 AM</span>
-              </div>
-              <div class="match-title-row">مدرسة بيان البحرين vs مدرسة الحكمة</div>
-              <div class="match-details-row">
-                <span>نادي الاتحاد</span>
-                <span>• الجولة 1</span>
-              </div>
-            </div>
-            <div class="match-item-card">
-              <div class="match-meta-tag">
-                <span>ألعاب إلكترونية</span>
-                <span>اليوم كامل</span>
-              </div>
-              <div class="match-title-row">تصفيات إعدادي - بنين</div>
-              <div class="match-details-row">
-                <span>صالة وزارة التربية</span>
-                <span>• افتتاح البطولة</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Monthly Calendar Grid -->
-        <div class="content-box">
-          <div class="box-header">
-            <h2 class="box-title">📅 تقويم شهر نوفمبر 2026</h2>
-          </div>
-          <div class="calendar-matrix">
-            <div class="cal-day-header">الأحد</div>
-            <div class="cal-day-header">الاثنين</div>
-            <div class="cal-day-header">الثلاثاء</div>
-            <div class="cal-day-header">الأربعاء</div>
-            <div class="cal-day-header">الخميس</div>
-            <div class="cal-day-header">الجمعة</div>
-            <div class="cal-day-header">السبت</div>
-
-            <!-- Week 1 & 2 November sample representation -->
-            <div class="cal-day-cell">1</div>
-            <div class="cal-day-cell">2</div>
-            <div class="cal-day-cell">3</div>
-            <div class="cal-day-cell">4</div>
-            <div class="cal-day-cell">5</div>
-            <div class="cal-day-cell">6</div>
-            <div class="cal-day-cell">7</div>
-            <div class="cal-day-cell active-event">
-              <span>8</span>
-              <span class="cal-pill">افتتاح القدم والإلكترونية</span>
-            </div>
-            <div class="cal-day-cell active-event">
-              <span>9</span>
-              <span class="cal-pill">قدم + إلكترونية بنات</span>
-            </div>
-            <div class="cal-day-cell active-event">
-              <span>10</span>
-              <span class="cal-pill">قدم + إلكترونية ثانوي</span>
-            </div>
-            <div class="cal-day-cell active-event">
-              <span>11</span>
-              <span class="cal-pill">مباريات الجولة 4</span>
-            </div>
-            <div class="cal-day-cell active-event">
-              <span>12</span>
-              <span class="cal-pill">مباريات الجولة 1</span>
-            </div>
-            <div class="cal-day-cell">13</div>
-            <div class="cal-day-cell">14</div>
-            <div class="cal-day-cell active-event">
-              <span>15</span>
-              <span class="cal-pill">انطلاق دوري السلة</span>
-            </div>
-            <div class="cal-day-cell active-event">
-              <span>16</span>
-              <span class="cal-pill">سلة + قدم</span>
-            </div>
-            <div class="cal-day-cell active-event">
-              <span>17</span>
-              <span class="cal-pill">سلة + قدم</span>
-            </div>
-            <div class="cal-day-cell active-event">
-              <span>18</span>
-              <span class="cal-pill">مباريات المجموعة</span>
-            </div>
-            <div class="cal-day-cell active-event">
-              <span>19</span>
-              <span class="cal-pill">ربع نهائي الإلكترونية</span>
-            </div>
-            <div class="cal-day-cell">20</div>
-            <div class="cal-day-cell">21</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= 2. FOOTBALL VIEW ================= -->
-      <section id="football-view" class="view-panel">
-        <div class="content-box">
-          <div class="box-header">
-            <h2 class="box-title">⚽ بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية 2026-2027</h2>
-          </div>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>رقم</th>
-                  <th>التاريخ</th>
-                  <th>الوقت</th>
-                  <th>الملعب</th>
-                  <th>المباراة</th>
-                  <th>المجموعة / الدور</th>
-                </tr>
-              </thead>
-              <tbody id="football-table-body">
-                <!-- Dynamically populated or verified from PDF -->
-                <tr><td>1</td><td>الأحد 8-11-2026</td><td>8:30 AM</td><td>نادي مدينة عيسى</td><td>مدرسة مدينة عيسى الثانوية vs مركز ناصر العلمي</td><td>الأولى</td></tr>
-                <tr><td>2</td><td>الأحد 8-11-2026</td><td>8:30 AM</td><td>نادي الاتحاد</td><td>مدرسة بيان البحرين vs مدرسة الحكمة الدولية</td><td>الأولى</td></tr>
-                <tr><td>3</td><td>الاثنين 9-11-2026</td><td>8:30 AM</td><td>نادي مدينة عيسى</td><td>الشيخ عيسى بن علي vs الرفاع الشرقي</td><td>الثانية</td></tr>
-                <tr><td>4</td><td>الاثنين 9-11-2026</td><td>8:30 AM</td><td>نادي الاتحاد</td><td>المعارف الحديثة vs الابداع الخاصة</td><td>الثانية</td></tr>
-                <tr><td>5</td><td>الثلاثاء 10-11-2026</td><td>8:30 AM</td><td>نادي مدينة عيسى</td><td>احمد العمران vs النعيم الثانوية</td><td>الثالثة</td></tr>
-                <tr><td>6</td><td>الثلاثاء 10-11-2026</td><td>8:30 AM</td><td>نادي الاتحاد</td><td>النور العالمية vs الفلاح الخاصة</td><td>الثالثة</td></tr>
-                <tr><td>7</td><td>الأربعاء 11-11-2026</td><td>8:30 AM</td><td>نادي مدينة عيسى</td><td>الجابرية الصناعية vs الهداية الخليفية</td><td>الرابعة</td></tr>
-                <tr><td>8</td><td>الأربعاء 11-11-2026</td><td>8:30 AM</td><td>نادي الاتحاد</td><td>المدرسة البريطانية vs سانت كريستوفر</td><td>الرابعة</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="content-box">
-          <div class="box-header">
-            <h2 class="box-title">📸 وسائط وفيديوهات بطولة كرة القدم</h2>
-          </div>
-          <div class="media-grid" id="football-media-grid">
-            <div class="media-card"><span>جاري مزامنة الوسائط المرفوعة...</span></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= 3. BASKETBALL VIEW ================= -->
-      <section id="basketball-view" class="view-panel">
-        <div class="content-box">
-          <div class="box-header">
-            <h2 class="box-title">🏀 جدول دوري المجموعات - الاتحاد البحريني لكرة السلة</h2>
-            <a href="https://maps.google.com/?cid=13083863488950478055" target="_blank" class="venue-link">📍 موقع الصالة بالماحوز</a>
-          </div>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>المباراة</th>
-                  <th>التاريخ</th>
-                  <th>اليوم</th>
-                  <th>الوقت</th>
-                  <th>الصالة</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>1</td><td>15-11-2026</td><td>الأحد</td><td>8:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>2</td><td>15-11-2026</td><td>الأحد</td><td>9:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>3</td><td>15-11-2026</td><td>الأحد</td><td>10:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>4 - 7</td><td>16-11-2026</td><td>الاثنين</td><td>8:30 am - 10:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>8</td><td>17-11-2026</td><td>الثلاثاء</td><td>9:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>9 - 11</td><td>22-11-2026</td><td>الأحد</td><td>8:30 am - 10:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>12 - 14</td><td>23-11-2026</td><td>الاثنين</td><td>8:30 am - 10:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>15 - 17</td><td>24-11-2026</td><td>الثلاثاء</td><td>8:30 am - 10:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>18 - 21</td><td>25-11-2026</td><td>الأربعاء</td><td>8:30 am - 10:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>22 - 23</td><td>26-11-2026</td><td>الخميس</td><td>8:30 am - 9:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>24 - 26</td><td>29-11-2026</td><td>الأحد</td><td>8:30 am - 10:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-                <tr><td>27 - 28</td><td>30-11-2026</td><td>الاثنين</td><td>8:30 am - 10:30 am</td><td>صالة الاتحاد البحريني لكرة السلة</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="content-box">
-          <div class="box-header">
-            <h2 class="box-title">📸 صور وفيديوهات دوري كرة السلة</h2>
-          </div>
-          <div class="media-grid" id="basketball-media-grid">
-            <div class="media-card"><span>جاري مزامنة الوسائط المرفوعة...</span></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= 4. ESPORTS VIEW ================= -->
-      <section id="esports-view" class="view-panel">
-        <div class="content-box">
-          <div class="box-header">
-            <h2 class="box-title">🎮 البرنامج الزمني لبطولة وزارة التربية للألعاب الإلكترونية</h2>
-            <a href="https://maps.google.com/?cid=12361665426147690921" target="_blank" class="venue-link">📍 موقع صالة الوزارة (مدينة عيسى)</a>
-          </div>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>م</th>
-                  <th>المرحلة والفعالية</th>
-                  <th>التاريخ</th>
-                  <th>اليوم</th>
-                  <th>الملاحظات والمكان</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>1</td><td>إعدادي - بنين</td><td>8 نوفمبر 2026</td><td>الأحد</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>2</td><td>إعدادي - بنات</td><td>9 نوفمبر 2026</td><td>الاثنين</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>3</td><td>ثانوي - بنين</td><td>10 نوفمبر 2026</td><td>الثلاثاء</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>4</td><td>ثانوي - بنات</td><td>11 نوفمبر 2026</td><td>الأربعاء</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>5</td><td>زيارات - هيئة تعليمية إناث</td><td>12 نوفمبر 2026</td><td>الخميس</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>6</td><td>زيارات - ابتدائي بنين</td><td>15 نوفمبر 2026</td><td>الأحد</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>7</td><td>زيارات - ابتدائي بنين</td><td>16 نوفمبر 2026</td><td>الاثنين</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>8</td><td>زيارات - ابتدائي بنات</td><td>17 نوفمبر 2026</td><td>الثلاثاء</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>9</td><td>زيارات - ابتدائي بنات</td><td>18 نوفمبر 2026</td><td>الأربعاء</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>10</td><td><span class="badge-stage">مباريات الدور ربع النهائي</span></td><td>19 نوفمبر 2026</td><td>الخميس</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>11</td><td>بطولة الجامعات</td><td>22 نوفمبر 2026</td><td>الأحد</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>12</td><td>تدريبات العروض</td><td>23 نوفمبر 2026</td><td>الاثنين</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>13</td><td>تدريبات وبروفات</td><td>24 نوفمبر 2026</td><td>الثلاثاء</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>14</td><td><span class="badge-stage">مقترح اليوم الختامي</span></td><td>25 نوفمبر 2026</td><td>الأربعاء</td><td>صالة وزارة التربية والتعليم</td></tr>
-                <tr><td>15</td><td>اليوم الختامي والتكريم</td><td>26 نوفمبر 2026</td><td>الخميس</td><td>صالة وزارة التربية والتعليم</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="content-box">
-          <div class="box-header">
-            <h2 class="box-title">📸 وسائط بطولة الألعاب الإلكترونية</h2>
-          </div>
-          <div class="media-grid" id="esports-media-grid">
-            <div class="media-card"><span>جاري مزامنة الوسائط المرفوعة...</span></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= 5. ALL MEDIA VIEW ================= -->
-      <section id="all-media-view" class="view-panel">
-        <div class="content-box">
-          <div class="box-header">
-            <h2 class="box-title">📸 معرض الصور والفيديوهات العام لكافة الفعاليات</h2>
-          </div>
-          <!-- Embed your Google Drive folder or parsed Google Sheets responses here -->
-          <div class="media-grid" id="master-media-container">
-            <div class="media-card">
-              <span>جميع وسائط الطلاب المرفوعة تظهر هنا تلقائياً</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <script>
-    // Tab and View Switcher logic
-    function switchView(viewId) {
-      document.querySelectorAll('.view-panel').forEach(panel => {
-        panel.classList.remove('active');
-      });
-      document.querySelectorAll('.nav-pill').forEach(btn => {
-        btn.classList.remove('active');
-      });
-
-      const activePanel = document.getElementById(viewId);
-      if (activePanel) {
-        activePanel.classList.add('active');
-      }
-
-      event.currentTarget.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  </script>
-</body>
-</html>
-
-i need it in ar and eng and when clicking on the event on the calendar pop up box with details of where when and who ? when clicking the upload photo the link should take you to the attached form . remove the form from the bottom. the 12 month calendar must be accessible with buttons on the first page use attached colour pallet attached need to be interactive and mobile friendly and way at the bottom there is a carousal of photos remove it
-
-Your updated web application file is ready:
-HTML icon
-index
- HTML 
-Key Updates Applied:
-
-    New Visual Identity & Exact Color Palette Applied   
-    Screenshot 2026-11-02 at 07.42.41.jpg
-
-        Deep Black (#0A0C12) as the main canvas background.   
-        Screenshot 2026-11-02 at 07.42.41.jpg
-
-        Primary Navy (#023661) for cards, container headers, and event highlights.   
-        Screenshot 2026-11-02 at 07.42.41.jpg
-
-        Dark Charcoal/Slate (#3F3A42) and Cool Slate (#76828E) for borders, secondary buttons, tags, and subtle metadata.   
-        Screenshot 2026-11-02 at 07.42.41.jpg
-
-        Vibrant Bright Orange (#DB5227) for active month badges, live indicator accents, and primary interactive buttons.   
-        Screenshot 2026-11-02 at 07.42.41.jpg
-
-    Full Bilingual Support (العربية & English)
-
-        A persistent language switcher button (English / العربية) in the top navigation bar dynamically updates all labels, titles, table headers, team names, days, and directionality (dir="rtl" ⇄ dir="ltr").
-
-    12-Month Quick-Access Calendar
-
-        Accessible month pill buttons (September 2026 through August 2027) let users switch between any month with one tap.
-
-        Days with events feature color-coded indicators for Football, Basketball, and E-Sports.   
-        البرنامج الزمني لبطولة وزارة التربية والتعليم للألعاب الإلكترونية.pdf+ 2
-
-    Interactive "Where / When / Who" Pop-up Modal
-
-        Clicking any day on the calendar or tapping "عرض / View" on any match in the schedules triggers a clean pop-up modal displaying:
-
-            Who (من المشاركون؟): Competing schools, tournament divisions, or student stages.   
-            البرنامج الزمني لبطولة وزارة التربية والتعليم للألعاب الإلكترونية.pdf+ 1
-
-            When (الموعد والتوقيت): Date, day of the week, and kick-off/start timing.   
-            البرنامج الزمني لبطولة وزارة التربية والتعليم للألعاب الإلكترونية.pdf+ 2
-
-            Where (المكان والملعب): Venue name with a direct button linking to Google Maps.   
-            تفريغ المبارايات لدوري المجموعات.pdf+ 1
-
-    Direct Upload & Form Cleanup
-
-        The inline embedded form at the bottom has been removed.
-
-        Clicking the top "رفع صور وفيديوهات / Upload Photos & Videos" button takes users directly to your designated submission form in a new tab.
-
-    Tournament Sidebar Navigation
-
-        Clicking any tournament in the sidebar switches directly to that specific competition's full timetable and match list:
-
-            بطولة ناصر بن حمد الثانوية لكرة القدم   
-            جدول الدور الرئيسي 26-27.pdf+ 1
-
-            دوري المجموعات لكرة السلة (الاتحاد البحريني لكرة السلة)   
-            تفريغ المبارايات لدوري المجموعات.pdf+ 1
-
-            بطولة وزارة التربية والتعليم للألعاب الإلكترونية   
-            البرنامج الزمني لبطولة وزارة التربية والتعليم للألعاب الإلكترونية.pdf
-
-            معرض الوسائط الكامل (Media Gallery) with category filters
-
-    Removed Carousel
-
-        The photo carousel at the bottom has been removed as requested.
-
-
-Gemini is AI and can make mistakes.
-Processed and analysed in code
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>قسم التربية الرياضية - التقويم الرياضي والبطولات | Physical Education Section - Sports Calendar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -878,13 +41,11 @@ Processed and analysed in code
       line-height: 1.5;
     }
 
-    /* English LTR override */
     body.lang-en {
       direction: ltr;
       text-align: left;
     }
 
-    /* Header */
     header {
       background: rgba(10, 12, 18, 0.92);
       backdrop-filter: blur(12px);
@@ -963,7 +124,6 @@ Processed and analysed in code
       box-shadow: 0 6px 20px rgba(219, 82, 39, 0.5);
     }
 
-    /* Main Dashboard Layout */
     .dashboard-layout {
       display: flex;
       flex: 1;
@@ -974,7 +134,6 @@ Processed and analysed in code
       gap: 1.25rem;
     }
 
-    /* Sidebar Navigation */
     .sidebar {
       width: 320px;
       flex-shrink: 0;
@@ -1042,7 +201,6 @@ Processed and analysed in code
       font-size: 1.1rem;
     }
 
-    /* Venue Quick Links */
     .venue-list {
       display: flex;
       flex-direction: column;
@@ -1063,7 +221,6 @@ Processed and analysed in code
       color: var(--color-accent-orange);
     }
 
-    /* Content Area */
     .main-content {
       flex: 1;
       min-width: 0;
@@ -1098,7 +255,6 @@ Processed and analysed in code
       margin-bottom: 1rem;
     }
 
-    /* Upcoming Matches Grid */
     .upcoming-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1146,7 +302,6 @@ Processed and analysed in code
       gap: 0.5rem;
     }
 
-    /* Month Selector Bar (12 Months Accessible) */
     .month-selector-bar {
       display: flex;
       align-items: center;
@@ -1182,7 +337,6 @@ Processed and analysed in code
       color: #fff;
     }
 
-    /* Calendar Grid */
     .calendar-container {
       display: flex;
       flex-direction: column;
@@ -1252,7 +406,6 @@ Processed and analysed in code
     .pill-basketball { background: #572d15; border-left: 2px solid var(--color-accent-orange); }
     .pill-esports { background: #3F3A42; border-left: 2px solid #a855f7; }
 
-    /* Tables */
     .table-wrapper {
       overflow-x: auto;
       border-radius: 10px;
@@ -1297,7 +450,6 @@ Processed and analysed in code
       font-family: inherit;
     }
 
-    /* Media Filter Grid */
     .media-filter-bar {
       display: flex;
       gap: 0.5rem;
@@ -1339,7 +491,6 @@ Processed and analysed in code
       font-size: 0.85rem;
     }
 
-    /* Modal Pop-up */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -1474,7 +625,6 @@ Processed and analysed in code
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <div class="brand-group">
       <div>
@@ -1483,7 +633,6 @@ Processed and analysed in code
       </div>
     </div>
     <div class="header-actions">
-      <!-- Attached Google Form link for photo & video uploads -->
       <a href="https://forms.gle/UploadMediaForm" target="_blank" class="btn-upload" id="t-btn-upload">
         <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
         <span>رفع صور وفيديوهات</span>
@@ -1492,10 +641,8 @@ Processed and analysed in code
     </div>
   </header>
 
-  <!-- Dashboard Container -->
   <div class="dashboard-layout">
     
-    <!-- Sidebar: Tournament & Views Switcher -->
     <aside class="sidebar">
       <div class="sidebar-box">
         <div class="sidebar-box-title" id="t-nav-title">البطولات والفعاليات</div>
@@ -1544,47 +691,34 @@ Processed and analysed in code
       </div>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="main-content">
       
-      <!-- ================= 1. HOME VIEW ================= -->
       <section id="home-view" class="view-section active">
-        <!-- Upcoming Matches (Next Up) -->
         <div class="card">
           <div class="card-title">
             <span id="t-up-title">⚡ الفعاليات والمباريات القادمة</span>
             <span style="font-size:0.75rem; color:var(--color-accent-orange); font-weight:600;" id="t-click-hint">اضغط لعرض التفاصيل الكاملة</span>
           </div>
-          <div class="upcoming-grid" id="upcoming-cards-container">
-            <!-- Dynamic inject via JS -->
-          </div>
+          <div class="upcoming-grid" id="upcoming-cards-container"></div>
         </div>
 
-        <!-- 12-Month Accessible Calendar -->
         <div class="card">
           <div class="card-title">
             <span id="t-cal-title">📅 التقويم السنوي الشامل 2026-2027</span>
             <span id="cal-current-label" style="font-size:0.85rem; color:var(--color-accent-orange);">نوفمبر 2026</span>
           </div>
 
-          <!-- 12 Month Selector Buttons -->
-          <div class="month-selector-bar" id="month-buttons">
-            <!-- 12 buttons generated by JS -->
-          </div>
+          <div class="month-selector-bar" id="month-buttons"></div>
 
-          <!-- Calendar Days Grid -->
           <div class="calendar-container">
             <div class="cal-weekdays" id="cal-weekdays">
               <span>الأحد</span><span>الاثنين</span><span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span><span>السبت</span>
             </div>
-            <div class="cal-days-grid" id="cal-grid">
-              <!-- Days populated dynamically by renderCalendar() -->
-            </div>
+            <div class="cal-days-grid" id="cal-grid"></div>
           </div>
         </div>
       </section>
 
-      <!-- ================= 2. FOOTBALL VIEW ================= -->
       <section id="football-view" class="view-section">
         <div class="card">
           <div class="card-title">
@@ -1609,7 +743,6 @@ Processed and analysed in code
         </div>
       </section>
 
-      <!-- ================= 3. BASKETBALL VIEW ================= -->
       <section id="basketball-view" class="view-section">
         <div class="card">
           <div class="card-title">
@@ -1633,7 +766,6 @@ Processed and analysed in code
         </div>
       </section>
 
-      <!-- ================= 4. ESPORTS VIEW ================= -->
       <section id="esports-view" class="view-section">
         <div class="card">
           <div class="card-title">
@@ -1657,7 +789,6 @@ Processed and analysed in code
         </div>
       </section>
 
-      <!-- ================= 5. ALL MEDIA VIEW ================= -->
       <section id="media-view" class="view-section">
         <div class="card">
           <div class="card-title">
@@ -1682,7 +813,6 @@ Processed and analysed in code
     </main>
   </div>
 
-  <!-- Interactive Event Detail Modal -->
   <div class="modal-overlay" id="event-modal" onclick="closeModalOnOverlay(event)">
     <div class="modal-card">
       <div class="modal-header">
@@ -1729,7 +859,6 @@ Processed and analysed in code
   </div>
 
   <script>
-    // Master Verified Datasets from PDFs
     const VENUES = {
       isaClub: { nameAr: "نادي مدينة عيسى", nameEn: "Isa Town Club", map: "https://maps.google.com/?cid=9845700810332841646" },
       ettihadClub: { nameAr: "نادي الاتحاد الرياضي", nameEn: "Al Ettihad Club", map: "https://maps.google.com/?cid=3545199616238861163" },
@@ -1808,7 +937,7 @@ Processed and analysed in code
 
     let currentLang = 'ar';
     let selectedYear = 2026;
-    let selectedMonth = 10; // 0-indexed: 10 = November
+    let selectedMonth = 10;
 
     const MONTHS = [
       { y: 2026, m: 8, ar: "سبتمبر 2026", en: "Sep 2026" },
@@ -1825,7 +954,6 @@ Processed and analysed in code
       { y: 2027, m: 7, ar: "أغسطس 2027", en: "Aug 2027" }
     ];
 
-    // Language strings
     const I18N = {
       ar: {
         brandTitle: "قسم الأنشطة والتربية الرياضية",
@@ -1982,14 +1110,12 @@ Processed and analysed in code
       const firstDayIndex = new Date(year, month, 1).getDay();
       const totalDays = new Date(year, month + 1, 0).getDate();
 
-      // Empty lead days
       for (let i = 0; i < firstDayIndex; i++) {
         const cell = document.createElement('div');
         cell.className = 'cal-day empty';
         grid.appendChild(cell);
       }
 
-      // Actual days
       for (let day = 1; day <= totalDays; day++) {
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const cell = document.createElement('div');
@@ -2000,7 +1126,6 @@ Processed and analysed in code
         dayNum.textContent = day;
         cell.appendChild(dayNum);
 
-        // Events on this day
         const fbToday = FOOTBALL_MATCHES.filter(m => m.date === dateStr);
         const bbToday = BASKETBALL_MATCHES.filter(m => m.date === dateStr);
         const esToday = ESPORTS_SCHEDULE.filter(m => m.date === dateStr);
@@ -2033,7 +1158,6 @@ Processed and analysed in code
       const container = document.getElementById('upcoming-cards-container');
       container.innerHTML = '';
 
-      // Showcase the opening matches & events (Nov 8-9)
       const showcases = [
         {
           type: "football",
@@ -2216,10 +1340,8 @@ Processed and analysed in code
     function filterMedia(category, btnElem) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       if (btnElem) btnElem.classList.add('active');
-      // Ready for Sheets API or Drive response integration
     }
 
-    // Modal Control
     function openModal({ title, who, when, where, map, stage }) {
       document.getElementById('m-title').textContent = title || '';
       document.getElementById('m-who').textContent = who || '-';
@@ -2288,11 +1410,7 @@ Processed and analysed in code
       }
     }
 
-    // Run on startup
     window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
-
-index.html
-Displaying index.html.
