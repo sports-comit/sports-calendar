@@ -23,7 +23,6 @@
       --font-stack: 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
     }
 
-    /* Prevent mobile horizontal page bleed */
     html, body {
       width: 100%;
       max-width: 100vw;
@@ -56,7 +55,7 @@
       text-align: left;
     }
 
-    /* Header */
+    /* Responsive Header */
     header {
       background: rgba(10, 12, 18, 0.96);
       backdrop-filter: blur(12px);
@@ -116,6 +115,12 @@
       cursor: pointer;
       font-family: inherit;
       white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .btn-lang:hover {
+      background: var(--color-navy);
+      border-color: #fff;
     }
 
     .btn-upload-top {
@@ -744,6 +749,34 @@
       align-items: center;
       gap: 0.35rem;
     }
+
+    /* Lightbox Modal for Full Image View */
+    .lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+
+    .lightbox-modal.open {
+      display: flex;
+    }
+
+    .lightbox-img {
+      max-width: 92vw;
+      max-height: 88vh;
+      border-radius: 10px;
+      object-fit: contain;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    }
   </style>
 </head>
 <body>
@@ -858,6 +891,18 @@
             <div class="cal-cells-matrix" id="cal-days-mount"></div>
           </div>
         </div>
+
+        <!-- Live Uploaded Media Section on Home Page -->
+        <div class="content-box">
+          <div class="content-box-title">
+            <span id="t-home-media-title">📸 أحدث الصور ومقاطع الفيديو المرفوعة</span>
+            <button onclick="fetchLiveMedia()" style="background:var(--color-navy); color:#fff; border:none; padding:0.28rem 0.65rem; border-radius:6px; font-size:0.72rem; font-weight:700; cursor:pointer;" id="t-btn-refresh-home">🔄 تحديث</button>
+          </div>
+          <div id="home-media-loading" style="text-align:center; padding:1.2rem; color:var(--color-slate-light); font-size:0.8rem;">
+            ⏳ جاري تحميل الصور المرفوعة...
+          </div>
+          <div id="home-live-media-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:0.55rem; width:100%;"></div>
+        </div>
       </section>
 
       <!-- ================= 2. FOOTBALL VIEW ================= -->
@@ -870,13 +915,13 @@
             <table>
               <thead>
                 <tr>
-                  <th>رقم</th>
-                  <th>التاريخ</th>
-                  <th>الوقت</th>
-                  <th>الملعب</th>
-                  <th>المباراة (الفريقان)</th>
-                  <th>المجموعة / الدور</th>
-                  <th>التفاصيل</th>
+                  <th id="th-fb-num">رقم</th>
+                  <th id="th-fb-date">التاريخ</th>
+                  <th id="th-fb-time">الوقت</th>
+                  <th id="th-fb-venue">الملعب</th>
+                  <th id="th-fb-teams">المباراة (الفريقان)</th>
+                  <th id="th-fb-group">المجموعة / الدور</th>
+                  <th id="th-fb-action">التفاصيل</th>
                 </tr>
               </thead>
               <tbody id="football-table-mount"></tbody>
@@ -895,12 +940,12 @@
             <table>
               <thead>
                 <tr>
-                  <th>المباراة</th>
-                  <th>التاريخ</th>
-                  <th>اليوم</th>
-                  <th>الوقت</th>
-                  <th>الصالة والموقع</th>
-                  <th>التفاصيل</th>
+                  <th id="th-bb-num">المباراة</th>
+                  <th id="th-bb-date">التاريخ</th>
+                  <th id="th-bb-day">اليوم</th>
+                  <th id="th-bb-time">الوقت</th>
+                  <th id="th-bb-hall">الصالة والموقع</th>
+                  <th id="th-bb-action">التفاصيل</th>
                 </tr>
               </thead>
               <tbody id="basketball-table-mount"></tbody>
@@ -919,12 +964,12 @@
             <table>
               <thead>
                 <tr>
-                  <th>م</th>
-                  <th>المرحلة والفعالية</th>
-                  <th>التاريخ</th>
-                  <th>اليوم</th>
-                  <th>المكان</th>
-                  <th>التفاصيل</th>
+                  <th id="th-es-num">م</th>
+                  <th id="th-es-stage">المرحلة والفعالية</th>
+                  <th id="th-es-date">التاريخ</th>
+                  <th id="th-es-day">اليوم</th>
+                  <th id="th-es-venue">المكان</th>
+                  <th id="th-es-action">التفاصيل</th>
                 </tr>
               </thead>
               <tbody id="esports-table-mount"></tbody>
@@ -946,11 +991,11 @@
             <table>
               <thead>
                 <tr>
-                  <th>اليوم والتاريخ</th>
-                  <th>الفئة المستهدفة</th>
-                  <th>التوقيت</th>
-                  <th>البرنامج والفعاليات</th>
-                  <th>التفاصيل</th>
+                  <th id="th-ex-date">اليوم والتاريخ</th>
+                  <th id="th-ex-target">الفئة المستهدفة</th>
+                  <th id="th-ex-time">التوقيت</th>
+                  <th id="th-ex-prog">البرنامج والفعاليات</th>
+                  <th id="th-ex-action">التفاصيل</th>
                 </tr>
               </thead>
               <tbody id="excellence-table-mount"></tbody>
@@ -964,7 +1009,7 @@
         <div class="content-box">
           <div class="content-box-title">
             <span id="t-media-title">📸 معرض وسائط الفعاليات والبطولات</span>
-            <button onclick="fetchLiveMedia()" style="background:var(--color-navy); color:#fff; border:none; padding:0.3rem 0.75rem; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">🔄 تحديث الصور</button>
+            <button onclick="fetchLiveMedia()" style="background:var(--color-navy); color:#fff; border:none; padding:0.3rem 0.75rem; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;" id="t-btn-refresh-all">🔄 تحديث الصور</button>
           </div>
           <div id="media-loading-indicator" style="text-align:center; padding:1.5rem; color:var(--color-slate-light); font-size:0.82rem;">
             ⏳ جاري تحميل الصور المرفوعة من Google Sheets...
@@ -987,11 +1032,16 @@
     </div>
   </div>
 
+  <!-- Lightbox Modal for Full Image View -->
+  <div class="lightbox-modal" id="lightbox-modal" onclick="closeLightbox()">
+    <img id="lightbox-full-img" class="lightbox-img" src="" alt="Full View" />
+  </div>
+
   <script>
     // Master Datasets
     const VENUES = {
-      isaClub: { nameAr: "نادي مدينة عيسى", nameEn: "Isa Town Club", map: "https://maps.google.com/?cid=9845700810332841646" },
-      ettihadClub: { nameAr: "نادي الاتحاد الرياضي", nameEn: "Al Ettihad Club", map: "https://maps.google.com/?cid=3545199616238861163" },
+      isaClub: { nameAr: "نادي مدينة عيسى", nameEn: "Isa Town Club Ground", map: "https://maps.google.com/?cid=9845700810332841646" },
+      ettihadClub: { nameAr: "نادي الاتحاد الرياضي", nameEn: "Al Ettihad Club Ground", map: "https://maps.google.com/?cid=3545199616238861163" },
       bbaArena: { nameAr: "صالة الاتحاد البحريني لكرة السلة (الماحوز)", nameEn: "Bahrain Basketball Association Arena (Mahooz)", map: "https://maps.google.com/?cid=13083863488950478055" },
       moeHall: { nameAr: "صالة وزارة التربية والتعليم (مدينة عيسى)", nameEn: "Ministry of Education Hall (Isa Town)", map: "https://maps.google.com/?cid=12361665426147690921" },
       khalifaStadium: { nameAr: "مدينة خليفة الرياضية", nameEn: "Khalifa Sports City", map: "https://maps.google.com/?q=Khalifa+Sports+City+Bahrain" },
@@ -1135,7 +1185,12 @@
         exHead: "🏆 جائزة الطالب المتميز في المجال الثقافي والرياضي للمرحلة الثانوية",
         exDesc: "بحضور سعادة الأستاذة / كفاية حبيب العنزور - الوكيل المساعد للخدمات التعليمية. المكان: مدرسة غازي القصيبي الثانوية للبنات.",
         mediaTitle: "📸 معرض وسائط الفعاليات والبطولات",
-        mediaEmpty: "📂 يتم جلب وتصنيف الصور والفيديوهات تلقائياً وفق البطولة المختارة من نموذج Google Form.",
+        homeMediaTitle: "📸 أحدث الصور ومقاطع الفيديو المرفوعة",
+        mediaRefreshBtn: "🔄 تحديث الصور",
+        homeRefreshBtn: "🔄 تحديث",
+        mediaEmpty: "لا توجد صور مرفوعة حالياً في النموذج.",
+        mediaLoading: "⏳ جاري تحميل الصور المرفوعة من Google Sheets...",
+        mediaError: "⚠️ تعذر تحميل الصور تلقائياً. تأكد من إعدادات النشر لـ Apps Script.",
         detailsBtn: "عرض التفاصيل",
         openMap: "فتح الموقع في خرائط Google",
         modalPrefix: "فعاليات ومباريات يوم",
@@ -1143,7 +1198,20 @@
         lblWho: "المشاركون (Who)",
         lblWhen: "التوقيت (When)",
         lblWhere: "المكان والملعب (Where)",
-        lblStage: "المرحلة / الدور"
+        lblStage: "المرحلة / الدور",
+        // Table Headers
+        thNum: "رقم",
+        thDate: "التاريخ",
+        thDay: "اليوم",
+        thTime: "الوقت",
+        thVenue: "الملعب",
+        thHall: "الصالة والموقع",
+        thTeams: "المباراة (الفريقان)",
+        thGroup: "المجموعة / الدور",
+        thStage: "المرحلة والفعالية",
+        thAction: "التفاصيل",
+        thTarget: "الفئة المستهدفة",
+        thProgram: "البرنامج والفعاليات"
       },
       en: {
         brandTitle: "Physical Education Activities Section",
@@ -1167,7 +1235,12 @@
         exHead: "🏆 Outstanding Student Award in Cultural & Sports Field - Secondary Level",
         exDesc: "Under the patronage of Assistant Undersecretary for Educational Services, Ms. Kefaya Habib Al Anzoor. Venue: Ghazi Al Gosaibi Secondary Girls School.",
         mediaTitle: "📸 Tournaments Media Gallery",
-        mediaEmpty: "📂 Uploaded media files are automatically routed here based on tournament selection in Google Form.",
+        homeMediaTitle: "📸 Latest Uploaded Photos & Videos",
+        mediaRefreshBtn: "🔄 Refresh Photos",
+        homeRefreshBtn: "🔄 Refresh",
+        mediaEmpty: "No photos uploaded yet in the form.",
+        mediaLoading: "⏳ Loading uploaded photos from Google Sheets...",
+        mediaError: "⚠️ Could not load media. Check Apps Script permissions.",
         detailsBtn: "View Details",
         openMap: "Open Venue on Google Maps",
         modalPrefix: "Scheduled Events for",
@@ -1175,7 +1248,20 @@
         lblWho: "Participants (Who)",
         lblWhen: "Timing (When)",
         lblWhere: "Venue (Where)",
-        lblStage: "Stage / Group"
+        lblStage: "Stage / Group",
+        // Table Headers
+        thNum: "No.",
+        thDate: "Date",
+        thDay: "Day",
+        thTime: "Time",
+        thVenue: "Venue",
+        thHall: "Hall & Location",
+        thTeams: "Match (Teams)",
+        thGroup: "Group / Stage",
+        thStage: "Stage & Event",
+        thAction: "Details",
+        thTarget: "Target Group",
+        thProgram: "Program & Events"
       }
     };
 
@@ -1228,8 +1314,44 @@
       document.getElementById('t-ex-head').textContent = t.exHead;
       document.getElementById('t-ex-desc').textContent = t.exDesc;
       document.getElementById('t-media-title').textContent = t.mediaTitle;
-      document.getElementById('t-media-empty').textContent = t.mediaEmpty;
+      document.getElementById('t-home-media-title').textContent = t.homeMediaTitle;
+      document.getElementById('t-btn-refresh-home').textContent = t.homeRefreshBtn;
+      document.getElementById('t-btn-refresh-all').textContent = t.mediaRefreshBtn;
 
+      // Translate Table Headers
+      // Football
+      document.getElementById('th-fb-num').textContent = t.thNum;
+      document.getElementById('th-fb-date').textContent = t.thDate;
+      document.getElementById('th-fb-time').textContent = t.thTime;
+      document.getElementById('th-fb-venue').textContent = t.thVenue;
+      document.getElementById('th-fb-teams').textContent = t.thTeams;
+      document.getElementById('th-fb-group').textContent = t.thGroup;
+      document.getElementById('th-fb-action').textContent = t.thAction;
+
+      // Basketball
+      document.getElementById('th-bb-num').textContent = t.thNum;
+      document.getElementById('th-bb-date').textContent = t.thDate;
+      document.getElementById('th-bb-day').textContent = t.thDay;
+      document.getElementById('th-bb-time').textContent = t.thTime;
+      document.getElementById('th-bb-hall').textContent = t.thHall;
+      document.getElementById('th-bb-action').textContent = t.thAction;
+
+      // Esports
+      document.getElementById('th-es-num').textContent = t.thNum;
+      document.getElementById('th-es-stage').textContent = t.thStage;
+      document.getElementById('th-es-date').textContent = t.thDate;
+      document.getElementById('th-es-day').textContent = t.thDay;
+      document.getElementById('th-es-venue').textContent = t.thVenue;
+      document.getElementById('th-es-action').textContent = t.thAction;
+
+      // Excellence
+      document.getElementById('th-ex-date').textContent = t.thDate;
+      document.getElementById('th-ex-target').textContent = t.thTarget;
+      document.getElementById('th-ex-time').textContent = t.thTime;
+      document.getElementById('th-ex-prog').textContent = t.thProgram;
+      document.getElementById('th-ex-action').textContent = t.thAction;
+
+      // Official Venues
       document.getElementById('t-venue-1').textContent = VENUES.bbaArena[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
       document.getElementById('t-venue-2').textContent = VENUES.moeHall[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
       document.getElementById('t-venue-3').textContent = VENUES.isaClub[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
@@ -1668,47 +1790,86 @@
       }
     }
 
+    // Lightbox Controls
+    function openLightbox(url) {
+      document.getElementById('lightbox-full-img').src = url;
+      document.getElementById('lightbox-modal').classList.add('open');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox-modal').classList.remove('open');
+    }
+
+    // Google Apps Script Live Sync Engine
     const MEDIA_API_URL = "https://script.google.com/macros/s/AKfycbx9jMFzhOjEryxl3zEgXrkBwBb93sK2woyFMAuzd1I4wf5s7V_ROjG4-gUUsIEUqa9l/exec";
 
     async function fetchLiveMedia() {
-      const grid = document.getElementById('live-media-grid');
-      const loader = document.getElementById('media-loading-indicator');
-      if (!grid) return;
+      const allGrid = document.getElementById('live-media-grid');
+      const allLoader = document.getElementById('media-loading-indicator');
+      const homeGrid = document.getElementById('home-live-media-grid');
+      const homeLoader = document.getElementById('home-media-loading');
 
-      loader.style.display = 'block';
-      loader.textContent = currentLang === 'ar' ? '⏳ جاري تحميل الصور المرفوعة...' : '⏳ Loading uploaded photos...';
+      const t = I18N[currentLang];
+      if (allLoader) { allLoader.style.display = 'block'; allLoader.textContent = t.mediaLoading; }
+      if (homeLoader) { homeLoader.style.display = 'block'; homeLoader.textContent = t.mediaLoading; }
 
       try {
         const response = await fetch(MEDIA_API_URL);
         const data = await response.json();
         
-        loader.style.display = 'none';
-        grid.innerHTML = '';
+        if (allLoader) allLoader.style.display = 'none';
+        if (homeLoader) homeLoader.style.display = 'none';
+
+        if (allGrid) allGrid.innerHTML = '';
+        if (homeGrid) homeGrid.innerHTML = '';
 
         if (!data || data.length === 0) {
-          grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:1.5rem; color:var(--color-slate-light); font-size:0.82rem;">${currentLang === 'ar' ? 'لا توجد صور مرفوعة حالياً في النموذج.' : 'No photos uploaded yet.'}</div>`;
+          const emptyMsg = `<div style="grid-column:1/-1; text-align:center; padding:1.2rem; color:var(--color-slate-light); font-size:0.8rem;">${t.mediaEmpty}</div>`;
+          if (allGrid) allGrid.innerHTML = emptyMsg;
+          if (homeGrid) homeGrid.innerHTML = emptyMsg;
           return;
         }
 
-        data.slice().reverse().forEach(item => {
-          if (!item.imageUrl) return;
-          const card = document.createElement('div');
-          card.style.cssText = 'background:#131a2c; border:1px solid #1c263c; border-radius:10px; overflow:hidden; aspect-ratio:1; position:relative; cursor:pointer;';
-          card.onclick = () => window.open(item.imageUrl, '_blank');
+        const reversedData = data.slice().reverse();
 
-          card.innerHTML = `
-            <img src="${item.imageUrl}" style="width:100%; height:100%; object-fit:cover; display:block;" loading="lazy" onerror="this.parentElement.style.display='none';" alt="Uploaded Media" />
-          `;
-          grid.appendChild(card);
-        });
+        // 1. Populate dedicated Media Gallery
+        if (allGrid) {
+          reversedData.forEach(item => {
+            if (!item.imageUrl) return;
+            const card = document.createElement('div');
+            card.style.cssText = 'background:#131a2c; border:1px solid #1c263c; border-radius:10px; overflow:hidden; aspect-ratio:1; position:relative; cursor:pointer;';
+            card.onclick = () => openLightbox(item.imageUrl);
+            card.innerHTML = `
+              <img src="${item.imageUrl}" style="width:100%; height:100%; object-fit:cover; display:block;" loading="lazy" onerror="this.onerror=null; this.src='https://drive.google.com/thumbnail?id='+('${item.imageUrl}'.split('/').pop())+'&sz=w1000';" alt="Uploaded Photo" />
+            `;
+            allGrid.appendChild(card);
+          });
+        }
+
+        // 2. Populate Home Page Feed (latest 8 uploads)
+        if (homeGrid) {
+          reversedData.slice(0, 8).forEach(item => {
+            if (!item.imageUrl) return;
+            const card = document.createElement('div');
+            card.style.cssText = 'background:#131a2c; border:1px solid #1c263c; border-radius:10px; overflow:hidden; aspect-ratio:1; position:relative; cursor:pointer;';
+            card.onclick = () => openLightbox(item.imageUrl);
+            card.innerHTML = `
+              <img src="${item.imageUrl}" style="width:100%; height:100%; object-fit:cover; display:block;" loading="lazy" onerror="this.onerror=null; this.src='https://drive.google.com/thumbnail?id='+('${item.imageUrl}'.split('/').pop())+'&sz=w1000';" alt="Uploaded Photo" />
+            `;
+            homeGrid.appendChild(card);
+          });
+        }
       } catch (err) {
         console.error('Error fetching media:', err);
-        loader.style.display = 'block';
-        loader.textContent = currentLang === 'ar' ? '⚠️ تعذر تحميل الصور تلقائياً. تأكد من إعدادات النشر لـ Apps Script.' : '⚠️ Could not load media. Check Apps Script permissions.';
+        if (allLoader) { allLoader.style.display = 'block'; allLoader.textContent = t.mediaError; }
+        if (homeLoader) { homeLoader.style.display = 'block'; homeLoader.textContent = t.mediaError; }
       }
     }
 
-    window.addEventListener('DOMContentLoaded', () => { init(); fetchLiveMedia(); });
+    window.addEventListener('DOMContentLoaded', () => {
+      init();
+      fetchLiveMedia();
+    });
   </script>
 </body>
 </html>
