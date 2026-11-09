@@ -578,6 +578,7 @@
       border-radius: 8px;
     }
 
+    /* Media Card with Hover Title Overlay */
     .media-card-wrap {
       background: #131a2c;
       border: 1px solid #1c263c;
@@ -910,7 +911,6 @@
 </head>
 <body>
 
-  <!-- Top Header -->
   <header>
     <div class="brand-wrap">
       <div class="brand-main" id="t-brand-title">قسم الأنشطة والتربية الرياضية</div>
@@ -925,10 +925,8 @@
     </div>
   </header>
 
-  <!-- Master Layout -->
   <div class="dashboard-layout">
     
-    <!-- Sidebar Area -->
     <aside class="sidebar-area">
       <div class="ui-panel">
         <div class="panel-header" id="t-nav-title">البطولات والفعاليات</div>
@@ -987,7 +985,6 @@
       </div>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="main-area">
       
       <!-- ================= 1. HOME VIEW ================= -->
@@ -1199,7 +1196,7 @@
       { id: 3, date: "2026-11-09", time: "8:30 AM", venueKey: "isaClub", groupAr: "الثانية", groupEn: "Group 2", t1Ar: "مدرسة الشيخ عيسى بن علي", t1En: "Shaikh Isa bin Ali Sec", t2Ar: "مدرسة الرفاع الشرقي الثانوية", t2En: "East Riffa Sec" },
       { id: 4, date: "2026-11-09", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الثانية", groupEn: "Group 2", t1Ar: "مدرسة المعارف الحديثة", t1En: "Modern Knowledge School", t2Ar: "مدرسة الإبداع الخاصة", t2En: "Al Ibdaa Private School" },
       { id: 5, date: "2026-11-10", time: "8:30 AM", venueKey: "isaClub", groupAr: "الثالثة", groupEn: "Group 3", t1Ar: "مدرسة أحمد العمران الثانوية", t1En: "Ahmed Al Omran Sec", t2Ar: "مدرسة النعيم الثانوية", t2En: "Al Naim Sec" },
-      { id: 6, date: "2026-11-10", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الثالثة", groupEn: "Group 3", t1Ar: "مدرسة النور العالمية", t1En: "Al Noor International", t2Ar: "مدارس الفلاح الخاصة", t2En: "Al الفلاح Private School" },
+      { id: 6, date: "2026-11-10", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الثالثة", groupEn: "Group 3", t1Ar: "مدرسة النور العالمية", t1En: "Al Noor International", t2Ar: "مدارس الفلاح الخاصة", t2En: "Al Falah Private School" },
       { id: 7, date: "2026-11-11", time: "8:30 AM", venueKey: "isaClub", groupAr: "الرابعة", groupEn: "Group 4", t1Ar: "مدرسة الجابرية الصناعية", t1En: "Al Jabriya Industrial", t2Ar: "مدرسة الهداية الخليفية", t2En: "Al Hidaya Al Khalifia" },
       { id: 8, date: "2026-11-11", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الرابعة", groupEn: "Group 4", t1Ar: "المدرسة البريطانية", t1En: "British School of Bahrain", t2Ar: "مدرسة سانت كريستوفر", t2En: "St Christopher's School" },
       { id: 9, date: "2026-11-12", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الأولى", groupEn: "Group 1", t1Ar: "مدرسة الحكمة الدولية", t1En: "Al Hekma", t2Ar: "مركز ناصر العلمي والتقني", t2En: "Nasser Vocational" },
@@ -1930,6 +1927,7 @@
       }
     }
 
+    // Interactive Lightbox Player
     function openLightbox(fileId, isVideo, title) {
       const box = document.getElementById('lightbox-box');
       const cleanTitle = title || (isVideo ? 'عرض مقطع الفيديو' : 'عرض الصورة');
@@ -1957,9 +1955,11 @@
       }
     }
 
+    // Google Sheets Direct Data Pipeline
     const SHEET_ID = "15kwFoT836RJ6JJ01vqYQG-6rzbW9btgoo6JQPyUc6LE";
     const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
+    // Baseline approved media with titles
     const DEFAULT_APPROVED_MEDIA = [
       { id: "1ynMxb1NJTmFndU1KKYJwL8S4WSMpsR8V", category: "esports", isVideo: false, title: "منافسات بطولة الألعاب الإلكترونية" },
       { id: "1JBIkXaJ_cn6TcRmTW39J6FnDDQ4jLAsq", category: "esports", isVideo: false, title: "مباراة إلكترونية حماسية" },
@@ -1979,7 +1979,7 @@
       const itemTitle = item.title || (item.isVideo ? 'فيديو تذكاري' : 'صورة تذكارية');
       const typeLabel = item.isVideo ? 'فيديو / Video' : 'صورة / Photo';
 
-      card.title = itemTitle;
+      card.title = itemTitle; // Standard HTML browser hover tooltip
       card.onclick = () => openLightbox(item.id, item.isVideo, itemTitle);
 
       card.innerHTML = `
@@ -1990,4 +1990,167 @@
              alt="${itemTitle}" />
         ${item.isVideo ? `
           <div class="play-video-icon">▶</div>
-        ` : ''
+        ` : ''}
+        <div class="media-hover-overlay">
+          <span class="hover-type-badge">${typeLabel}</span>
+          <span class="hover-title-text">${itemTitle}</span>
+        </div>
+      `;
+      return card;
+    }
+
+    function renderCategorizedMedia(items) {
+      const homeGrid = document.getElementById('home-live-media-grid');
+      const allGrid = document.getElementById('live-media-grid');
+      const fbGrid = document.getElementById('football-live-media-grid');
+      const bbGrid = document.getElementById('basketball-live-media-grid');
+      const esGrid = document.getElementById('esports-live-media-grid');
+      const exGrid = document.getElementById('excellence-live-media-grid');
+
+      [homeGrid, allGrid, fbGrid, bbGrid, esGrid, exGrid].forEach(grid => {
+        if (grid) grid.innerHTML = '';
+      });
+
+      const counts = { football: 0, basketball: 0, esports: 0, excellence: 0 };
+
+      items.forEach((item, idx) => {
+        if (allGrid) allGrid.appendChild(createMediaCard(item));
+        if (homeGrid && idx < 8) homeGrid.appendChild(createMediaCard(item));
+
+        const cat = item.category || 'general';
+        if (cat === 'football' && fbGrid) { fbGrid.appendChild(createMediaCard(item)); counts.football++; }
+        else if (cat === 'basketball' && bbGrid) { bbGrid.appendChild(createMediaCard(item)); counts.basketball++; }
+        else if (cat === 'esports' && esGrid) { esGrid.appendChild(createMediaCard(item)); counts.esports++; }
+        else if (cat === 'excellence' && exGrid) { exGrid.appendChild(createMediaCard(item)); counts.excellence++; }
+      });
+
+      const emptyText = I18N[currentLang].mediaEmpty;
+      if (fbGrid && counts.football === 0) fbGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
+      if (bbGrid && counts.basketball === 0) bbGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
+      if (esGrid && counts.esports === 0) esGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
+      if (exGrid && counts.excellence === 0) exGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
+    }
+
+    function categorizeTournament(rawText) {
+      const text = String(rawText || '').toLowerCase();
+      if (text.includes('قدم') || text.includes('football') || text.includes('ناصر')) return 'football';
+      if (text.includes('سلة') || text.includes('basket')) return 'basketball';
+      if (text.includes('إلكترونية') || text.includes('الكترونية') || text.includes('esport')) return 'esports';
+      if (text.includes('متميز') || text.includes('excellence')) return 'excellence';
+      return 'general';
+    }
+
+    function detectIsVideo(rawText) {
+      const text = String(rawText || '').toLowerCase();
+      return text.includes('video') || text.includes('فيديو') || text.includes('.mp4') || text.includes('.mov');
+    }
+
+    async function fetchLiveMedia() {
+      // 1. Initial display of approved baseline media
+      renderCategorizedMedia(DEFAULT_APPROVED_MEDIA);
+
+      // 2. Query Google Sheet for live updates with titles and Status gating
+      try {
+        const response = await fetch(GVIZ_URL);
+        const text = await response.text();
+        
+        const jsonStart = text.indexOf('{');
+        const jsonEnd = text.lastIndexOf('}') + 1;
+        const jsonData = JSON.parse(text.substring(jsonStart, jsonEnd));
+        
+        const rows = jsonData.table.rows;
+        const liveItems = [];
+
+        rows.forEach(r => {
+          if (!r.c) return;
+          let fileId = null;
+          let tourCategory = 'general';
+          let isVideo = false;
+          let userTitle = '';
+          let isApproved = false;
+          let hasStatusColumn = false;
+
+          r.c.forEach((cell, colIndex) => {
+            if (!cell || cell.v === null || cell.v === undefined) return;
+            const str = String(cell.v).trim();
+            if (!str) return;
+
+            // Check Approval Status
+            const lowerStr = str.toLowerCase();
+            if (lowerStr === 'approved' || lowerStr === 'معتمد' || lowerStr === 'مقبول') {
+              isApproved = true;
+              hasStatusColumn = true;
+              return; // skip, this is status not title!
+            }
+            if (lowerStr === 'pending' || lowerStr === 'rejected' || lowerStr === 'قيد الانتظار' || lowerStr === 'مرفوض') {
+              hasStatusColumn = true;
+              return; // skip
+            }
+
+            // Extract Google Drive File Links
+            if (str.includes('drive.google.com') || str.includes('open?id=')) {
+              // Handles multiple links if comma separated
+              const matches = str.match(/[-\w]{25,}/g);
+              if (matches && matches.length > 0) {
+                fileId = matches[0]; // primary
+              }
+              return;
+            }
+
+            // Detect Tournament category
+            const cat = categorizeTournament(str);
+            if (cat !== 'general') {
+              tourCategory = cat;
+              return;
+            }
+
+            // Detect Video
+            if (detectIsVideo(str)) {
+              isVideo = true;
+            }
+
+            // Detect Custom User Title (ignore PINs, dates, timestamps, emails)
+            if (!str.includes('http') && !str.includes('@') && isNaN(str) && str.length >= 2 && str.length <= 100) {
+              if (lowerStr !== 'sports2026' && lowerStr !== 'pera' && lowerStr !== 'pera olympics' && lowerStr !== 'photograph' && lowerStr !== 'video') {
+                userTitle = str;
+              }
+            }
+          });
+
+          // Moderation Gate: If your sheet has a Status column, only show Approved items.
+          // If no Status column is used on that row, display it directly.
+          const allowedToShow = !hasStatusColumn || isApproved;
+
+          if (fileId && allowedToShow) {
+            liveItems.push({ 
+              id: fileId, 
+              category: tourCategory, 
+              isVideo: isVideo, 
+              title: userTitle || (isVideo ? 'مقطع فيديو رياضي' : 'صورة تذكارية') 
+            });
+          }
+        });
+
+        if (liveItems.length > 0) {
+          const merged = [];
+          const seen = new Set();
+          liveItems.reverse().concat(DEFAULT_APPROVED_MEDIA).forEach(item => {
+            if (!seen.has(item.id)) {
+              seen.add(item.id);
+              merged.push(item);
+            }
+          });
+          renderCategorizedMedia(merged);
+        }
+      } catch (err) {
+        console.warn('Live poll fallback: baseline media loaded.');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      init();
+      fetchLiveMedia();
+    });
+  </script>
+</body>
+</html>
