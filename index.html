@@ -561,6 +561,23 @@
       white-space: nowrap;
     }
 
+    .photo-grid-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.55rem;
+      width: 100%;
+    }
+
+    .empty-media-badge {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 1.2rem;
+      color: var(--color-slate-light);
+      font-size: 0.8rem;
+      background: rgba(19, 26, 44, 0.4);
+      border-radius: 8px;
+    }
+
     .modal-backdrop {
       position: fixed;
       top: 0;
@@ -885,10 +902,7 @@
             <span id="t-home-media-title">📸 أحدث الصور ومقاطع الفيديو المرفوعة</span>
             <button onclick="fetchLiveMedia()" style="background:var(--color-navy); color:#fff; border:none; padding:0.28rem 0.65rem; border-radius:6px; font-size:0.72rem; font-weight:700; cursor:pointer;" id="t-btn-refresh-home">🔄 تحديث</button>
           </div>
-          <div id="home-media-loading" style="text-align:center; padding:1.2rem; color:var(--color-slate-light); font-size:0.8rem;">
-            ⏳ جاري تحميل الصور المرفوعة...
-          </div>
-          <div id="home-live-media-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:0.55rem; width:100%;"></div>
+          <div class="photo-grid-layout" id="home-live-media-grid"></div>
         </div>
       </section>
 
@@ -915,6 +929,14 @@
             </table>
           </div>
         </div>
+
+        <!-- Dedicated Football Photos -->
+        <div class="content-box">
+          <div class="content-box-title">
+            <span id="t-fb-media-title">📸 صور وفيديوهات بطولة كرة القدم</span>
+          </div>
+          <div class="photo-grid-layout" id="football-live-media-grid"></div>
+        </div>
       </section>
 
       <!-- ================= 3. BASKETBALL VIEW ================= -->
@@ -939,6 +961,14 @@
             </table>
           </div>
         </div>
+
+        <!-- Dedicated Basketball Photos -->
+        <div class="content-box">
+          <div class="content-box-title">
+            <span id="t-bb-media-title">📸 صور وفيديوهات دوري كرة السلة</span>
+          </div>
+          <div class="photo-grid-layout" id="basketball-live-media-grid"></div>
+        </div>
       </section>
 
       <!-- ================= 4. ESPORTS VIEW ================= -->
@@ -962,6 +992,14 @@
               <tbody id="esports-table-mount"></tbody>
             </table>
           </div>
+        </div>
+
+        <!-- Dedicated E-Sports Photos -->
+        <div class="content-box">
+          <div class="content-box-title">
+            <span id="t-es-media-title">📸 صور وفيديوهات بطولة الألعاب الإلكترونية</span>
+          </div>
+          <div class="photo-grid-layout" id="esports-live-media-grid"></div>
         </div>
       </section>
 
@@ -989,6 +1027,14 @@
             </table>
           </div>
         </div>
+
+        <!-- Dedicated Excellence Award Photos -->
+        <div class="content-box">
+          <div class="content-box-title">
+            <span id="t-ex-media-title">📸 صور وفيديوهات جائزة الطالب المتميز</span>
+          </div>
+          <div class="photo-grid-layout" id="excellence-live-media-grid"></div>
+        </div>
       </section>
 
       <!-- ================= 6. ALL MEDIA VIEW ================= -->
@@ -998,10 +1044,7 @@
             <span id="t-media-title">📸 معرض وسائط الفعاليات والبطولات</span>
             <button onclick="fetchLiveMedia()" style="background:var(--color-navy); color:#fff; border:none; padding:0.3rem 0.75rem; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;" id="t-btn-refresh-all">🔄 تحديث الصور</button>
           </div>
-          <div id="media-loading-indicator" style="text-align:center; padding:1.5rem; color:var(--color-slate-light); font-size:0.82rem;">
-            ⏳ جاري تحميل الصور المرفوعة من Google Sheets...
-          </div>
-          <div id="live-media-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:0.65rem; width:100%;"></div>
+          <div class="photo-grid-layout" id="live-media-grid"></div>
         </div>
       </section>
 
@@ -1025,7 +1068,6 @@
   </div>
 
   <script>
-    // Master Datasets
     const VENUES = {
       isaClub: { nameAr: "نادي مدينة عيسى", nameEn: "Isa Town Club Ground", map: "https://maps.google.com/?cid=9845700810332841646" },
       ettihadClub: { nameAr: "نادي الاتحاد الرياضي", nameEn: "Al Ettihad Club Ground", map: "https://maps.google.com/?cid=3545199616238861163" },
@@ -1173,11 +1215,13 @@
         exDesc: "بحضور سعادة الأستاذة / كفاية حبيب العنزور - الوكيل المساعد للخدمات التعليمية. المكان: مدرسة غازي القصيبي الثانوية للبنات.",
         mediaTitle: "📸 معرض وسائط الفعاليات والبطولات",
         homeMediaTitle: "📸 أحدث الصور ومقاطع الفيديو المرفوعة",
+        fbMediaTitle: "📸 صور وفيديوهات بطولة كرة القدم",
+        bbMediaTitle: "📸 صور وفيديوهات دوري كرة السلة",
+        esMediaTitle: "📸 صور وفيديوهات بطولة الألعاب الإلكترونية",
+        exMediaTitle: "📸 صور وفيديوهات جائزة الطالب المتميز",
         mediaRefreshBtn: "🔄 تحديث الصور",
         homeRefreshBtn: "🔄 تحديث",
-        mediaEmpty: "لا توجد صور مرفوعة حالياً في النموذج.",
-        mediaLoading: "⏳ جاري تحميل الصور المرفوعة من Google Sheets...",
-        mediaError: "⚠️ تعذر تحميل الصور تلقائياً. تأكد من أن ملف الإكسل متاح للعامة كـ Viewer.",
+        mediaEmpty: "لا توجد صور مرفوعة لهذه البطولة حالياً.",
         detailsBtn: "عرض التفاصيل",
         openMap: "فتح الموقع في خرائط Google",
         modalPrefix: "فعاليات ومباريات يوم",
@@ -1222,11 +1266,13 @@
         exDesc: "Under the patronage of Assistant Undersecretary for Educational Services, Ms. Kefaya Habib Al Anzoor. Venue: Ghazi Al Gosaibi Secondary Girls School.",
         mediaTitle: "📸 Tournaments Media Gallery",
         homeMediaTitle: "📸 Latest Uploaded Photos & Videos",
+        fbMediaTitle: "📸 Football Tournament Media",
+        bbMediaTitle: "📸 Basketball League Media",
+        esMediaTitle: "📸 E-Sports Championship Media",
+        exMediaTitle: "📸 Outstanding Student Award Media",
         mediaRefreshBtn: "🔄 Refresh Photos",
         homeRefreshBtn: "🔄 Refresh",
-        mediaEmpty: "No photos uploaded yet in the form.",
-        mediaLoading: "⏳ Loading uploaded photos from Google Sheets...",
-        mediaError: "⚠️ Could not load media. Ensure the sheet is shared as Viewer with anyone with link.",
+        mediaEmpty: "No photos uploaded for this tournament yet.",
         detailsBtn: "View Details",
         openMap: "Open Venue on Google Maps",
         modalPrefix: "Scheduled Events for",
@@ -1300,6 +1346,10 @@
       document.getElementById('t-ex-desc').textContent = t.exDesc;
       document.getElementById('t-media-title').textContent = t.mediaTitle;
       document.getElementById('t-home-media-title').textContent = t.homeMediaTitle;
+      document.getElementById('t-fb-media-title').textContent = t.fbMediaTitle;
+      document.getElementById('t-bb-media-title').textContent = t.bbMediaTitle;
+      document.getElementById('t-es-media-title').textContent = t.esMediaTitle;
+      document.getElementById('t-ex-media-title').textContent = t.exMediaTitle;
       document.getElementById('t-btn-refresh-home').textContent = t.homeRefreshBtn;
       document.getElementById('t-btn-refresh-all').textContent = t.mediaRefreshBtn;
 
@@ -1774,95 +1824,148 @@
       document.getElementById('lightbox-modal').classList.remove('open');
     }
 
-    // Direct Google Sheets Visualization API (Zero CORS errors, 100% Reliable)
+    // Direct Google Sheets Visualization API & Categorized Media Routing
     const SHEET_ID = "15kwFoT836RJ6JJ01vqYQG-6rzbW9btgoo6JQPyUc6LE";
     const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
-    async function fetchLiveMedia() {
-      const allGrid = document.getElementById('live-media-grid');
-      const allLoader = document.getElementById('media-loading-indicator');
+    // Static fallback cache
+    const DEFAULT_APPROVED_MEDIA = [
+      { id: "1ynMxb1NJTmFndU1KKYJwL8S4WSMpsR8V", category: "esports" },
+      { id: "1JBIkXaJ_cn6TcRmTW39J6FnDDQ4jLAsq", category: "esports" },
+      { id: "1dqs1GEJm8gpa_LeQ__I6tKxjdarGfNqc", category: "esports" },
+      { id: "192_O5OoKcMl4XGBLISFLPLBRaiiZRjIv", category: "general" },
+      { id: "1NB-rL1Ud3oovcQqQ-2CCTHxAtuAbwBG-", category: "general" }
+    ];
+
+    function createPhotoCard(fileId) {
+      const card = document.createElement('div');
+      card.style.cssText = 'background:#131a2c; border:1px solid #1c263c; border-radius:10px; overflow:hidden; aspect-ratio:1; position:relative; cursor:pointer; display:flex; align-items:center; justify-content:center;';
+      
+      const primaryUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+      const fallbackUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+      const directViewUrl = `https://drive.google.com/file/d/${fileId}/view`;
+
+      card.onclick = () => openLightbox(primaryUrl);
+
+      card.innerHTML = `
+        <img src="${primaryUrl}" 
+             style="width:100%; height:100%; object-fit:cover; display:block;" 
+             loading="lazy" 
+             onerror="this.onerror=null; this.src='${fallbackUrl}'; this.onerror=() => { this.style.display='none'; this.nextElementSibling.style.display='flex'; };" 
+             alt="Uploaded Match Media" />
+        <div style="display:none; width:100%; height:100%; background:#162033; flex-direction:column; align-items:center; justify-content:center; padding:0.5rem; text-align:center;">
+          <span style="font-size:1.4rem;">📷</span>
+          <a href="${directViewUrl}" target="_blank" style="color:var(--color-accent-orange); font-size:0.7rem; font-weight:700; text-decoration:none; margin-top:0.3rem;">عرض في Drive</a>
+        </div>
+      `;
+      return card;
+    }
+
+    function renderCategorizedMedia(items) {
       const homeGrid = document.getElementById('home-live-media-grid');
-      const homeLoader = document.getElementById('home-media-loading');
+      const allGrid = document.getElementById('live-media-grid');
+      const fbGrid = document.getElementById('football-live-media-grid');
+      const bbGrid = document.getElementById('basketball-live-media-grid');
+      const esGrid = document.getElementById('esports-live-media-grid');
+      const exGrid = document.getElementById('excellence-live-media-grid');
 
-      const t = I18N[currentLang];
-      if (allLoader) { allLoader.style.display = 'block'; allLoader.textContent = t.mediaLoading; }
-      if (homeLoader) { homeLoader.style.display = 'block'; homeLoader.textContent = t.mediaLoading; }
+      // Clear grids
+      [homeGrid, allGrid, fbGrid, bbGrid, esGrid, exGrid].forEach(grid => {
+        if (grid) grid.innerHTML = '';
+      });
 
+      const counts = { football: 0, basketball: 0, esports: 0, excellence: 0 };
+
+      // Render items
+      items.forEach((item, idx) => {
+        const card = createPhotoCard(item.id);
+        
+        // 1. All Media tab
+        if (allGrid) allGrid.appendChild(card.cloneNode(true));
+
+        // 2. Home Page (latest 8)
+        if (homeGrid && idx < 8) homeGrid.appendChild(card.cloneNode(true));
+
+        // 3. Tournament pages
+        const cat = item.category || 'general';
+        if (cat === 'football' && fbGrid) { fbGrid.appendChild(card.cloneNode(true)); counts.football++; }
+        else if (cat === 'basketball' && bbGrid) { bbGrid.appendChild(card.cloneNode(true)); counts.basketball++; }
+        else if (cat === 'esports' && esGrid) { esGrid.appendChild(card.cloneNode(true)); counts.esports++; }
+        else if (cat === 'excellence' && exGrid) { exGrid.appendChild(card.cloneNode(true)); counts.excellence++; }
+      });
+
+      // Add empty badge if a tournament has no specific photos yet
+      const emptyText = I18N[currentLang].mediaEmpty;
+      if (fbGrid && counts.football === 0) fbGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
+      if (bbGrid && counts.basketball === 0) bbGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
+      if (esGrid && counts.esports === 0) esGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
+      if (exGrid && counts.excellence === 0) exGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
+    }
+
+    function categorizeTournament(rawText) {
+      const text = String(rawText || '').toLowerCase();
+      if (text.includes('قدم') || text.includes('football') || text.includes('ناصر')) return 'football';
+      if (text.includes('سلة') || text.includes('basket')) return 'basketball';
+      if (text.includes('إلكترونية') || text.includes('الكترونية') || text.includes('esport')) return 'esports';
+      if (text.includes('متميز') || text.includes('excellence')) return 'excellence';
+      return 'general';
+    }
+
+    async function fetchLiveMedia() {
+      // Show default cached media immediately
+      renderCategorizedMedia(DEFAULT_APPROVED_MEDIA);
+
+      // Poll Google Sheet for new uploads
       try {
         const response = await fetch(GVIZ_URL);
         const text = await response.text();
         
-        // Strip the google.visualization.Query.setResponse() wrapper
         const jsonStart = text.indexOf('{');
         const jsonEnd = text.lastIndexOf('}') + 1;
         const jsonData = JSON.parse(text.substring(jsonStart, jsonEnd));
         
         const rows = jsonData.table.rows;
-        const mediaItems = [];
+        const liveItems = [];
 
-        // Scan every row and cell for Google Drive file links
         rows.forEach(r => {
           if (!r.c) return;
+          let fileId = null;
+          let tourCategory = 'general';
+
           r.c.forEach(cell => {
             if (!cell || !cell.v) return;
             const str = String(cell.v);
+            
+            // Extract Drive Link
             if (str.indexOf('drive.google.com') !== -1 || str.indexOf('id=') !== -1) {
               const match = str.match(/[-\w]{25,}/);
-              if (match) {
-                mediaItems.push(match[0]);
-              }
+              if (match) fileId = match[0];
             }
+
+            // Detect Tournament category
+            const cat = categorizeTournament(str);
+            if (cat !== 'general') tourCategory = cat;
           });
+
+          if (fileId) {
+            liveItems.push({ id: fileId, category: tourCategory });
+          }
         });
 
-        if (allLoader) allLoader.style.display = 'none';
-        if (homeLoader) homeLoader.style.display = 'none';
-
-        if (allGrid) allGrid.innerHTML = '';
-        if (homeGrid) homeGrid.innerHTML = '';
-
-        if (mediaItems.length === 0) {
-          const emptyMsg = `<div style="grid-column:1/-1; text-align:center; padding:1.2rem; color:var(--color-slate-light); font-size:0.8rem;">${t.mediaEmpty}</div>`;
-          if (allGrid) allGrid.innerHTML = emptyMsg;
-          if (homeGrid) homeGrid.innerHTML = emptyMsg;
-          return;
-        }
-
-        const reversedIds = mediaItems.slice().reverse();
-
-        function createPhotoCard(fileId) {
-          const primaryUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
-          const fallbackUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
-
-          const card = document.createElement('div');
-          card.style.cssText = 'background:#131a2c; border:1px solid #1c263c; border-radius:10px; overflow:hidden; aspect-ratio:1; position:relative; cursor:pointer;';
-          card.onclick = () => openLightbox(primaryUrl);
-          
-          card.innerHTML = `
-            <img src="${primaryUrl}" 
-                 style="width:100%; height:100%; object-fit:cover; display:block;" 
-                 loading="lazy" 
-                 onerror="this.onerror=null; this.src='${fallbackUrl}';" 
-                 alt="Uploaded Match Photo" />
-          `;
-          return card;
-        }
-
-        if (allGrid) {
-          reversedIds.forEach(id => {
-            allGrid.appendChild(createPhotoCard(id));
+        if (liveItems.length > 0) {
+          const merged = [];
+          const seen = new Set();
+          // Put newest uploads first
+          liveItems.reverse().concat(DEFAULT_APPROVED_MEDIA).forEach(item => {
+            if (!seen.has(item.id)) {
+              seen.add(item.id);
+              merged.push(item);
+            }
           });
-        }
-
-        if (homeGrid) {
-          reversedIds.slice(0, 8).forEach(id => {
-            homeGrid.appendChild(createPhotoCard(id));
-          });
+          renderCategorizedMedia(merged);
         }
       } catch (err) {
-        console.error('Error fetching media:', err);
-        if (allLoader) { allLoader.style.display = 'block'; allLoader.textContent = t.mediaError; }
-        if (homeLoader) { homeLoader.style.display = 'block'; homeLoader.textContent = t.mediaError; }
+        console.warn('Live poll fallback: cached media displayed.');
       }
     }
 
