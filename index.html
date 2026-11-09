@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>قسم التربية الرياضية - جدول الفعاليات والبطولات | Sports Activities Calendar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -1025,6 +1025,7 @@
   </div>
 
   <script>
+    // Master Datasets
     const VENUES = {
       isaClub: { nameAr: "نادي مدينة عيسى", nameEn: "Isa Town Club Ground", map: "https://maps.google.com/?cid=9845700810332841646" },
       ettihadClub: { nameAr: "نادي الاتحاد الرياضي", nameEn: "Al Ettihad Club Ground", map: "https://maps.google.com/?cid=3545199616238861163" },
@@ -1176,7 +1177,7 @@
         homeRefreshBtn: "🔄 تحديث",
         mediaEmpty: "لا توجد صور مرفوعة حالياً في النموذج.",
         mediaLoading: "⏳ جاري تحميل الصور المرفوعة من Google Sheets...",
-        mediaError: "⚠️ تعذر تحميل الصور تلقائياً. تأكد من إعدادات النشر لـ Apps Script.",
+        mediaError: "⚠️ تعذر تحميل الصور تلقائياً. تأكد من أن ملف الإكسل متاح للعامة كـ Viewer.",
         detailsBtn: "عرض التفاصيل",
         openMap: "فتح الموقع في خرائط Google",
         modalPrefix: "فعاليات ومباريات يوم",
@@ -1225,7 +1226,7 @@
         homeRefreshBtn: "🔄 Refresh",
         mediaEmpty: "No photos uploaded yet in the form.",
         mediaLoading: "⏳ Loading uploaded photos from Google Sheets...",
-        mediaError: "⚠️ Could not load media. Check Apps Script permissions.",
+        mediaError: "⚠️ Could not load media. Ensure the sheet is shared as Viewer with anyone with link.",
         detailsBtn: "View Details",
         openMap: "Open Venue on Google Maps",
         modalPrefix: "Scheduled Events for",
@@ -1302,7 +1303,7 @@
       document.getElementById('t-btn-refresh-home').textContent = t.homeRefreshBtn;
       document.getElementById('t-btn-refresh-all').textContent = t.mediaRefreshBtn;
 
-      // Translate Table Headers
+      // Table Headers
       document.getElementById('th-fb-num').textContent = t.thNum;
       document.getElementById('th-fb-date').textContent = t.thDate;
       document.getElementById('th-fb-time').textContent = t.thTime;
@@ -1773,7 +1774,9 @@
       document.getElementById('lightbox-modal').classList.remove('open');
     }
 
-    const MEDIA_API_URL = "https://script.google.com/macros/s/AKfycbx9jMFzhOjEryxl3zEgXrkBwBb93sK2woyFMAuzd1I4wf5s7V_ROjG4-gUUsIEUqa9l/exec";
+    // Direct Google Sheets Visualization API (Zero CORS errors, 100% Reliable)
+    const SHEET_ID = "15kwFoT836RJ6JJ01vqYQG-6rzbW9btgoo6JQPyUc6LE";
+    const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
     async function fetchLiveMedia() {
       const allGrid = document.getElementById('live-media-grid');
@@ -1786,28 +1789,48 @@
       if (homeLoader) { homeLoader.style.display = 'block'; homeLoader.textContent = t.mediaLoading; }
 
       try {
-        const response = await fetch(MEDIA_API_URL);
-        const data = await response.json();
+        const response = await fetch(GVIZ_URL);
+        const text = await response.text();
         
+        // Strip the google.visualization.Query.setResponse() wrapper
+        const jsonStart = text.indexOf('{');
+        const jsonEnd = text.lastIndexOf('}') + 1;
+        const jsonData = JSON.parse(text.substring(jsonStart, jsonEnd));
+        
+        const rows = jsonData.table.rows;
+        const mediaItems = [];
+
+        // Scan every row and cell for Google Drive file links
+        rows.forEach(r => {
+          if (!r.c) return;
+          r.c.forEach(cell => {
+            if (!cell || !cell.v) return;
+            const str = String(cell.v);
+            if (str.indexOf('drive.google.com') !== -1 || str.indexOf('id=') !== -1) {
+              const match = str.match(/[-\w]{25,}/);
+              if (match) {
+                mediaItems.push(match[0]);
+              }
+            }
+          });
+        });
+
         if (allLoader) allLoader.style.display = 'none';
         if (homeLoader) homeLoader.style.display = 'none';
 
         if (allGrid) allGrid.innerHTML = '';
         if (homeGrid) homeGrid.innerHTML = '';
 
-        if (!data || data.length === 0) {
+        if (mediaItems.length === 0) {
           const emptyMsg = `<div style="grid-column:1/-1; text-align:center; padding:1.2rem; color:var(--color-slate-light); font-size:0.8rem;">${t.mediaEmpty}</div>`;
           if (allGrid) allGrid.innerHTML = emptyMsg;
           if (homeGrid) homeGrid.innerHTML = emptyMsg;
           return;
         }
 
-        const reversedData = data.slice().reverse();
+        const reversedIds = mediaItems.slice().reverse();
 
-        function createPhotoCard(item) {
-          const fileId = item.fileId || (item.imageUrl ? item.imageUrl.match(/[-\w]{25,}/)[0] : "");
-          if (!fileId) return null;
-
+        function createPhotoCard(fileId) {
           const primaryUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
           const fallbackUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
 
@@ -1826,16 +1849,14 @@
         }
 
         if (allGrid) {
-          reversedData.forEach(item => {
-            const el = createPhotoCard(item);
-            if (el) allGrid.appendChild(el);
+          reversedIds.forEach(id => {
+            allGrid.appendChild(createPhotoCard(id));
           });
         }
 
         if (homeGrid) {
-          reversedData.slice(0, 8).forEach(item => {
-            const el = createPhotoCard(item);
-            if (el) homeGrid.appendChild(el);
+          reversedIds.slice(0, 8).forEach(id => {
+            homeGrid.appendChild(createPhotoCard(id));
           });
         }
       } catch (err) {
