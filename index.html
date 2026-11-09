@@ -578,6 +578,50 @@
       border-radius: 8px;
     }
 
+    /* Video Play Badge */
+    .media-card-wrap {
+      background: #131a2c;
+      border: 1px solid #1c263c;
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-video-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 38px;
+      height: 38px;
+      background: rgba(0, 0, 0, 0.75);
+      border: 2px solid var(--color-accent-orange);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .video-label-tag {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: rgba(10, 12, 18, 0.85);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+
     .modal-backdrop {
       position: fixed;
       top: 0;
@@ -775,12 +819,34 @@
       display: flex;
     }
 
+    .lightbox-content-box {
+      width: 100%;
+      max-width: 900px;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
     .lightbox-img {
       max-width: 92vw;
-      max-height: 88vh;
+      max-height: 86vh;
       border-radius: 10px;
       object-fit: contain;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .lightbox-iframe {
+      width: 92vw;
+      max-width: 860px;
+      height: 520px;
+      max-height: 75vh;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+      background: #000;
     }
   </style>
 </head>
@@ -868,7 +934,6 @@
       
       <!-- ================= 1. HOME VIEW ================= -->
       <section id="home-view" class="view-container active">
-        <!-- Upcoming Games -->
         <div class="content-box">
           <div class="content-box-title">
             <span id="t-up-title">⚡ الفعاليات والمباريات القادمة</span>
@@ -877,17 +942,14 @@
           <div class="upcoming-matches-flow" id="upcoming-cards-mount"></div>
         </div>
 
-        <!-- 12-Month Calendar -->
         <div class="content-box">
           <div class="content-box-title">
             <span id="t-cal-title">📅 التقويم السنوي الشامل 2026-2027</span>
             <span id="cal-current-label" style="font-size:0.8rem; color:var(--color-accent-orange);">نوفمبر 2026</span>
           </div>
 
-          <!-- 12-Month Bar -->
           <div class="month-scroll-track" id="month-buttons-mount"></div>
 
-          <!-- Calendar Matrix -->
           <div class="calendar-wrapper">
             <div class="cal-header-row" id="cal-weekdays-mount">
               <span>الأحد</span><span>الاثنين</span><span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span><span>السبت</span>
@@ -930,7 +992,6 @@
           </div>
         </div>
 
-        <!-- Dedicated Football Photos -->
         <div class="content-box">
           <div class="content-box-title">
             <span id="t-fb-media-title">📸 صور وفيديوهات بطولة كرة القدم</span>
@@ -962,7 +1023,6 @@
           </div>
         </div>
 
-        <!-- Dedicated Basketball Photos -->
         <div class="content-box">
           <div class="content-box-title">
             <span id="t-bb-media-title">📸 صور وفيديوهات دوري كرة السلة</span>
@@ -994,7 +1054,6 @@
           </div>
         </div>
 
-        <!-- Dedicated E-Sports Photos -->
         <div class="content-box">
           <div class="content-box-title">
             <span id="t-es-media-title">📸 صور وفيديوهات بطولة الألعاب الإلكترونية</span>
@@ -1028,7 +1087,6 @@
           </div>
         </div>
 
-        <!-- Dedicated Excellence Award Photos -->
         <div class="content-box">
           <div class="content-box-title">
             <span id="t-ex-media-title">📸 صور وفيديوهات جائزة الطالب المتميز</span>
@@ -1062,9 +1120,9 @@
     </div>
   </div>
 
-  <!-- Lightbox Modal for Full Image View -->
-  <div class="lightbox-modal" id="lightbox-modal" onclick="closeLightbox()">
-    <img id="lightbox-full-img" class="lightbox-img" src="" alt="Full View" />
+  <!-- Lightbox Player Modal -->
+  <div class="lightbox-modal" id="lightbox-modal" onclick="closeLightbox(event)">
+    <div class="lightbox-content-box" id="lightbox-box"></div>
   </div>
 
   <script>
@@ -1221,7 +1279,7 @@
         exMediaTitle: "📸 صور وفيديوهات جائزة الطالب المتميز",
         mediaRefreshBtn: "🔄 تحديث الصور",
         homeRefreshBtn: "🔄 تحديث",
-        mediaEmpty: "لا توجد صور مرفوعة لهذه البطولة حالياً.",
+        mediaEmpty: "لا توجد وسائط مرفوعة لهذه البطولة حالياً.",
         detailsBtn: "عرض التفاصيل",
         openMap: "فتح الموقع في خرائط Google",
         modalPrefix: "فعاليات ومباريات يوم",
@@ -1272,7 +1330,7 @@
         exMediaTitle: "📸 Outstanding Student Award Media",
         mediaRefreshBtn: "🔄 Refresh Photos",
         homeRefreshBtn: "🔄 Refresh",
-        mediaEmpty: "No photos uploaded for this tournament yet.",
+        mediaEmpty: "No media uploaded for this tournament yet.",
         detailsBtn: "View Details",
         openMap: "Open Venue on Google Maps",
         modalPrefix: "Scheduled Events for",
@@ -1353,7 +1411,6 @@
       document.getElementById('t-btn-refresh-home').textContent = t.homeRefreshBtn;
       document.getElementById('t-btn-refresh-all').textContent = t.mediaRefreshBtn;
 
-      // Table Headers
       document.getElementById('th-fb-num').textContent = t.thNum;
       document.getElementById('th-fb-date').textContent = t.thDate;
       document.getElementById('th-fb-time').textContent = t.thTime;
@@ -1815,48 +1872,64 @@
       }
     }
 
-    function openLightbox(url) {
-      document.getElementById('lightbox-full-img').src = url;
+    // Interactive Lightbox (Image & Video Player)
+    function openLightbox(fileId, isVideo) {
+      const box = document.getElementById('lightbox-box');
+      if (isVideo) {
+        box.innerHTML = `
+          <iframe class="lightbox-iframe" 
+                  src="https://drive.google.com/file/d/${fileId}/preview" 
+                  allow="autoplay; encrypted-media; fullscreen" 
+                  allowfullscreen></iframe>
+        `;
+      } else {
+        const imgUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
+        box.innerHTML = `<img class="lightbox-img" src="${imgUrl}" alt="Full Media View" />`;
+      }
       document.getElementById('lightbox-modal').classList.add('open');
     }
 
-    function closeLightbox() {
-      document.getElementById('lightbox-modal').classList.remove('open');
+    function closeLightbox(e) {
+      if (e.target.id === 'lightbox-modal' || e.target.classList.contains('lightbox-modal')) {
+        document.getElementById('lightbox-box').innerHTML = '';
+        document.getElementById('lightbox-modal').classList.remove('open');
+      }
     }
 
-    // Direct Google Sheets Visualization API & Categorized Media Routing
+    // Google Sheets Direct Data Pipeline
     const SHEET_ID = "15kwFoT836RJ6JJ01vqYQG-6rzbW9btgoo6JQPyUc6LE";
     const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
-    // Static fallback cache
+    // Verified Approved Media Baseline
     const DEFAULT_APPROVED_MEDIA = [
-      { id: "1ynMxb1NJTmFndU1KKYJwL8S4WSMpsR8V", category: "esports" },
-      { id: "1JBIkXaJ_cn6TcRmTW39J6FnDDQ4jLAsq", category: "esports" },
-      { id: "1dqs1GEJm8gpa_LeQ__I6tKxjdarGfNqc", category: "esports" },
-      { id: "192_O5OoKcMl4XGBLISFLPLBRaiiZRjIv", category: "general" },
-      { id: "1NB-rL1Ud3oovcQqQ-2CCTHxAtuAbwBG-", category: "general" }
+      { id: "1ynMxb1NJTmFndU1KKYJwL8S4WSMpsR8V", category: "esports", isVideo: false },
+      { id: "1JBIkXaJ_cn6TcRmTW39J6FnDDQ4jLAsq", category: "esports", isVideo: false },
+      { id: "1dqs1GEJm8gpa_LeQ__I6tKxjdarGfNqc", category: "esports", isVideo: false },
+      { id: "1k1dKmDsk1zPRM4AgXnj_PBSVXttcikNH", category: "esports", isVideo: true },
+      { id: "1RYybk_jXlGjHMfbpK2ZXz0JJdGdHSL4p", category: "general", isVideo: true },
+      { id: "192_O5OoKcMl4XGBLISFLPLBRaiiZRjIv", category: "general", isVideo: false },
+      { id: "1NB-rL1Ud3oovcQqQ-2CCTHxAtuAbwBG-", category: "general", isVideo: false }
     ];
 
-    function createPhotoCard(fileId) {
+    function createMediaCard(item) {
       const card = document.createElement('div');
-      card.style.cssText = 'background:#131a2c; border:1px solid #1c263c; border-radius:10px; overflow:hidden; aspect-ratio:1; position:relative; cursor:pointer; display:flex; align-items:center; justify-content:center;';
-      
-      const primaryUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
-      const fallbackUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
-      const directViewUrl = `https://drive.google.com/file/d/${fileId}/view`;
+      card.className = 'media-card-wrap';
 
-      card.onclick = () => openLightbox(primaryUrl);
+      const thumbUrl = `https://drive.google.com/thumbnail?id=${item.id}&sz=w800`;
+      const fallbackUrl = `https://lh3.googleusercontent.com/d/${item.id}`;
+
+      card.onclick = () => openLightbox(item.id, item.isVideo);
 
       card.innerHTML = `
-        <img src="${primaryUrl}" 
+        <img src="${thumbUrl}" 
              style="width:100%; height:100%; object-fit:cover; display:block;" 
              loading="lazy" 
-             onerror="this.onerror=null; this.src='${fallbackUrl}'; this.onerror=() => { this.style.display='none'; this.nextElementSibling.style.display='flex'; };" 
-             alt="Uploaded Match Media" />
-        <div style="display:none; width:100%; height:100%; background:#162033; flex-direction:column; align-items:center; justify-content:center; padding:0.5rem; text-align:center;">
-          <span style="font-size:1.4rem;">📷</span>
-          <a href="${directViewUrl}" target="_blank" style="color:var(--color-accent-orange); font-size:0.7rem; font-weight:700; text-decoration:none; margin-top:0.3rem;">عرض في Drive</a>
-        </div>
+             onerror="this.onerror=null; this.src='${fallbackUrl}';" 
+             alt="Uploaded Media" />
+        ${item.isVideo ? `
+          <div class="play-video-icon">▶</div>
+          <div class="video-label-tag">فيديو / Video</div>
+        ` : ''}
       `;
       return card;
     }
@@ -1869,32 +1942,23 @@
       const esGrid = document.getElementById('esports-live-media-grid');
       const exGrid = document.getElementById('excellence-live-media-grid');
 
-      // Clear grids
       [homeGrid, allGrid, fbGrid, bbGrid, esGrid, exGrid].forEach(grid => {
         if (grid) grid.innerHTML = '';
       });
 
       const counts = { football: 0, basketball: 0, esports: 0, excellence: 0 };
 
-      // Render items
       items.forEach((item, idx) => {
-        const card = createPhotoCard(item.id);
-        
-        // 1. All Media tab
-        if (allGrid) allGrid.appendChild(card.cloneNode(true));
+        if (allGrid) allGrid.appendChild(createMediaCard(item));
+        if (homeGrid && idx < 8) homeGrid.appendChild(createMediaCard(item));
 
-        // 2. Home Page (latest 8)
-        if (homeGrid && idx < 8) homeGrid.appendChild(card.cloneNode(true));
-
-        // 3. Tournament pages
         const cat = item.category || 'general';
-        if (cat === 'football' && fbGrid) { fbGrid.appendChild(card.cloneNode(true)); counts.football++; }
-        else if (cat === 'basketball' && bbGrid) { bbGrid.appendChild(card.cloneNode(true)); counts.basketball++; }
-        else if (cat === 'esports' && esGrid) { esGrid.appendChild(card.cloneNode(true)); counts.esports++; }
-        else if (cat === 'excellence' && exGrid) { exGrid.appendChild(card.cloneNode(true)); counts.excellence++; }
+        if (cat === 'football' && fbGrid) { fbGrid.appendChild(createMediaCard(item)); counts.football++; }
+        else if (cat === 'basketball' && bbGrid) { bbGrid.appendChild(createMediaCard(item)); counts.basketball++; }
+        else if (cat === 'esports' && esGrid) { esGrid.appendChild(createMediaCard(item)); counts.esports++; }
+        else if (cat === 'excellence' && exGrid) { exGrid.appendChild(createMediaCard(item)); counts.excellence++; }
       });
 
-      // Add empty badge if a tournament has no specific photos yet
       const emptyText = I18N[currentLang].mediaEmpty;
       if (fbGrid && counts.football === 0) fbGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
       if (bbGrid && counts.basketball === 0) bbGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
@@ -1911,11 +1975,16 @@
       return 'general';
     }
 
+    function detectIsVideo(rawText) {
+      const text = String(rawText || '').toLowerCase();
+      return text.includes('video') || text.includes('فيديو') || text.includes('.mp4') || text.includes('.mov');
+    }
+
     async function fetchLiveMedia() {
-      // Show default cached media immediately
+      // Immediate baseline render
       renderCategorizedMedia(DEFAULT_APPROVED_MEDIA);
 
-      // Poll Google Sheet for new uploads
+      // Live Google Sheet sync
       try {
         const response = await fetch(GVIZ_URL);
         const text = await response.text();
@@ -1931,31 +2000,31 @@
           if (!r.c) return;
           let fileId = null;
           let tourCategory = 'general';
+          let isVideo = false;
 
           r.c.forEach(cell => {
             if (!cell || !cell.v) return;
             const str = String(cell.v);
             
-            // Extract Drive Link
             if (str.indexOf('drive.google.com') !== -1 || str.indexOf('id=') !== -1) {
               const match = str.match(/[-\w]{25,}/);
               if (match) fileId = match[0];
             }
 
-            // Detect Tournament category
             const cat = categorizeTournament(str);
             if (cat !== 'general') tourCategory = cat;
+
+            if (detectIsVideo(str)) isVideo = true;
           });
 
           if (fileId) {
-            liveItems.push({ id: fileId, category: tourCategory });
+            liveItems.push({ id: fileId, category: tourCategory, isVideo: isVideo });
           }
         });
 
         if (liveItems.length > 0) {
           const merged = [];
           const seen = new Set();
-          // Put newest uploads first
           liveItems.reverse().concat(DEFAULT_APPROVED_MEDIA).forEach(item => {
             if (!seen.has(item.id)) {
               seen.add(item.id);
@@ -1965,7 +2034,7 @@
           renderCategorizedMedia(merged);
         }
       } catch (err) {
-        console.warn('Live poll fallback: cached media displayed.');
+        console.warn('Live poll fallback: baseline media loaded.');
       }
     }
 
