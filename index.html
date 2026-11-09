@@ -563,8 +563,8 @@
 
     .photo-grid-layout {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 0.55rem;
+      grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+      gap: 0.6rem;
       width: 100%;
     }
 
@@ -578,7 +578,7 @@
       border-radius: 8px;
     }
 
-    /* Video Play Badge */
+    /* Media Card with Smooth Hover Tooltip/Title Overlay */
     .media-card-wrap {
       background: #131a2c;
       border: 1px solid #1c263c;
@@ -590,36 +590,84 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
 
+    .media-card-wrap:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-accent-orange);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Hover Title Overlay Banner */
+    .media-hover-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(10, 12, 18, 0.96) 0%, rgba(10, 12, 18, 0.8) 75%, transparent 100%);
+      padding: 22px 8px 8px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .media-card-wrap:hover .media-hover-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (hover: none) {
+      .media-hover-overlay {
+        opacity: 0.92;
+        transform: translateY(0);
+      }
+    }
+
+    .hover-title-text {
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hover-type-badge {
+      font-size: 0.6rem;
+      color: var(--color-accent-orange);
+      font-weight: 800;
+    }
+
+    /* Video Play Icon */
     .play-video-icon {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 38px;
-      height: 38px;
-      background: rgba(0, 0, 0, 0.75);
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.78);
       border: 2px solid var(--color-accent-orange);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-size: 1rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      font-size: 1.05rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      z-index: 2;
+      transition: transform 0.2s;
     }
 
-    .video-label-tag {
-      position: absolute;
-      bottom: 6px;
-      right: 6px;
-      background: rgba(10, 12, 18, 0.85);
-      color: #fff;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.65rem;
-      font-weight: 700;
+    .media-card-wrap:hover .play-video-icon {
+      transform: translate(-50%, -50%) scale(1.1);
     }
 
     .modal-backdrop {
@@ -830,9 +878,22 @@
       position: relative;
     }
 
+    .lightbox-title-bar {
+      width: 100%;
+      max-width: 860px;
+      padding: 0.5rem 0.75rem;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.4rem;
+      background: rgba(19, 26, 44, 0.7);
+      border-radius: 8px;
+    }
+
     .lightbox-img {
       max-width: 92vw;
-      max-height: 86vh;
+      max-height: 82vh;
       border-radius: 10px;
       object-fit: contain;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
@@ -842,7 +903,7 @@
       width: 92vw;
       max-width: 860px;
       height: 520px;
-      max-height: 75vh;
+      max-height: 72vh;
       border: none;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
@@ -1872,11 +1933,14 @@
       }
     }
 
-    // Interactive Lightbox (Image & Video Player)
-    function openLightbox(fileId, isVideo) {
+    // Interactive Lightbox Player
+    function openLightbox(fileId, isVideo, title) {
       const box = document.getElementById('lightbox-box');
+      const cleanTitle = title || (isVideo ? 'عرض مقطع الفيديو' : 'عرض الصورة');
+      
+      let contentHtml = `<div class="lightbox-title-bar">${cleanTitle}</div>`;
       if (isVideo) {
-        box.innerHTML = `
+        contentHtml += `
           <iframe class="lightbox-iframe" 
                   src="https://drive.google.com/file/d/${fileId}/preview" 
                   allow="autoplay; encrypted-media; fullscreen" 
@@ -1884,8 +1948,9 @@
         `;
       } else {
         const imgUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
-        box.innerHTML = `<img class="lightbox-img" src="${imgUrl}" alt="Full Media View" />`;
+        contentHtml += `<img class="lightbox-img" src="${imgUrl}" alt="${cleanTitle}" />`;
       }
+      box.innerHTML = contentHtml;
       document.getElementById('lightbox-modal').classList.add('open');
     }
 
@@ -1900,15 +1965,15 @@
     const SHEET_ID = "15kwFoT836RJ6JJ01vqYQG-6rzbW9btgoo6JQPyUc6LE";
     const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
-    // Verified Approved Media Baseline
+    // Baseline approved media with titles
     const DEFAULT_APPROVED_MEDIA = [
-      { id: "1ynMxb1NJTmFndU1KKYJwL8S4WSMpsR8V", category: "esports", isVideo: false },
-      { id: "1JBIkXaJ_cn6TcRmTW39J6FnDDQ4jLAsq", category: "esports", isVideo: false },
-      { id: "1dqs1GEJm8gpa_LeQ__I6tKxjdarGfNqc", category: "esports", isVideo: false },
-      { id: "1k1dKmDsk1zPRM4AgXnj_PBSVXttcikNH", category: "esports", isVideo: true },
-      { id: "1RYybk_jXlGjHMfbpK2ZXz0JJdGdHSL4p", category: "general", isVideo: true },
-      { id: "192_O5OoKcMl4XGBLISFLPLBRaiiZRjIv", category: "general", isVideo: false },
-      { id: "1NB-rL1Ud3oovcQqQ-2CCTHxAtuAbwBG-", category: "general", isVideo: false }
+      { id: "1ynMxb1NJTmFndU1KKYJwL8S4WSMpsR8V", category: "esports", isVideo: false, title: "منافسات بطولة الألعاب الإلكترونية" },
+      { id: "1JBIkXaJ_cn6TcRmTW39J6FnDDQ4jLAsq", category: "esports", isVideo: false, title: "مباراة إلكترونية حماسية" },
+      { id: "1dqs1GEJm8gpa_LeQ__I6tKxjdarGfNqc", category: "esports", isVideo: false, title: "مشاركة طلاب المدارس في البطولة" },
+      { id: "1k1dKmDsk1zPRM4AgXnj_PBSVXttcikNH", category: "esports", isVideo: true, title: "لقطات فيديو من صالة الألعاب الإلكترونية" },
+      { id: "1RYybk_jXlGjHMfbpK2ZXz0JJdGdHSL4p", category: "general", isVideo: true, title: "تغطية الأنشطة الرياضية المدرسية" },
+      { id: "192_O5OoKcMl4XGBLISFLPLBRaiiZRjIv", category: "general", isVideo: false, title: "صورة تذكارية للفرق الرياضية" },
+      { id: "1NB-rL1Ud3oovcQqQ-2CCTHxAtuAbwBG-", category: "general", isVideo: false, title: "جانب من الفعاليات الطلابية" }
     ];
 
     function createMediaCard(item) {
@@ -1917,19 +1982,25 @@
 
       const thumbUrl = `https://drive.google.com/thumbnail?id=${item.id}&sz=w800`;
       const fallbackUrl = `https://lh3.googleusercontent.com/d/${item.id}`;
+      const itemTitle = item.title || (item.isVideo ? 'فيديو تذكاري' : 'صورة تذكارية');
+      const typeLabel = item.isVideo ? 'فيديو / Video' : 'صورة / Photo';
 
-      card.onclick = () => openLightbox(item.id, item.isVideo);
+      card.title = itemTitle;
+      card.onclick = () => openLightbox(item.id, item.isVideo, itemTitle);
 
       card.innerHTML = `
         <img src="${thumbUrl}" 
              style="width:100%; height:100%; object-fit:cover; display:block;" 
              loading="lazy" 
              onerror="this.onerror=null; this.src='${fallbackUrl}';" 
-             alt="Uploaded Media" />
+             alt="${itemTitle}" />
         ${item.isVideo ? `
           <div class="play-video-icon">▶</div>
-          <div class="video-label-tag">فيديو / Video</div>
         ` : ''}
+        <div class="media-hover-overlay">
+          <span class="hover-type-badge">${typeLabel}</span>
+          <span class="hover-title-text">${itemTitle}</span>
+        </div>
       `;
       return card;
     }
@@ -1981,10 +2052,10 @@
     }
 
     async function fetchLiveMedia() {
-      // Immediate baseline render
+      // 1. Initial display of approved baseline media
       renderCategorizedMedia(DEFAULT_APPROVED_MEDIA);
 
-      // Live Google Sheet sync
+      // 2. Query Google Sheet for live updates with titles
       try {
         const response = await fetch(GVIZ_URL);
         const text = await response.text();
@@ -2001,24 +2072,40 @@
           let fileId = null;
           let tourCategory = 'general';
           let isVideo = false;
+          let userTitle = '';
 
           r.c.forEach(cell => {
             if (!cell || !cell.v) return;
-            const str = String(cell.v);
+            const str = String(cell.v).trim();
             
+            // File Link
             if (str.indexOf('drive.google.com') !== -1 || str.indexOf('id=') !== -1) {
               const match = str.match(/[-\w]{25,}/);
               if (match) fileId = match[0];
             }
 
+            // Tournament
             const cat = categorizeTournament(str);
             if (cat !== 'general') tourCategory = cat;
 
+            // Video check
             if (detectIsVideo(str)) isVideo = true;
+
+            // Custom Title: any descriptive string that isn't a link, date, PIN, or email
+            if (!str.includes('http') && !str.includes('@') && isNaN(str) && str.length > 2 && str.length < 90) {
+              if (cat === 'general') {
+                userTitle = str;
+              }
+            }
           });
 
           if (fileId) {
-            liveItems.push({ id: fileId, category: tourCategory, isVideo: isVideo });
+            liveItems.push({ 
+              id: fileId, 
+              category: tourCategory, 
+              isVideo: isVideo, 
+              title: userTitle || (isVideo ? 'مقطع فيديو رياضي' : 'صورة تذكارية') 
+            });
           }
         });
 
