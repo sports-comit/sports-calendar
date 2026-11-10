@@ -56,7 +56,7 @@
       }
     }
 
-    /* Top Header Bar */
+    /* Top Bar Header */
     header.top-bar {
       max-width: 1380px;
       margin: 0 auto 14px auto;
@@ -126,9 +126,7 @@
       background-color: var(--accent-orange-hover);
     }
 
-    /* =========================================================
-       NEW: TOP TOURNAMENT NAV CAROUSEL WITH ARROWS
-       ========================================================= */
+    /* Top Tournament Carousel with Arrows */
     .top-tournaments-bar {
       max-width: 1380px;
       margin: 0 auto 16px auto;
@@ -139,7 +137,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      position: relative;
     }
 
     .carousel-nav-btn {
@@ -153,7 +150,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       line-height: 1;
       flex-shrink: 0;
       transition: all 0.2s;
@@ -170,13 +167,13 @@
       gap: 8px;
       overflow-x: auto;
       scroll-behavior: smooth;
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
       flex-grow: 1;
       padding: 2px 0;
     }
     .tournaments-track::-webkit-scrollbar {
-      display: none; /* Chrome, Safari */
+      display: none;
     }
 
     .tournament-pill-btn {
@@ -206,7 +203,7 @@
       color: #fff;
     }
 
-    /* Main Dashboard Layout */
+    /* Layout Grid */
     .dashboard-layout {
       max-width: 1380px;
       margin: 0 auto;
@@ -222,7 +219,6 @@
       }
     }
 
-    /* Cards */
     .dashboard-card {
       background: var(--card-bg);
       border: 1px solid var(--border-dark);
@@ -253,7 +249,7 @@
       color: var(--accent-orange);
     }
 
-    /* Calendar System */
+    /* Month Selector */
     .calendar-month-selector {
       display: flex;
       gap: 6px;
@@ -284,17 +280,18 @@
       font-weight: 700;
     }
 
-    /* Mobile Table Scroll Container to fit screen */
+    /* Calendar Grid Container */
     .calendar-scroll-wrapper {
       width: 100%;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      border-radius: 6px;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
     }
 
     .calendar-table {
       width: 100%;
-      min-width: 580px; /* Ensures clean grid columns on small screens */
+      min-width: 500px;
       border-collapse: collapse;
       text-align: center;
       table-layout: fixed;
@@ -305,13 +302,21 @@
       font-weight: 600;
       padding: 6px 2px;
       border-bottom: 1px solid var(--border-dark);
+      background: #0d1624;
     }
     .calendar-table td {
       border: 1px solid var(--border-dark);
-      height: 68px;
+      height: 72px;
       vertical-align: top;
       padding: 4px;
       background: rgba(17, 28, 42, 0.4);
+      transition: background 0.15s ease;
+    }
+    .calendar-table td.has-event {
+      cursor: pointer;
+    }
+    .calendar-table td.has-event:hover {
+      background: #1a2a40;
     }
     .calendar-table .cell-date {
       font-size: 0.75rem;
@@ -321,9 +326,12 @@
       margin-bottom: 2px;
       font-weight: 600;
     }
+    .calendar-table td.has-event .cell-date {
+      color: #ffffff;
+    }
     .calendar-table .event-stripe {
       font-size: 0.65rem;
-      padding: 2px 3px;
+      padding: 2px 4px;
       border-radius: 4px;
       margin-bottom: 2px;
       white-space: nowrap;
@@ -331,6 +339,7 @@
       text-overflow: ellipsis;
       display: block;
       text-align: center;
+      cursor: pointer;
     }
     .stripe-blue { background: #123d6a; color: #93c5fd; }
     .stripe-orange { background: #5c2b0c; color: #fdba74; }
@@ -357,7 +366,7 @@
       line-height: 1.5;
     }
 
-    /* Match Cards */
+    /* Match Roster Cards */
     .matches-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -377,6 +386,12 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .match-item:hover {
+      border-color: var(--accent-orange);
+      transform: translateY(-2px);
     }
 
     .match-teams-title {
@@ -435,7 +450,7 @@
       border-style: dashed;
     }
 
-    /* Gallery Cards */
+    /* Media Gallery Cards */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -454,6 +469,11 @@
       display: flex;
       flex-direction: column;
       cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .media-card:hover {
+      border-color: var(--accent-orange);
+      transform: translateY(-2px);
     }
     .media-thumb {
       width: 100%;
@@ -484,7 +504,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Official Venues Block in Sidebar */
+    /* Sidebar Venues */
     .sidebar-block {
       background: var(--sidebar-bg);
       border: 1px solid var(--border-dark);
@@ -526,6 +546,98 @@
       border: 1px dashed var(--border-dark);
       border-radius: 8px;
     }
+
+    /* =========================================================
+       POP-UP MODAL (Works on both Phone & PC)
+       ========================================================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(4, 9, 15, 0.82);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-box {
+      background: #111c2a;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      transform: translateY(15px);
+      transition: transform 0.2s ease;
+    }
+    .modal-overlay.active .modal-box {
+      transform: translateY(0);
+    }
+    .modal-header {
+      background: #162436;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .modal-header h3 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-gray);
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+    .modal-close-btn:hover {
+      color: var(--accent-orange);
+    }
+    .modal-body {
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .modal-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 0.84rem;
+    }
+    .m-label {
+      color: var(--text-muted);
+      min-width: 90px;
+      font-weight: 600;
+    }
+    .m-val {
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .m-desc {
+      color: var(--text-gray);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      margin-top: 4px;
+      background: #0b1420;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-dark);
+    }
   </style>
 </head>
 <body>
@@ -544,25 +656,18 @@
     </div>
   </header>
 
-  <!-- ========================================================
-       TOP TOURNAMENT BAR WITH ARROWS (Shifted to Top)
-       ======================================================== -->
+  <!-- Top Tournament Bar with Arrows -->
   <nav class="top-tournaments-bar" aria-label="شريط البطولات">
-    <!-- Right arrow for RTL (scroll forward) -->
-    <button class="carousel-nav-btn" id="scrollRightBtn" title="السابق" aria-label="التالي">›</button>
-
-    <!-- Scrollable Pills Track -->
+    <button class="carousel-nav-btn" id="scrollRightBtn" title="السابق">›</button>
     <div class="tournaments-track" id="tournamentsTrack">
-      <a href="#" class="tournament-pill-btn active">🏠 الرئيسية والتقويم</a>
-      <a href="#" class="tournament-pill-btn">⚽ بطولة ناصر بن حمد للقدم</a>
-      <a href="#" class="tournament-pill-btn">🏀 دوري المجموعات لكرة السلة</a>
-      <a href="#" class="tournament-pill-btn">🎮 بطولة الألعاب الإلكترونية</a>
-      <a href="#" class="tournament-pill-btn">🏆 جائزة الطالب المتميز</a>
-      <a href="#" class="tournament-pill-btn">📷 معرض الوسائط الكامل</a>
+      <a href="#" class="tournament-pill-btn active" data-filter="all">🏠 الرئيسية والتقويم</a>
+      <a href="#" class="tournament-pill-btn" data-filter="كرة قدم ثانوية">⚽ بطولة ناصر بن حمد للقدم</a>
+      <a href="#" class="tournament-pill-btn" data-filter="كرة سلة">🏀 دوري المجموعات لكرة السلة</a>
+      <a href="#" class="tournament-pill-btn" data-filter="بطولة الألعاب الإلكترونية">🎮 بطولة الألعاب الإلكترونية</a>
+      <a href="#" class="tournament-pill-btn" data-filter="جائزة الطالب المتميز">🏆 جائزة الطالب المتميز</a>
+      <a href="#" class="tournament-pill-btn" data-filter="media">📷 معرض الوسائط الكامل</a>
     </div>
-
-    <!-- Left arrow for RTL (scroll backward) -->
-    <button class="carousel-nav-btn" id="scrollLeftBtn" title="التالي" aria-label="السابق">‹</button>
+    <button class="carousel-nav-btn" id="scrollLeftBtn" title="التالي">‹</button>
   </nav>
 
   <!-- Dashboard Container -->
@@ -571,11 +676,11 @@
     <!-- MAIN CONTENT COLUMN -->
     <main class="main-content-col">
 
-      <!-- 1. Full Annual Calendar -->
-      <section class="dashboard-card">
+      <!-- 1. Interactive Annual Calendar at Top -->
+      <section class="dashboard-card" id="calendarSection">
         <div class="card-title-row">
           <h2>📅 التقويم السنوي الشامل 2026-2027</h2>
-          <span class="hint-text">نوفمبر 2026</span>
+          <span class="hint-text">اضغط على أي يوم لعرض تفاصيل الفعالية</span>
         </div>
 
         <div class="calendar-month-selector">
@@ -590,7 +695,6 @@
           <div class="month-pill">مايو 2027</div>
         </div>
 
-        <!-- Horizontal scroll wrapper for mobile fit -->
         <div class="calendar-scroll-wrapper">
           <table class="calendar-table">
             <thead>
@@ -604,64 +708,8 @@
                 <th>السبت</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><span class="cell-date">1</span></td>
-                <td><span class="cell-date">2</span></td>
-                <td><span class="cell-date">3</span></td>
-                <td><span class="cell-date">4</span></td>
-                <td><span class="cell-date">5</span></td>
-                <td><span class="cell-date">6</span></td>
-                <td><span class="cell-date">7</span></td>
-              </tr>
-              <tr>
-                <td>
-                  <span class="cell-date">8</span>
-                  <span class="event-stripe stripe-blue">⚽ 2 قدم (إعدادي - بنين)</span>
-                </td>
-                <td>
-                  <span class="cell-date">9</span>
-                  <span class="event-stripe stripe-blue">⚽ 2 قدم (إعدادي - بنات)</span>
-                </td>
-                <td>
-                  <span class="cell-date">10</span>
-                  <span class="event-stripe stripe-blue">⚽ 2 قدم (ثانوي - بنين)</span>
-                </td>
-                <td>
-                  <span class="cell-date">11</span>
-                  <span class="event-stripe stripe-blue">⚽ 2 قدم (ثانوي - بنات)</span>
-                </td>
-                <td>
-                  <span class="cell-date">12</span>
-                  <span class="event-stripe stripe-orange">🎮 ألعاب إلكترونية</span>
-                </td>
-                <td><span class="cell-date">13</span></td>
-                <td><span class="cell-date">14</span></td>
-              </tr>
-              <tr>
-                <td>
-                  <span class="cell-date">15</span>
-                  <span class="event-stripe stripe-yellow">🏀 سلة (ابتدائي - بنين)</span>
-                </td>
-                <td>
-                  <span class="cell-date">16</span>
-                  <span class="event-stripe stripe-yellow">🏀 سلة (ابتدائي - بنات)</span>
-                </td>
-                <td>
-                  <span class="cell-date">17</span>
-                  <span class="event-stripe stripe-yellow">🏀 سلة (إعدادي)</span>
-                </td>
-                <td>
-                  <span class="cell-date">18</span>
-                  <span class="event-stripe stripe-blue">زيارات ميدانية</span>
-                </td>
-                <td>
-                  <span class="cell-date">19</span>
-                  <span class="event-stripe stripe-blue">مباريات الدوري</span>
-                </td>
-                <td><span class="cell-date">20</span></td>
-                <td><span class="cell-date">21</span></td>
-              </tr>
+            <tbody id="calendarTableBody">
+              <!-- Dynamically populated via JS with click listeners -->
             </tbody>
           </table>
         </div>
@@ -679,7 +727,7 @@
       <section class="dashboard-card">
         <div class="card-title-row">
           <h2>⚡ الفعاليات والمباريات القادمة</h2>
-          <span class="hint-text">اضغط لعرض تفاصيل كل مباراة في صندوق مستقل</span>
+          <span class="hint-text">اضغط على أي مباراة لعرض الصندوق المستقل</span>
         </div>
         <div class="matches-grid" id="upcoming-matches-grid">
           <!-- Populated via JS -->
@@ -697,11 +745,11 @@
         </div>
       </section>
 
-      <!-- 5. Photo Gallery (Hover shows title, not date/time) -->
+      <!-- 5. Photo Gallery -->
       <section class="dashboard-card">
         <div class="card-title-row">
           <h2>📸 أحدث الصور ومقتطفات الفعاليات</h2>
-          <span class="hint-text">تمرير الفأرة يعرض عنوان الصورة</span>
+          <span class="hint-text">تمرير الفأرة أو الضغط يعرض عنوان الصورة</span>
         </div>
         <div class="gallery-grid" id="photo-gallery-grid">
           <!-- Populated via JS -->
@@ -710,7 +758,7 @@
 
     </main>
 
-    <!-- SIDEBAR COLUMN: Official Venues -->
+    <!-- SIDEBAR: Official Venues -->
     <aside class="sidebar-col">
       <div class="sidebar-block">
         <div class="sidebar-header">المواقع والملاعب الرسمية</div>
@@ -726,6 +774,27 @@
 
   </div>
 
+  <!-- Interactive Details Modal Pop-Up -->
+  <div id="detailsModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle">تفاصيل الحدث</h3>
+        <button class="modal-close-btn" id="closeModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-row"><span class="m-label">البطولة / الفعالية:</span> <span id="modalTournament" class="m-val"></span></div>
+        <div class="modal-row"><span class="m-label">المواجهة / الفرق:</span> <span id="modalTeams" class="m-val"></span></div>
+        <div class="modal-row"><span class="m-label">التاريخ والوقت:</span> <span id="modalDateTime" class="m-val"></span></div>
+        <div class="modal-row"><span class="m-label">الموقع / الصالة:</span> <span id="modalVenue" class="m-val"></span></div>
+        <div class="modal-row"><span class="m-label">النتيجة الحالية:</span> <span id="modalScore" class="m-val"></span></div>
+        <div class="modal-row" style="flex-direction:column; gap:4px; margin-top:4px;">
+          <span class="m-label">ملاحظات وتفاصيل إضافية:</span>
+          <div id="modalNotes" class="m-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Games Roster Data
     const gamesRoster = [
@@ -737,7 +806,8 @@
         date: "2026-11-08",
         time: "08:30 صباحاً",
         location: "نادي مدينة عيسى",
-        score: "2 - 1" // Past & Finished
+        score: "2 - 1",
+        notes: "مباراة افتتاحية حماسية انتهت بفوز مدرسة مدينة عيسى بنتيجة هدفين مقابل هدف."
       },
       {
         id: "G2",
@@ -747,7 +817,8 @@
         date: "2026-11-09",
         time: "08:30 صباحاً",
         location: "نادي الاتحاد الرياضي",
-        score: "3 - 0" // Past & Finished
+        score: "3 - 0",
+        notes: "فوز مستحق لمدرسة بيان البحرين بثلاثية نظيفة ضمن الجولة الأولى."
       },
       {
         id: "G3",
@@ -757,7 +828,8 @@
         date: "2026-11-12",
         time: "08:00 صباحاً",
         location: "صالة وزارة التربية والتعليم (مدينة عيسى)",
-        score: "" // Upcoming
+        score: "",
+        notes: "المباراة التأهيلية الأولى في بطولة FIFA والألعاب الإلكترونية لطلبة الإعدادي."
       },
       {
         id: "G4",
@@ -767,9 +839,24 @@
         date: "2026-11-30",
         time: "09:00 صباحاً",
         location: "مدرسة غازي القصيبي الثانوية للبنات",
-        score: "" // Upcoming
+        score: "",
+        notes: "الحفل التكريمي الختامي لجائزة المتميزين للمعلمين والطلاب للعام 2026."
       }
     ];
+
+    // Calendar Days & Events Mapping
+    const calendarEventsData = {
+      "2026-11-08": { title: "⚽ 2 قدم (إعدادي - بنين)", color: "stripe-blue", t: "كرة قدم إعدادي", venue: "نادي مدينة عيسى", notes: "مباريات دور المجموعات - الجولة الأولى" },
+      "2026-11-09": { title: "⚽ 2 قدم (إعدادي - بنات)", color: "stripe-blue", t: "كرة قدم إعدادي", venue: "صالة وزارة التربية", notes: "تصفيات مدارس البنات لكرة القدم" },
+      "2026-11-10": { title: "⚽ 2 قدم (ثانوي - بنين)", color: "stripe-blue", t: "كرة قدم ثانوي", venue: "نادي الاتحاد الرياضي", notes: "مباريات الجولة الثانية للمرحلة الثانوية" },
+      "2026-11-11": { title: "⚽ 2 قدم (ثانوي - بنات)", color: "stripe-blue", t: "كرة قدم ثانوي", venue: "صالة الوزارة", notes: "منافسات المرحلة الثانوية للفتيات" },
+      "2026-11-12": { title: "🎮 ألعاب إلكترونية", color: "stripe-orange", t: "بطولة الألعاب الإلكترونية", venue: "صالة مدينة عيسى", notes: "انطلاق المنافسات الرسمية لبطولة الألعاب الإلكترونية" },
+      "2026-11-15": { title: "🏀 سلة (ابتدائي - بنين)", color: "stripe-yellow", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "مباريات الجولة الافتتاحية للمرحلة الابتدائية" },
+      "2026-11-16": { title: "🏀 سلة (ابتدائي - بنات)", color: "stripe-yellow", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "مباريات كرة السلة لمدارس البنات الابتدائية" },
+      "2026-11-17": { title: "🏀 سلة (إعدادي)", color: "stripe-yellow", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "تصفيات المرحلة الإعدادية لكرة السلة" },
+      "2026-11-18": { title: "زيارات ميدانية", color: "stripe-blue", t: "التنظيم الميداني", venue: "ملاعب المدارس", notes: "الجولات التفتيشية والمتابعة الميدانية للفرق" },
+      "2026-11-19": { title: "مباريات الدوري", color: "stripe-blue", t: "المسابقات الرياضية", venue: "ملاعب متفرقة", notes: "مباريات تصفيات الأدوار الإقصائية" }
+    };
 
     // Media Gallery Data
     const mediaGallery = [
@@ -790,38 +877,90 @@
       }
     ];
 
-    // Render Match Card
+    // Modal Control Functions
+    function showModal(data) {
+      document.getElementById('modalTitle').innerText = data.title || "تفاصيل المباراة / الفعالية";
+      document.getElementById('modalTournament').innerText = data.tournament || "بطولة مدرسية";
+      document.getElementById('modalTeams').innerText = data.teams || "—";
+      document.getElementById('modalDateTime').innerText = `${data.date || ""} ${data.time ? " | " + data.time : ""}`;
+      document.getElementById('modalVenue').innerText = data.location || data.venue || "صالة وزارة التربية والتعليم";
+      document.getElementById('modalScore').innerText = data.score && data.score.trim() !== "" ? data.score : "لم تبدأ بعد / مجدولة";
+      document.getElementById('modalNotes').innerText = data.notes || "لا توجد ملاحظات إضافية مسجلة.";
+
+      document.getElementById('detailsModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('detailsModal').classList.remove('active');
+    }
+
+    // Render Calendar Table Dynamically
+    function renderCalendarGrid() {
+      const tbody = document.getElementById('calendarTableBody');
+      const weeks = [
+        [1, 2, 3, 4, 5, 6, 7],
+        [8, 9, 10, 11, 12, 13, 14],
+        [15, 16, 17, 18, 19, 20, 21]
+      ];
+
+      tbody.innerHTML = weeks.map(week => `
+        <tr>
+          ${week.map(day => {
+            const dateStr = `2026-11-${day < 10 ? '0' + day : day}`;
+            const event = calendarEventsData[dateStr];
+            const hasEvent = !!event;
+
+            return `
+              <td class="${hasEvent ? 'has-event' : ''}" data-date="${dateStr}">
+                <span class="cell-date">${day}</span>
+                ${hasEvent ? `<span class="event-stripe ${event.color}">${event.title}</span>` : ''}
+              </td>
+            `;
+          }).join('')}
+        </tr>
+      `).join('');
+
+      // Add click listeners to every calendar day
+      tbody.querySelectorAll('td.has-event').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const dStr = cell.getAttribute('data-date');
+          const ev = calendarEventsData[dStr];
+          showModal({
+            title: ev.title,
+            tournament: ev.t,
+            teams: "فعالية مجدولة",
+            date: dStr,
+            time: "08:30 صباحاً",
+            venue: ev.venue,
+            score: "مجدولة في التقويم",
+            notes: ev.notes
+          });
+        });
+      });
+    }
+
+    // Render Match Cards
     function renderMatchCard(game) {
       const hasScore = game.score && game.score.trim() !== "";
-
       return `
-        <div class="match-item">
-          <!-- Team names separated by V/S in Orange -->
+        <div class="match-item" onclick="openGameModal('${game.id}')">
           <div class="match-teams-title">
             <span>${game.teamA}</span>
             <span class="vs-accent">V/S</span>
             <span>${game.teamB}</span>
           </div>
-
-          <!-- Date -->
           <div class="match-meta-line">
             <span class="meta-label">التاريخ:</span>
             <span>${game.date}</span>
           </div>
-
-          <!-- Time -->
           <div class="match-meta-line">
             <span class="meta-label">الوقت:</span>
             <span>${game.time}</span>
           </div>
-
-          <!-- Location -->
           <div class="match-meta-line">
             <span class="meta-label">المكان:</span>
             <span class="venue-text">📍 ${game.location}</span>
           </div>
-
-          <!-- Score -->
           <div class="match-score-footer">
             <span class="meta-label">النتيجة:</span>
             <span class="score-badge ${hasScore ? '' : 'pending'}">
@@ -832,7 +971,22 @@
       `;
     }
 
-    // Auto-distribute matches into Upcoming and Finished
+    function openGameModal(gameId) {
+      const game = gamesRoster.find(g => g.id === gameId);
+      if (!game) return;
+      showModal({
+        title: `${game.teamA} V/S ${game.teamB}`,
+        tournament: game.tournament,
+        teams: `${game.teamA} ضد ${game.teamB}`,
+        date: game.date,
+        time: game.time,
+        location: game.location,
+        score: game.score,
+        notes: game.notes
+      });
+    }
+
+    // Distribute matches into Upcoming and Finished automatically
     function distributeMatches() {
       const today = new Date().toISOString().split('T')[0];
       const upcomingGrid = document.getElementById('upcoming-matches-grid');
@@ -862,7 +1016,7 @@
     function renderGallery() {
       const gallery = document.getElementById('photo-gallery-grid');
       gallery.innerHTML = mediaGallery.map(item => `
-        <div class="media-card" title="${item.title}">
+        <div class="media-card" title="${item.title}" onclick="showModal({title:'${item.title}', tournament:'${item.tournament}', teams:'معرض الصور', date:'2026-11', location:'وزارة التربية والتعليم', score:'صورة توثيقية', notes:'صورة ملتقطة من الفعالية الرسمية.'})">
           <img src="${item.imgUrl}" alt="${item.title}" class="media-thumb" loading="lazy" />
           <div class="media-caption-area">
             <div class="media-custom-title">${item.title}</div>
@@ -872,152 +1026,35 @@
       `).join('');
     }
 
-    // Setup Top Tournament Arrow Navigation
+    // Top Carousel Arrows Functionality
     function initTournamentCarousel() {
       const track = document.getElementById('tournamentsTrack');
       const leftBtn = document.getElementById('scrollLeftBtn');
       const rightBtn = document.getElementById('scrollRightBtn');
-
-      if (!track || !leftBtn || !rightBtn) return;
-
       const scrollStep = 180;
 
       leftBtn.addEventListener('click', () => {
-        // Scroll left (in RTL, positive or negative depending on browser standard)
         track.scrollBy({ left: -scrollStep, behavior: 'smooth' });
       });
 
       rightBtn.addEventListener('click', () => {
-        // Scroll right
         track.scrollBy({ left: scrollStep, behavior: 'smooth' });
       });
     }
 
+    // Initialize All
     document.addEventListener('DOMContentLoaded', () => {
-      initTournamentCarousel();
+      renderCalendarGrid();
       distributeMatches();
       renderGallery();
+      initTournamentCarousel();
+
+      // Modal close handlers
+      document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+      document.getElementById('detailsModal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('detailsModal')) closeModal();
+      });
     });
   </script>
-  <!-- Event Details Modal Pop-up -->
-<div id="calendarModal" class="modal-overlay" style="display:none;">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h3 id="modalEventTitle">تفاصيل الفعالية</h3>
-      <button class="modal-close-btn" onclick="closeCalendarModal()">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-row"><span class="m-label">التاريخ:</span> <span id="modalEventDate" class="m-val"></span></div>
-      <div class="modal-row"><span class="m-label">الوقت:</span> <span id="modalEventTime" class="m-val"></span></div>
-      <div class="modal-row"><span class="m-label">البطولة / الفعالية:</span> <span id="modalEventTournament" class="m-val"></span></div>
-      <div class="modal-row"><span class="m-label">الموقع والصالة:</span> <span id="modalEventLocation" class="m-val"></span></div>
-      <div class="modal-row"><span class="m-label">التفاصيل:</span> <p id="modalEventDesc" class="m-desc"></p></div>
-    </div>
-  </div>
-</div>
-
-<style>
-  /* Modal Overlay & Card */
-  .modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(4, 9, 15, 0.75);
-    backdrop-filter: blur(6px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 16px;
-  }
-  .modal-box {
-    background: #111c2a;
-    border: 1px solid #1e2e42;
-    border-radius: 14px;
-    width: 100%;
-    max-width: 480px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    overflow: hidden;
-    animation: modalPop 0.2s ease-out;
-  }
-  @keyframes modalPop {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  .modal-header {
-    background: #162436;
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #1e2e42;
-  }
-  .modal-header h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #fff;
-  }
-  .modal-close-btn {
-    background: transparent;
-    border: none;
-    color: #9fb1c7;
-    font-size: 1.5rem;
-    line-height: 1;
-    cursor: pointer;
-  }
-  .modal-body {
-    padding: 16px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .modal-row {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    font-size: 0.85rem;
-  }
-  .m-label {
-    color: #627791;
-    min-width: 90px;
-    font-weight: 600;
-  }
-  .m-val {
-    color: #ffffff;
-    font-weight: 600;
-  }
-  .m-desc {
-    color: #9fb1c7;
-    font-size: 0.82rem;
-    line-height: 1.5;
-    margin-top: 4px;
-  }
-
-  /* Prevent Mobile Bleed on Table */
-  .calendar-scroll-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border: 1px solid var(--border-dark);
-    border-radius: 8px;
-  }
-  .calendar-table {
-    width: 100%;
-    min-width: 520px; /* Fits comfortably across mobile screens */
-    table-layout: fixed;
-  }
-  .calendar-table td {
-    cursor: pointer;
-    transition: background 0.15s ease;
-  }
-  .calendar-table td:hover {
-    background: rgba(22, 36, 54, 0.9);
-  }
-  .event-clickable {
-    cursor: pointer;
-  }
-  .event-clickable:active {
-    transform: scale(0.97);
-  }
-</style>
 </body>
 </html>
