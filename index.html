@@ -192,6 +192,7 @@
       text-decoration: none;
       transition: all 0.2s;
       flex-shrink: 0;
+      font-family: inherit;
     }
     .tournament-pill-btn:hover {
       border-color: var(--text-gray);
@@ -812,7 +813,9 @@
   </div>
 
   <script>
-    // TOURNAMENT PAGES DATABASE & SPECIFIC DESCRIPTIONS
+    // ========================================================
+    // 1. TOURNAMENT PAGES DATABASE & SPECIFIC DESCRIPTIONS
+    // ========================================================
     const tournamentPagesData = {
       home: {
         title: "عن الفعاليات الرياضية العامة",
@@ -824,28 +827,28 @@
       football: {
         title: "عن بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية",
         desc: "أقوى بطولات كرة القدم المدرسية على مستوى مملكة البحرين، وتجمع نخبة منتخبات المدارس الثانوية الحكومية والخاصة للمنافسة على اللقب الغالي وفق لوائح الاتحاد البحريني لكرة القدم.",
-        filterKey: "بطولة ناصر بن حمد",
+        filterKey: "football",
         showCalendar: false,
         showGallery: true
       },
       basketball: {
         title: "عن دوري المجموعات لكرة السلة",
         desc: "منافسات دوري المجموعات للمدارس الابتدائية والإعدادية بالتعاون مع الاتحاد البحريني لكرة السلة، المقامة على صالة الاتحاد بالماحوز وصالات الأندية الشريكة.",
-        filterKey: "كرة سلة",
+        filterKey: "basketball",
         showCalendar: false,
         showGallery: false
       },
       esports: {
         title: "عن بطولة وزارة التربية والتعليم للألعاب الإلكترونية",
         desc: "بطولة رسمية تنافسية لطلبة المدارس الحكومية والخاصة في الألعاب الإلكترونية الرياضية (FIFA/FC و Rocket League)، برعاية وتنظيم إدارة التربية الرياضية لدعم المواهب الرقمية.",
-        filterKey: "الألعاب الإلكترونية",
+        filterKey: "esports",
         showCalendar: false,
         showGallery: true
       },
       excellence: {
         title: "عن جائزة الطالب المتميز في المجال الرياضي والثقافي",
         desc: "مبادرة سنوية لتكريم الطلاب والطالبات المتميزين رياضياً وأكاديمياً، وحاملي المراكز الأولى في البطولات والمشاركات الوطنية لتعزيز الروح الرياضية والتميز الدراسي.",
-        filterKey: "جائزة الطالب المتميز",
+        filterKey: "excellence",
         showCalendar: false,
         showGallery: false
       },
@@ -858,95 +861,17 @@
       }
     };
 
-    // ACTIVE GAMES ROSTER (Matching Sheet & Previous Data)
-    const gamesRoster = [
-      {
-        id: "G101",
-        tournament: "بطولة ناصر بن حمد للقدم",
-        pageKey: "football",
-        teamA: "مدرسة الهداية الخليفية",
-        teamB: "مدرسة أحمد العمران",
-        date: "2026-11-02",
-        time: "08:30 صباحاً",
-        location: "استاد مدينة خليفة الرياضية",
-        score: "2 - 1",
-        notes: "نصف النهائي - تأهل مدرسة الهداية الخليفية."
-      },
-      {
-        id: "G102",
-        tournament: "دوري المجموعات لكرة السلة",
-        pageKey: "basketball",
-        teamA: "مدرسة الرفاع الشرقي",
-        teamB: "مدرسة المحرق الثانوية",
-        date: "2026-11-05",
-        time: "10:00 صباحاً",
-        location: "صالة الاتحاد بالماحوز",
-        score: "68 - 62",
-        notes: "مباراة مثيرة انتهت لصالح الرفاع الشرقي."
-      },
-      {
-        id: "G103",
-        tournament: "كرة قدم ثانوية",
-        pageKey: "football",
-        teamA: "مدرسة مدينة عيسى",
-        teamB: "مركز ناصر العلمي",
-        date: "2026-11-08",
-        time: "08:30 صباحاً",
-        location: "نادي مدينة عيسى",
-        score: "2 - 1",
-        notes: "مباراة قوية ضمن الجولة الافتتاحية للمجموعة الأولى."
-      },
-      {
-        id: "G104",
-        tournament: "كرة قدم ثانوية",
-        pageKey: "football",
-        teamA: "مدرسة بيان البحرين",
-        teamB: "مدرسة الحكمة الدولية",
-        date: "2026-11-09",
-        time: "08:30 صباحاً",
-        location: "نادي الاتحاد الرياضي",
-        score: "3 - 0",
-        notes: "ثلاثية نظيفة ضمن الجولة الأولى لفرق المدارس الخاصة."
-      },
-      {
-        id: "G105",
-        tournament: "بطولة الألعاب الإلكترونية",
-        pageKey: "esports",
-        teamA: "المرحلة الإعدادية",
-        teamB: "بنين",
-        date: "2026-11-12",
-        time: "08:00 صباحاً",
-        location: "صالة وزارة التربية والتعليم (مدينة عيسى)",
-        score: "",
-        notes: "التصفيات التمهيدية الأولى لبطولة EA Sports FC."
-      },
-      {
-        id: "G106",
-        tournament: "دوري المجموعات لكرة السلة",
-        pageKey: "basketball",
-        teamA: "مدرسة أحمد العمران",
-        teamB: "مدرسة الشيخ عبد الله بن عيسى",
-        date: "2026-11-18",
-        time: "09:00 صباحاً",
-        location: "صالة الاتحاد بالماحوز",
-        score: "",
-        notes: "المباراة القادمة ضمن المجموعة الثانية."
-      },
-      {
-        id: "G107",
-        tournament: "جائزة الطالب المتميز",
-        pageKey: "excellence",
-        teamA: "مدارس المرحلة الثانوية",
-        teamB: "(بنين وبنات)",
-        date: "2026-11-30",
-        time: "09:00 صباحاً",
-        location: "مدرسة غازي القصيبي الثانوية للبنات",
-        score: "",
-        notes: "الحفل التكريمي الختامي للفصل الدراسي الأول."
-      }
-    ];
+    // ========================================================
+    // 2. LIVE GOOGLE SHEETS URL (CONNECTED)
+    // ========================================================
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFrEKvM8AglCT3swkTUdmsnX2zhkMvnS2SrYMCSCHDFLBRFRXT1uCPDmHY2Nr33rNJswpFbfTu-E6A/pub?output=csv";
 
-    // CALENDAR DATA FOR POPUPS
+    // Fallback/Initial Roster while loading
+    let gamesRoster = [];
+
+    // ========================================================
+    // 3. CALENDAR EVENTS DATA (For Popups)
+    // ========================================================
     const calendarEventsData = {
       "2026-11-08": { title: "⚽ 2 قدم (إعدادي - بنين)", color: "stripe-blue", t: "كرة قدم إعدادي", venue: "نادي مدينة عيسى", notes: "مباريات دور المجموعات - الجولة الأولى" },
       "2026-11-09": { title: "⚽ 2 قدم (إعدادي - بنات)", color: "stripe-blue", t: "كرة قدم إعدادي", venue: "صالة وزارة التربية", notes: "تصفيات مدارس البنات لكرة القدم" },
@@ -960,7 +885,9 @@
       "2026-11-19": { title: "مباريات الدوري", color: "stripe-blue", t: "المسابقات الرياضية", venue: "ملاعب متفرقة", notes: "مباريات الأدوار الإقصائية" }
     };
 
-    // MEDIA GALLERY DATA
+    // ========================================================
+    // 4. MEDIA GALLERY DATA
+    // ========================================================
     const mediaGallery = [
       {
         title: "قرعة بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية",
@@ -984,12 +911,61 @@
 
     let currentPage = "home";
 
-    // PAGE SWITCHER: SWITCHES TOURNAMENTS INSTANTLY
+    // ========================================================
+    // 5. LIVE GOOGLE SHEETS FETCHER (Auto Sync)
+    // ========================================================
+    async function loadMatchesFromGoogleSheet() {
+      try {
+        const response = await fetch(SHEET_CSV_URL);
+        const csvData = await response.text();
+        const rows = csvData.trim().split("\n").slice(1); // skip headers
+
+        if (rows.length > 0) {
+          const loadedGames = [];
+          rows.forEach((row, index) => {
+            // Split row accounting for CSV values
+            const cols = row.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
+            if (cols[2] && cols[3]) {
+              const tName = cols[1] || "";
+              let pageKey = "home";
+              if (tName.includes("قدم") || tName.includes("ناصر")) pageKey = "football";
+              else if (tName.includes("سلة")) pageKey = "basketball";
+              else if (tName.includes("إلكترونية")) pageKey = "esports";
+              else if (tName.includes("طالب") || tName.includes("متميز")) pageKey = "excellence";
+
+              loadedGames.push({
+                id: cols[0] || "G" + (index + 1),
+                tournament: cols[1] || "بطولة مدرسية",
+                pageKey: pageKey,
+                teamA: cols[2],
+                teamB: cols[3],
+                date: cols[4] || "",
+                time: cols[5] || "",
+                location: cols[6] || "",
+                score: cols[7] || "",
+                notes: cols[9] || ""
+              });
+            }
+          });
+
+          if (loadedGames.length > 0) {
+            gamesRoster = loadedGames;
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch Google Sheet, check permissions/network:", err);
+      }
+
+      distributeMatches(currentPage);
+    }
+
+    // ========================================================
+    // 6. PAGE SWITCHER
+    // ========================================================
     function switchTournamentPage(pageKey) {
       currentPage = pageKey;
       const pageInfo = tournamentPagesData[pageKey] || tournamentPagesData.home;
 
-      // 1. Highlight Top Pill
       document.querySelectorAll('.tournament-pill-btn').forEach(btn => {
         if (btn.getAttribute('data-page') === pageKey) {
           btn.classList.add('active');
@@ -999,7 +975,6 @@
         }
       });
 
-      // 2. Toggle Calendar visibility (only on home)
       const calendarSection = document.getElementById('calendarSection');
       if (pageInfo.showCalendar) {
         calendarSection.style.display = 'block';
@@ -1007,19 +982,16 @@
         calendarSection.style.display = 'none';
       }
 
-      // 3. Update About Box
       document.getElementById('tournamentAboutTitle').innerText = pageInfo.title;
       document.getElementById('tournamentAboutDesc').innerText = pageInfo.desc;
       document.getElementById('btnBackHome').style.display = pageKey === 'home' ? 'none' : 'inline-block';
 
-      // 4. Update and filter matches
       distributeMatches(pageKey);
 
-      // 5. Update gallery visibility
       const gallerySection = document.getElementById('gallerySection');
       if (pageKey === 'media') {
         gallerySection.style.display = 'block';
-        renderGallery(null); // All photos
+        renderGallery(null);
         document.getElementById('upcomingMatchesCard').style.display = 'none';
         document.getElementById('finishedMatchesCard').style.display = 'none';
       } else {
@@ -1033,11 +1005,12 @@
         }
       }
 
-      // Scroll smoothly to top of content
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // MODAL CONTROL
+    // ========================================================
+    // 7. MODAL POP-UP SYSTEM
+    // ========================================================
     function showModal(data) {
       document.getElementById('modalTitle').innerText = data.title || "تفاصيل الحدث";
       document.getElementById('modalTournament').innerText = data.tournament || "بطولة مدرسية";
@@ -1054,7 +1027,9 @@
       document.getElementById('detailsModal').classList.remove('active');
     }
 
-    // RENDER MATCH CARD (Order: Team Names with orange V/S -> Date -> Time -> Location -> Score)
+    // ========================================================
+    // 8. RENDER MATCH CARDS (Order: Teams V/S -> Date -> Time -> Location -> Score)
+    // ========================================================
     function renderMatchCard(game) {
       const hasScore = game.score && game.score.trim() !== "";
       return `
@@ -1101,7 +1076,9 @@
       });
     }
 
-    // DISTRIBUTE MATCHES (Upcoming vs Finished) WITH FILTERING
+    // ========================================================
+    // 9. DISTRIBUTE MATCHES (Upcoming vs Finished)
+    // ========================================================
     function distributeMatches(filterPage = "home") {
       const today = new Date().toISOString().split('T')[0];
       const upcomingGrid = document.getElementById('upcoming-matches-grid');
@@ -1116,7 +1093,7 @@
       const finished = [];
 
       list.forEach(game => {
-        if ((game.score && game.score.trim() !== "") || game.date < today) {
+        if ((game.score && game.score.trim() !== "") || (game.date && game.date < today)) {
           finished.push(game);
         } else {
           upcoming.push(game);
@@ -1132,7 +1109,9 @@
         : finished.map(renderMatchCard).join('');
     }
 
-    // RENDER CALENDAR TABLE
+    // ========================================================
+    // 10. RENDER CALENDAR TABLE
+    // ========================================================
     function renderCalendarGrid() {
       const tbody = document.getElementById('calendarTableBody');
       const weeks = [
@@ -1158,4 +1137,85 @@
         </tr>
       `).join('');
 
-      //
+      tbody.querySelectorAll('td.has-event').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const dStr = cell.getAttribute('data-date');
+          const ev = calendarEventsData[dStr];
+          showModal({
+            title: ev.title,
+            tournament: ev.t,
+            teams: "فعالية مجدولة",
+            date: dStr,
+            time: "08:30 صباحاً",
+            venue: ev.venue,
+            score: "مجدولة في التقويم",
+            notes: ev.notes
+          });
+        });
+      });
+    }
+
+    // ========================================================
+    // 11. RENDER MEDIA GALLERY
+    // ========================================================
+    function renderGallery(pageFilter = null) {
+      const gallery = document.getElementById('photo-gallery-grid');
+      let items = mediaGallery;
+      if (pageFilter) {
+        items = mediaGallery.filter(m => m.pageKey === pageFilter);
+      }
+
+      if (items.length === 0) {
+        gallery.innerHTML = `<div class="empty-note">لا توجد صور مضافة لهذه البطولة حالياً.</div>`;
+        return;
+      }
+
+      gallery.innerHTML = items.map(item => `
+        <div class="media-card" title="${item.title}" onclick="showModal({title:'${item.title}', tournament:'${item.tournament}', teams:'معرض الصور', date:'2026-11', location:'وزارة التربية والتعليم', score:'صورة توثيقية', notes:'صورة ملتقطة من الفعالية الرسمية.'})">
+          <img src="${item.imgUrl}" alt="${item.title}" class="media-thumb" loading="lazy" />
+          <div class="media-caption-area">
+            <div class="media-custom-title">${item.title}</div>
+            <div class="media-tournament-tag">${item.tournament}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ========================================================
+    // 12. INITIALIZE NAVIGATION & LISTENERS
+    // ========================================================
+    function initTournamentNav() {
+      const track = document.getElementById('tournamentsTrack');
+      const leftBtn = document.getElementById('scrollLeftBtn');
+      const rightBtn = document.getElementById('scrollRightBtn');
+      const scrollStep = 200;
+
+      leftBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+      });
+      rightBtn.addEventListener('click', () => {
+        track.scrollBy({ left: scrollStep, behavior: 'smooth' });
+      });
+
+      document.querySelectorAll('.tournament-pill-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const page = btn.getAttribute('data-page');
+          switchTournamentPage(page);
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCalendarGrid();
+      initTournamentNav();
+      loadMatchesFromGoogleSheet();
+      renderGallery();
+
+      document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+      document.getElementById('detailsModal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('detailsModal')) closeModal();
+      });
+    });
+  </script>
+</body>
+</html>
