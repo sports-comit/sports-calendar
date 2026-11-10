@@ -362,12 +362,13 @@
     .stripe-orange { background: #5c2b0c; color: #fdba74; }
     .stripe-yellow { background: #4d380c; color: #fde047; }
 
+    /* About Tournament Box - Heading configured to Theme Orange */
     .about-tournament-box {
       background: var(--card-inner);
       border: 1px solid var(--border-subtle);
       border-right: 4px solid var(--accent-orange);
       border-radius: 10px;
-      padding: 12px 14px;
+      padding: 14px 16px;
       margin-bottom: 14px;
     }
     html[dir="ltr"] .about-tournament-box {
@@ -379,12 +380,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     .about-tournament-box h3 {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text-white);
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--accent-orange) !important;
+      letter-spacing: -0.2px;
     }
     .btn-back-home {
       background: #1a2c42;
@@ -398,9 +400,9 @@
     }
 
     .about-tournament-box p {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--text-gray);
-      line-height: 1.5;
+      line-height: 1.7;
     }
 
     .matches-grid {
@@ -670,7 +672,7 @@
     <div class="tournaments-track" id="tournamentsTrack">
       <button class="tournament-pill-btn active" data-page="home" id="pillHome">🏠 الرئيسية والتقويم</button>
       <button class="tournament-pill-btn" data-page="football" id="pillFootball">⚽ بطولة ناصر بن حمد للقدم</button>
-      <button class="tournament-pill-btn" data-page="basketball" id="pillBasketball">🏀 دوري المجموعات لكرة السلة</button>
+      <button class="tournament-pill-btn" data-page="basketball" id="pillBasketball">🏀 بطولة خالد بن حمد للسلة</button>
       <button class="tournament-pill-btn" data-page="esports" id="pillEsports">🎮 بطولة الألعاب الإلكترونية</button>
       <button class="tournament-pill-btn" data-page="excellence" id="pillExcellence">🏆 جائزة الطالب المتميز</button>
       <button class="tournament-pill-btn" data-page="media" id="pillMedia">📷 معرض الوسائط الكامل</button>
@@ -700,6 +702,7 @@
         </div>
       </section>
 
+      <!-- Tournament About Box with Orange Title -->
       <section class="about-tournament-box" id="aboutTournamentBox">
         <div class="about-header-row">
           <h3 id="tournamentAboutTitle">عن الفعاليات الرياضية العامة</h3>
@@ -788,7 +791,7 @@
         uploadBtnText: "رفع صور وفيديوهات",
         pillHome: "🏠 الرئيسية والتقويم",
         pillFootball: "⚽ بطولة ناصر بن حمد للقدم",
-        pillBasketball: "🏀 دوري المجموعات لكرة السلة",
+        pillBasketball: "🏀 بطولة خالد بن حمد للسلة",
         pillEsports: "🎮 بطولة الألعاب الإلكترونية",
         pillExcellence: "🏆 جائزة الطالب المتميز",
         pillMedia: "📷 معرض الوسائط الكامل",
@@ -831,8 +834,8 @@
         brandSubtitle: "Ministry of Education - Kingdom of Bahrain",
         uploadBtnText: "Upload Media",
         pillHome: "🏠 Home & Calendar",
-        pillFootball: "⚽ Nasser bin Hamad Football",
-        pillBasketball: "🏀 Basketball Groups League",
+        pillFootball: "⚽ Nasser bin Hamad Football Cup",
+        pillBasketball: "🏀 Khalid bin Hamad Basketball Cup",
         pillEsports: "🎮 Esports Championship",
         pillExcellence: "🏆 Student Excellence Award",
         pillMedia: "📷 Media Gallery",
@@ -872,46 +875,83 @@
       }
     };
 
+    // Official descriptions from leadership with professional translations
     const tournamentPagesData = {
       home: {
-        ar: { title: "عن الفعاليات الرياضية العامة", desc: "مرحباً بكم في البوابة الرقمية الرسمية لقسم الأنشطة الرياضية بوزارة التربية والتعليم. تصفحوا روزنامة الفعاليات، جداول المباريات الحالية، والنتائج المسجلة لجميع البطولات المدرسية." },
-        en: { title: "About School Sports Activities", desc: "Welcome to the official digital portal for the Sports Activities Section at the Ministry of Education. Explore event calendars, active match schedules, and official tournament records." },
+        ar: { 
+          title: "عن الفعاليات الرياضية العامة", 
+          desc: "مرحباً بكم في البوابة الرقمية الرسمية لقسم الأنشطة الرياضية بوزارة التربية والتعليم. تصفحوا روزنامة الفعاليات، جداول المباريات الحالية، والنتائج المسجلة لجميع البطولات المدرسية." 
+        },
+        en: { 
+          title: "About School Sports Activities", 
+          desc: "Welcome to the official digital portal of the Sports Activities Section at the Ministry of Education. Explore event schedules, active tournament fixtures, and official school competition results." 
+        },
         showCalendar: true,
         showGallery: true
       },
       football: {
-        ar: { title: "عن بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية 2026-2027", desc: "أقوى بطولات كرة القدم المدرسية بمملكة البحرين للمدارس الحكومية والخاصة. تقام المباريات بنادي مدينة عيسى ونادي الاتحاد بدءاً من 8:30 صباحاً، وتختتم بالنهائي على استاد مدينة خليفة الرياضية." },
-        en: { title: "About Nasser bin Hamad Secondary Schools Football 2026-2027", desc: "Bahrain's premier secondary schools championship for government and private schools. Matches are held at Isa Town Club and Al Ittihad Club starting at 8:30 AM, culminating in the finals at Khalifa Sports City Stadium." },
+        ar: { 
+          title: "بطولة ناصر بن حمد لكرة القدم", 
+          desc: "تعد بطولة ناصر بن حمد لكرة القدم للمرحلة الثانوية، التي تنظمها وزارة التربية والتعليم متمثلة بإدارة التربية الرياضية هي من الخطوات الأساسية لاكتشاف ورعاية المواهب الكروية الطلابية، وتعزيز القيم الوطنية والروح الرياضية، والارتقاء بمستوى الرياضة المدرسية، بما يسهم في رفد الأندية والمنتخبات باللاعبين المتميزين." 
+        },
+        en: { 
+          title: "Nasser bin Hamad Football Championship", 
+          desc: "Organized by the Ministry of Education through the Physical Education Directorate, the Nasser bin Hamad Secondary Schools Football Championship is an essential initiative to discover and nurture student football talent, strengthen national values and sportsmanship, elevate school sports, and supply national clubs and teams with outstanding athletes." 
+        },
         showCalendar: false,
         showGallery: true
       },
       basketball: {
-        ar: { title: "عن دوري المجموعات لكرة السلة 2026-2027", desc: "منافسات دور المجموعات للمدارس بالتعاون مع الاتحاد البحريني لكرة السلة على صالة الاتحاد بالماحوز من 15 إلى 30 نوفمبر 2026 في الفترات الصباحية (8:30، 9:30، 10:30 صباحاً)." },
-        en: { title: "About Basketball Group Stage League 2026-2027", desc: "Official school group stage tournament organized in partnership with Bahrain Basketball Association at BBA Hall (Um Al Hassam) from Nov 15 to Nov 30, 2026 with morning fixtures at 8:30, 9:30, and 10:30 AM." },
+        ar: { 
+          title: "بطولة خالد بن حمد لكرة السلة", 
+          desc: "تُجسد بطولة خالد بن حمد لكرة السلة للمدارس الثانوية رؤيةً طموحة تؤمن بأن الرياضة المدرسية ليست مجرد نشاط تنافسي، بل تهدف إلى تعزيز قيم القيادة والعمل الجماعي والانضباط، وتنمية المهارات الرياضية لدى الطلبة، إلى جانب اكتشاف المواهب الوطنية الواعدة ورعايتها، بما يسهم في رفد الأندية والمنتخبات بكفاءات رياضية متميزة." 
+        },
+        en: { 
+          title: "Khalid bin Hamad Basketball Championship", 
+          desc: "The Khalid bin Hamad Secondary Schools Basketball Championship embodies an ambitious vision where school sports transcend mere competition. It fosters leadership, teamwork, and discipline while developing athletic skills and scouting promising national talent to enrich Bahraini clubs and national teams with distinguished sporting competencies." 
+        },
         showCalendar: false,
         showGallery: false
       },
       esports: {
-        ar: { title: "عن البرنامج الزمني لبطولة وزارة التربية والتعليم للألعاب الإلكترونية", desc: "البطولة الرسمية التنافسية للألعاب الإلكترونية لمدارس البنين والبنات، تشمل تصفيات الإعدادي والثانوي، الدور ربع النهائي (19 نوفمبر)، بطولة الجامعات (22 نوفمبر)، واليوم الختامي (25 نوفمبر)." },
-        en: { title: "About MOE Esports Championship Schedule", desc: "Official competitive gaming tournament across intermediate and secondary schools. Includes intermediate & secondary qualifiers, Quarter-Finals (Nov 19), Universities Tournament (Nov 22), and Final Day (Nov 25)." },
+        ar: { 
+          title: "بطولة الألعاب الإلكترونية", 
+          desc: "تُقام بطولة الألعاب الإلكترونية في نسختها الأولى بمشاركة طلبة المرحلة الثانوية والإعدادية (بنين وبنات)، في لعبة واحدة (فيفا) باعتبارها خطوة تأسيسية لإطلاق البطولة، نظراً لشعبيتها الواسعة بين الطلبة والطالبات، وملاءمتها لمختلف الفئات العمرية، وسهولة تنظيم منافساتها. ومن المقرر التوسع مستقبلاً في إدراج ألعاب إلكترونية متنوعة ضمن النسخ القادمة، بما يعزز فرص المشاركة ويستقطب شريحة أكبر من الطلبة." 
+        },
+        en: { 
+          title: "MOE Esports Championship", 
+          desc: "The inaugural edition of the MOE Esports Championship features secondary and intermediate students (boys and girls) competing in EA Sports FC (FIFA) as a foundational launch title, chosen for its widespread popularity, suitability across age groups, and streamlined tournament structure. Future editions are scheduled to expand into diverse esports titles to broaden participation and engage a wider demographic of students." 
+        },
         showCalendar: false,
         showGallery: true
       },
       excellence: {
-        ar: { title: "عن جائزة الطالب المتميز في المجال الثقافي والرياضي 2026", desc: "تقام الفعاليات بمدرسة غازي القصيبي الثانوية للبنات في تمام 9:00 صباحاً بحضور سعادة الأستاذة كفاية حبيب العنزور (29 نوفمبر للبنين و30 نوفمبر للبنات)، وتتضمن سباق F1 وتتويج الفائزين." },
-        en: { title: "About Student Excellence Award in Sports & Culture 2026", desc: "Held at Ghazi Al Gosaibi Secondary Girls School at 9:00 AM under the patronage of Assistant Undersecretary Kefaya Habib Al Anzoor (Nov 29 for boys, Nov 30 for girls), featuring F1 races and podium ceremonies." },
+        ar: { 
+          title: "جائزة الطالب المتميز في المجال الثقافي والرياضي", 
+          desc: "تُعنى الجائزة بتكريم الطلبة المتميزين في الجانب المعرفي والثقافي المرتبط بالرياضة، من خلال إبراز معارفهم في القوانين والتاريخ والمفاهيم الرياضية، بما يُكمل الجوانب المهارية والأدائية. وتستهدف طلبة المرحلة الثانوية من البنين والبنات." 
+        },
+        en: { 
+          title: "Student Excellence Award in Sports and Culture", 
+          desc: "This award honors students who demonstrate excellence in the intellectual and cultural dimensions of athletics by showcasing their knowledge of sports rules, sports history, and athletic concepts—complementing physical skill and performance. It is dedicated to secondary school students across boys' and girls' divisions." 
+        },
         showCalendar: false,
         showGallery: false
       },
       media: {
-        ar: { title: "معرض الوسائط الكامل (الصور والفيديوهات)", desc: "التغطيات المصورة والتقارير المرئية لكافة الفعاليات والبطولات الرياضية المعتمدة بعد مراجعتها وتوثيقها من فريق اللجنة الإعلامية." },
-        en: { title: "Full Media Gallery (Photos & Videos)", desc: "Comprehensive photo and video highlights documenting all official school tournaments and sports festivals." },
+        ar: { 
+          title: "معرض الوسائط الكامل (الصور والفيديوهات)", 
+          desc: "التغطيات المصورة والتقارير المرئية لكافة الفعاليات والبطولات الرياضية المعتمدة بعد مراجعتها وتوثيقها من فريق اللجنة الإعلامية." 
+        },
+        en: { 
+          title: "Full Media Gallery (Photos & Videos)", 
+          desc: "Comprehensive photo and video highlights documenting all official school tournaments and athletic festivals after verification by the media committee." 
+        },
         showCalendar: false,
         showGallery: true
       }
     };
 
-    // Official Baseline Schedule
+    // Official Tournament Schedule Baseline
     const baseVerifiedMatches = [
       { id: "FB-01", pageKey: "football", date: "2026-11-08", time: "08:30 AM", score: "2 - 1",
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة مدينة عيسى الثانوية للبنين", teamB: "مركز ناصر العلمي والتقني", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الأولى" },
@@ -938,8 +978,8 @@
         en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Al Noor International School", teamB: "Al Falah Private Schools", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 3" }
       },
       { id: "BB-01", pageKey: "basketball", date: "2026-11-15", time: "08:30 AM", score: "",
-        ar: { tournament: "دوري المجموعات لكرة السلة", teamA: "مدرسة أحمد العمران", teamB: "مدرسة الشيخ عبد الله بن عيسى", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات - مباراة 1" },
-        en: { tournament: "Basketball Groups League", teamA: "Ahmed Al Omran Secondary School", teamB: "Shaikh Abdullah bin Isa Secondary School", location: "BBA Hall (Um Al Hassam)", notes: "Group Stage Opener" }
+        ar: { tournament: "بطولة خالد بن حمد للسلة", teamA: "مدرسة أحمد العمران", teamB: "مدرسة الشيخ عبد الله بن عيسى", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات - مباراة 1" },
+        en: { tournament: "Khalid bin Hamad Basketball", teamA: "Ahmed Al Omran Secondary School", teamB: "Shaikh Abdullah bin Isa Secondary School", location: "BBA Hall (Um Al Hassam)", notes: "Group Stage Opener" }
       },
       { id: "ES-01", pageKey: "esports", date: "2026-11-08", time: "08:30 AM", score: "2 - 0",
         ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "تصفيات المرحلة الإعدادية (بنين)", teamB: "تصفيات تمهيدية", location: "صالة وزارة التربية (مدينة عيسى)", notes: "اليوم الأول: إعدادي بنين" },
@@ -959,14 +999,13 @@
       "2026-11-15": { color: "stripe-yellow", ar: { title: "🏀 سلة (ابتدائي - بنين)", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "افتتاح دوري المدارس الابتدائية للسلة" }, en: { title: "🏀 Basketball (Prim. Boys)", t: "Basketball League", venue: "BBA Arena (Um Al Hassam)", notes: "Primary Basketball League Opening" } }
     };
 
-    // CONNECTED GOOGLE SHEETS URLS
+    // Connected Sheets CSV feeds
     const MATCHES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFrEKvM8AglCT3swkTUdmsnX2zhkMvnS2SrYMCSCHDFLBRFRXT1uCPDmHY2Nr33rNJswpFbfTu-E6A/pub?output=csv";
     const MEDIA_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzaz5nQ6lBjDYfXFICtoT8WKEepIbQJg6a1W9SRwq8dV3rltw97NVLVx-nzvxz3GY737Uuzv7loLOV/pub?output=csv";
 
     let activeRoster = [...baseVerifiedMatches];
     let mediaGallery = [];
 
-    // Helper: Converts Google Drive file link into a direct web image source
     function formatDriveImage(driveUrl) {
       if (!driveUrl) return "";
       const firstLink = driveUrl.split(",")[0].trim();
@@ -991,7 +1030,7 @@
               const t = cols[1] || "";
               let pKey = "home";
               if (t.includes("قدم") || t.includes("ناصر") || t.toLowerCase().includes("foot")) pKey = "football";
-              else if (t.includes("سلة") || t.toLowerCase().includes("basket")) pKey = "basketball";
+              else if (t.includes("سلة") || t.includes("خالد") || t.toLowerCase().includes("basket")) pKey = "basketball";
               else if (t.includes("إلكترونية") || t.toLowerCase().includes("esport")) pKey = "esports";
               else if (t.includes("طالب") || t.includes("متميز") || t.toLowerCase().includes("award")) pKey = "excellence";
 
@@ -1036,16 +1075,14 @@
         rows.forEach(row => {
           const cols = row.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
           const title = cols[1] || "تغطية مصورة للفعاليات";
-          const mediaType = cols[3] || "Photograph";
           const rawLink = cols[5] || "";
           const tournament = cols[8] || "فعالية رياضية مدرسية";
           const status = cols[11] || "";
 
-          // Display Approved uploads with valid links
           if (rawLink && status.toLowerCase().includes("approved")) {
             let pKey = "home";
             if (tournament.includes("قدم") || tournament.includes("ناصر")) pKey = "football";
-            else if (tournament.includes("سلة")) pKey = "basketball";
+            else if (tournament.includes("سلة") || tournament.includes("خالد")) pKey = "basketball";
             else if (tournament.includes("إلكترونية")) pKey = "esports";
             else if (tournament.includes("طالب") || tournament.includes("متميز")) pKey = "excellence";
 
