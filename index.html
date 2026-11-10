@@ -206,6 +206,7 @@
       gap: 5px;
       flex-shrink: 0;
       font-family: inherit;
+      border: 1px solid var(--border-dark);
     }
     .tournament-pill-btn.active {
       background: var(--active-blue) !important;
@@ -406,7 +407,7 @@
       line-height: 1.5;
     }
 
-    /* Match Roster Cards */
+    /* Match Roster Cards: Team Names V/S -> Date -> Time -> Location -> Score */
     .matches-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -664,7 +665,7 @@
     </div>
   </header>
 
-  <!-- Top Tournament Switcher Bar with Arrows -->
+  <!-- Top Tournament Switcher Bar with Adaptive Arrows -->
   <nav class="top-tournaments-bar" aria-label="Tournaments Bar">
     <button class="carousel-nav-btn" id="scrollPrevBtn" title="Previous">&#8250;</button>
     <div class="tournaments-track" id="tournamentsTrack">
@@ -684,7 +685,7 @@
     <!-- MAIN CONTENT COLUMN -->
     <main class="main-content-col">
 
-      <!-- 1. Interactive Calendar (Only visible on Home) -->
+      <!-- 1. Interactive Calendar (Home Only) -->
       <section class="dashboard-card" id="calendarSection">
         <div class="card-title-row">
           <h2 id="calendarTitle">📅 التقويم السنوي الشامل 2026-2027</h2>
@@ -765,14 +766,7 @@
     <aside class="sidebar-col">
       <div class="sidebar-block">
         <div class="sidebar-header" id="venuesTitle">المواقع والملاعب الرسمية</div>
-        <ul class="venue-list" id="venuesList">
-          <li class="venue-item">📍 صالة الاتحاد البحريني لكرة السلة (الماحوز)</li>
-          <li class="venue-item">📍 صالة وزارة التربية والتعليم (مدينة عيسى)</li>
-          <li class="venue-item">📍 استاد مدينة خليفة الرياضية</li>
-          <li class="venue-item">📍 نادي مدينة عيسى</li>
-          <li class="venue-item">📍 نادي الاتحاد الرياضي</li>
-          <li class="venue-item">📍 مدرسة غازي القصيبي الثانوية للبنات</li>
-        </ul>
+        <ul class="venue-list" id="venuesList"></ul>
       </div>
     </aside>
 
@@ -800,11 +794,12 @@
   </div>
 
   <script>
+    let currentLang = "ar";
+    let currentPage = "home";
+
     // ========================================================
     // BILINGUAL LOCALIZATION DICTIONARY
     // ========================================================
-    let currentLang = "ar";
-
     const i18n = {
       ar: {
         brandTitle: "قسم الأنشطة والتربية الرياضية",
@@ -840,7 +835,15 @@
         lblNotes: "ملاحظات إضافية:",
         noUpcoming: "لا توجد مباريات قادمة لهذه البطولة حالياً.",
         noFinished: "لا توجد نتائج مسجلة لهذه البطولة بعد.",
-        noMedia: "لا توجد صور مضافة لهذه البطولة حالياً."
+        noMedia: "لا توجد صور مضافة لهذه البطولة حالياً.",
+        venues: [
+          "📍 صالة الاتحاد البحريني لكرة السلة (الماحوز)",
+          "📍 صالة وزارة التربية والتعليم (مدينة عيسى)",
+          "📍 استاد مدينة خليفة الرياضية",
+          "📍 نادي مدينة عيسى",
+          "📍 نادي الاتحاد الرياضي",
+          "📍 مدرسة غازي القصيبي الثانوية للبنات"
+        ]
       },
       en: {
         brandTitle: "Physical Education & Sports Section",
@@ -876,12 +879,20 @@
         lblNotes: "Additional Notes:",
         noUpcoming: "No upcoming matches currently scheduled.",
         noFinished: "No finished match results recorded yet.",
-        noMedia: "No photos available for this section yet."
+        noMedia: "No photos available for this section yet.",
+        venues: [
+          "📍 Bahrain Basketball Association Arena (Um Al Hassam)",
+          "📍 Ministry of Education Hall (Isa Town)",
+          "📍 Khalifa Sports City Stadium",
+          "📍 Isa Town Sports Club",
+          "📍 Al Ittihad Sports Club",
+          "📍 Ghazi Al Gosaibi Secondary Girls School"
+        ]
       }
     };
 
     // ========================================================
-    // TOURNAMENT PAGES DATABASE
+    // TOURNAMENT PAGES DATABASE & VERIFIED DESCRIPTIONS
     // ========================================================
     const tournamentPagesData = {
       home: {
@@ -891,26 +902,26 @@
         showGallery: true
       },
       football: {
-        ar: { title: "عن بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية", desc: "أقوى بطولات كرة القدم المدرسية بمملكة البحرين، وتجمع نخبة منتخبات المدارس الثانوية الحكومية والخاصة للمنافسة على اللقب وفق لوائح الاتحاد البحريني لكرة القدم." },
-        en: { title: "About Nasser bin Hamad Secondary Schools Football", desc: "Bahrain's premier school football championship, bringing together top public and private secondary school teams competing under Bahrain Football Association regulations." },
+        ar: { title: "عن بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية 2026-2027", desc: "أقوى بطولات كرة القدم المدرسية بمملكة البحرين للمدارس الحكومية والخاصة. تقام المباريات بنادي مدينة عيسى ونادي الاتحاد بدءاً من 8:30 صباحاً، وتختتم بالنهائي على استاد مدينة خليفة الرياضية." },
+        en: { title: "About Nasser bin Hamad Secondary Schools Football 2026-2027", desc: "Bahrain's premier secondary schools championship for government and private schools. Matches are held at Isa Town Club and Al Ittihad Club starting at 8:30 AM, culminating in the finals at Khalifa Sports City Stadium." },
         showCalendar: false,
         showGallery: true
       },
       basketball: {
-        ar: { title: "عن دوري المجموعات لكرة السلة", desc: "منافسات دوري المجموعات للمدارس الابتدائية والإعدادية بالتعاون مع الاتحاد البحريني لكرة السلة، المقامة على صالة الاتحاد بالماحوز والصالات الشريكة." },
-        en: { title: "About Basketball Group League", desc: "Group competitions for primary and intermediate schools in collaboration with Bahrain Basketball Association, held at the BBA Arena in Um Al Hassam." },
+        ar: { title: "عن دوري المجموعات لكرة السلة 2026-2027", desc: "منافسات دور المجموعات للمدارس بالتعاون مع الاتحاد البحريني لكرة السلة على صالة الاتحاد بالماحوز من 15 إلى 30 نوفمبر 2026 في الفترات الصباحية (8:30، 9:30، 10:30 صباحاً)." },
+        en: { title: "About Basketball Group Stage League 2026-2027", desc: "Official school group stage tournament organized in partnership with Bahrain Basketball Association at BBA Hall (Um Al Hassam) from Nov 15 to Nov 30, 2026 with morning fixtures at 8:30, 9:30, and 10:30 AM." },
         showCalendar: false,
         showGallery: false
       },
       esports: {
-        ar: { title: "عن بطولة وزارة التربية والتعليم للألعاب الإلكترونية", desc: "بطولة رسمية تنافسية لطلبة المدارس الحكومية والخاصة في الألعاب الإلكترونية الرياضية (FIFA/FC و Rocket League)، برعاية وتنظيم إدارة التربية الرياضية." },
-        en: { title: "About MOE Esports Championship", desc: "Official competitive championship for students across public and private schools in sports esports titles (FC and Rocket League), organized by the Physical Education Directorate." },
+        ar: { title: "عن البرنامج الزمني لبطولة وزارة التربية والتعليم للألعاب الإلكترونية", desc: "البطولة الرسمية التنافسية للألعاب الإلكترونية لمدارس البنين والبنات، تشمل تصفيات الإعدادي والثانوي، الدور ربع النهائي (19 نوفمبر)، بطولة الجامعات (22 نوفمبر)، واليوم الختامي (25 نوفمبر)." },
+        en: { title: "About MOE Esports Championship Schedule", desc: "Official competitive gaming tournament across intermediate and secondary schools. Includes intermediate & secondary qualifiers, Quarter-Finals (Nov 19), Universities Tournament (Nov 22), and Final Day (Nov 25)." },
         showCalendar: false,
         showGallery: true
       },
       excellence: {
-        ar: { title: "عن جائزة الطالب المتميز في المجال الرياضي والثقافي", desc: "مبادرة سنوية لتكريم الطلاب والطالبات المتميزين رياضياً وأكاديمياً وحاملي المراكز الأولى لتعزيز الروح الرياضية والتميز الدراسي." },
-        en: { title: "About Student Excellence Award in Sports", desc: "An annual initiative celebrating outstanding student athletes and national championship medalists, inspiring athletic and academic excellence." },
+        ar: { title: "عن جائزة الطالب المتميز في المجال الثقافي والرياضي 2026", desc: "تقام الفعاليات بمدرسة غازي القصيبي الثانوية للبنات في تمام 9:00 صباحاً بحضور سعادة الأستاذة كفاية حبيب العنزور (29 نوفمبر للبنين و30 نوفمبر للبنات)، وتتضمن سباق F1 وتتويج الفائزين." },
+        en: { title: "About Student Excellence Award in Sports & Culture 2026", desc: "Held at Ghazi Al Gosaibi Secondary Girls School at 9:00 AM under the patronage of Assistant Undersecretary Kefaya Habib Al Anzoor (Nov 29 for boys, Nov 30 for girls), featuring F1 races and podium ceremonies." },
         showCalendar: false,
         showGallery: false
       },
@@ -923,52 +934,695 @@
     };
 
     // ========================================================
-    // LIVE SPREADSHEET URL & DATA ARRAYS
+    // VERIFIED MATCHES ROSTER (Bilingual with Authentic Names)
+    // Order: Team Names (with orange V/S) -> Date -> Time -> Location -> Score
     // ========================================================
-    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFrEKvM8AglCT3swkTUdmsnX2zhkMvnS2SrYMCSCHDFLBRFRXT1uCPDmHY2Nr33rNJswpFbfTu-E6A/pub?output=csv";
-
-    let gamesRoster = [];
-    let currentPage = "home";
-
-    // Calendar Events Catalog
-    const calendarEventsData = {
-      "2026-11-08": { title: "⚽ 2 قدم (إعدادي - بنين)", color: "stripe-blue", t: "كرة قدم إعدادي", venue: "نادي مدينة عيسى", notes: "مباريات دور المجموعات - الجولة الأولى" },
-      "2026-11-09": { title: "⚽ 2 قدم (إعدادي - بنات)", color: "stripe-blue", t: "كرة قدم إعدادي", venue: "صالة وزارة التربية", notes: "تصفيات مدارس البنات لكرة القدم" },
-      "2026-11-10": { title: "⚽ 2 قدم (ثانوي - بنين)", color: "stripe-blue", t: "كرة قدم ثانوي", venue: "نادي الاتحاد الرياضي", notes: "مباريات الجولة الثانية للمرحلة الثانوية" },
-      "2026-11-11": { title: "⚽ 2 قدم (ثانوي - بنات)", color: "stripe-blue", t: "كرة قدم ثانوي", venue: "صالة الوزارة", notes: "منافسات المرحلة الثانوية للفتيات" },
-      "2026-11-12": { title: "🎮 ألعاب إلكترونية", color: "stripe-orange", t: "بطولة الألعاب الإلكترونية", venue: "صالة مدينة عيسى", notes: "انطلاق المنافسات الرسمية لبطولة الألعاب الإلكترونية" },
-      "2026-11-15": { title: "🏀 سلة (ابتدائي - بنين)", color: "stripe-yellow", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "افتتاح دوري المدارس الابتدائية للسلة" },
-      "2026-11-16": { title: "🏀 سلة (ابتدائي - بنات)", color: "stripe-yellow", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "مباريات كرة السلة لمدارس البنات" },
-      "2026-11-17": { title: "🏀 سلة (إعدادي)", color: "stripe-yellow", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "تصفيات المرحلة الإعدادية لكرة السلة" },
-      "2026-11-18": { title: "زيارات ميدانية", color: "stripe-blue", t: "التنظيم الميداني", venue: "ملاعب المدارس", notes: "جولات المتابعة الميدانية للفرق" },
-      "2026-11-19": { title: "مباريات الدوري", color: "stripe-blue", t: "المسابقات الرياضية", venue: "ملاعب متفرقة", notes: "مباريات الأدوار الإقصائية" }
-    };
-
-    // Media Gallery Catalog
-    const mediaGallery = [
+    const verifiedMatchesData = [
+      // Nasser bin Hamad Football Tournament (Source: PDF Schedule)
       {
-        title: "قرعة بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية",
-        tournament: "بطولة ناصر بن حمد",
+        id: "FB-01",
         pageKey: "football",
-        imgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80"
+        date: "2026-11-08",
+        time: "08:30 AM",
+        score: "2 - 1",
+        ar: {
+          tournament: "بطولة ناصر بن حمد للقدم",
+          teamA: "مدرسة مدينة عيسى الثانوية للبنين",
+          teamB: "مركز ناصر العلمي والتقني",
+          location: "نادي مدينة عيسى",
+          notes: "الجولة الأولى - المجموعة الأولى (مباراة رقم 1)"
+        },
+        en: {
+          tournament: "Nasser bin Hamad Football Cup",
+          teamA: "Isa Town Secondary Boys School",
+          teamB: "Nasser Vocational Training Centre (NCST)",
+          location: "Isa Town Sports Club",
+          notes: "Round 1 - Group 1 (Match #1)"
+        }
       },
       {
-        title: "مباريات المجموعة الثانية ضمن الجولة الأولى",
-        tournament: "كرة قدم ثانوية",
+        id: "FB-02",
         pageKey: "football",
-        imgUrl: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80"
+        date: "2026-11-08",
+        time: "08:30 AM",
+        score: "3 - 0",
+        ar: {
+          tournament: "بطولة ناصر بن حمد للقدم",
+          teamA: "مدرسة بيان البحرين",
+          teamB: "مدرسة الحكمة الدولية",
+          location: "نادي الاتحاد الرياضي",
+          notes: "الجولة الأولى - المجموعة الأولى (مباراة رقم 2)"
+        },
+        en: {
+          tournament: "Nasser bin Hamad Football Cup",
+          teamA: "Bahrain Bayan School",
+          teamB: "Al Hekma International School",
+          location: "Al Ittihad Sports Club",
+          notes: "Round 1 - Group 1 (Match #2)"
+        }
       },
       {
-        title: "مدرسة الحكمة الدولية - مسابقة الألعاب الإلكترونية",
-        tournament: "بطولة الألعاب الإلكترونية",
+        id: "FB-03",
+        pageKey: "football",
+        date: "2026-11-09",
+        time: "08:30 AM",
+        score: "",
+        ar: {
+          tournament: "بطولة ناصر بن حمد للقدم",
+          teamA: "مدرسة الشيخ عيسى بن علي الثانوية",
+          teamB: "مدرسة الرفاع الشرقي الثانوية",
+          location: "نادي مدينة عيسى",
+          notes: "الجولة الأولى - المجموعة الثانية (مباراة رقم 3)"
+        },
+        en: {
+          tournament: "Nasser bin Hamad Football Cup",
+          teamA: "Shaikh Isa bin Ali Secondary School",
+          teamB: "East Riffa Secondary School",
+          location: "Isa Town Sports Club",
+          notes: "Round 1 - Group 2 (Match #3)"
+        }
+      },
+      {
+        id: "FB-04",
+        pageKey: "football",
+        date: "2026-11-09",
+        time: "08:30 AM",
+        score: "",
+        ar: {
+          tournament: "بطولة ناصر بن حمد للقدم",
+          teamA: "مدرسة المعارف الحديثة",
+          teamB: "مدرسة الإبداع الخاصة",
+          location: "نادي الاتحاد الرياضي",
+          notes: "الجولة الأولى - المجموعة الثانية (مباراة رقم 4)"
+        },
+        en: {
+          tournament: "Nasser bin Hamad Football Cup",
+          teamA: "Modern Knowledge Schools (MKS)",
+          teamB: "Al Ibdaa Private School",
+          location: "Al Ittihad Sports Club",
+          notes: "Round 1 - Group 2 (Match #4)"
+        }
+      },
+      {
+        id: "FB-05",
+        pageKey: "football",
+        date: "2026-11-10",
+        time: "08:30 AM",
+        score: "",
+        ar: {
+          tournament: "بطولة ناصر بن حمد للقدم",
+          teamA: "مدرسة أحمد العمران الثانوية",
+          teamB: "مدرسة النعيم الثانوية",
+          location: "نادي مدينة عيسى",
+          notes: "الجولة الأولى - المجموعة الثالثة (مباراة رقم 5)"
+        },
+        en: {
+          tournament: "Nasser bin Hamad Football Cup",
+          teamA: "Ahmed Al Omran Secondary School",
+          teamB: "Al Naim Secondary School",
+          location: "Isa Town Sports Club",
+          notes: "Round 1 - Group 3 (Match #5)"
+        }
+      },
+      {
+        id: "FB-06",
+        pageKey: "football",
+        date: "2026-11-10",
+        time: "08:30 AM",
+        score: "",
+        ar: {
+          tournament: "بطولة ناصر بن حمد للقدم",
+          teamA: "مدرسة النور العالمية",
+          teamB: "مدارس الفلاح الخاصة",
+          location: "نادي الاتحاد الرياضي",
+          notes: "الجولة الأولى - المجموعة الثالثة (مباراة رقم 6)"
+        },
+        en: {
+          tournament: "Nasser bin Hamad Football Cup",
+          teamA: "Al Noor International School",
+          teamB: "Al Falah Private Schools",
+          location: "Al Ittihad Sports Club",
+          notes: "Round 1 - Group 3 (Match #6)"
+        }
+      },
+      {
+        id: "FB-07",
+        pageKey: "football",
+        date: "2026-11-11",
+        time: "08:30 AM",
+        score: "",
+        ar: {
+          tournament: "بطولة ناصر بن حمد للقدم",
+          teamA: "مدرسة الجابرية الثانوية الصناعية",
+          teamB: "مدرسة الهداية الخليفية الثانوية",
+          location: "نادي مدينة عيسى",
+          notes: "الجولة الأولى - المجموعة الرابعة (مباراة رقم 7)"
+        },
+        en: {
+          tournament: "Nasser bin Hamad Football Cup",
+          teamA: "Al Jabriya Technical Secondary School",
+          teamB: "Al Hidaya Al Khalifia Secondary School",
+          location: "Isa Town Sports Club",
+          notes: "Round 1 - Group 4 (Match #7)"
+        }
+      },
+      {
+        id: "FB-08",
+        pageKey: "football",
+        date: "2026-11-11",
+        time: "08:30 AM",
+        score: "",
+        ar: {
+          tournament: "بطولة ناصر بن حمد للقدم",
+          teamA: "المدرسة البريطانية في البحرين",
+          teamB: "مدرسة سانت كريستوفر",
+          location: "نادي الاتحاد الرياضي",
+          notes: "الجولة الأولى - المجموعة الرابعة (مباراة رقم 8)"
+        },
+        en: {
+          tournament: "Nasser bin Hamad Football Cup",
+          teamA: "British School of Bahrain (BSB)",
+          teamB: "St Christopher's School",
+          location: "Al Ittihad Sports Club",
+          notes: "Round 1 - Group 4 (Match #8)"
+        }
+      },
+
+      // Basketball Group Stage Matches (Source: PDF Schedule)
+      {
+        id: "BB-01",
+        pageKey: "basketball",
+        date: "2026-11-15",
+        time: "08:30 AM",
+        score: "",
+        ar: {
+          tournament: "دوري المجموعات لكرة السلة",
+          teamA: "مدرسة أحمد العمران",
+          teamB: "مدرسة الشيخ عبد الله بن عيسى",
+          location: "صالة الاتحاد بالماحوز",
+          notes: "المباراة الافتتاحية لدور المجموعات (مباراة رقم 1)"
+        },
+        en: {
+          tournament: "Basketball Groups League",
+          teamA: "Ahmed Al Omran Secondary School",
+          teamB: "Shaikh Abdullah bin Isa Secondary School",
+          location: "Bahrain Basketball Association Hall (Um Al Hassam)",
+          notes: "Group Stage Opener (Match #1)"
+        }
+      },
+      {
+        id: "BB-02",
+        pageKey: "basketball",
+        date: "2026-11-15",
+        time: "09:30 AM",
+        score: "",
+        ar: {
+          tournament: "دوري المجموعات لكرة السلة",
+          teamA: "مدرسة الرفاع الشرقي",
+          teamB: "مدرسة المحرق الثانوية",
+          location: "صالة الاتحاد بالماحوز",
+          notes: "دور المجموعات (مباراة رقم 2)"
+        },
+        en: {
+          tournament: "Basketball Groups League",
+          teamA: "East Riffa Secondary School",
+          teamB: "Muharraq Secondary School",
+          location: "Bahrain Basketball Association Hall (Um Al Hassam)",
+          notes: "Group Stage (Match #2)"
+        }
+      },
+
+      // Esports Tournament Matches (Source: PDF Schedule)
+      {
+        id: "ES-01",
         pageKey: "esports",
-        imgUrl: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+        date: "2026-11-12",
+        time: "08:00 AM",
+        score: "",
+        ar: {
+          tournament: "بطولة الألعاب الإلكترونية",
+          teamA: "المرحلة الإعدادية (بنين)",
+          teamB: "المرحلة الإعدادية (بنات)",
+          location: "صالة وزارة التربية والتعليم (مدينة عيسى)",
+          notes: "تصفيات المرحلة الإعدادية للألعاب الإلكترونية"
+        },
+        en: {
+          tournament: "MOE Esports Championship",
+          teamA: "Intermediate Boys Division",
+          teamB: "Intermediate Girls Division",
+          location: "Ministry of Education Hall (Isa Town)",
+          notes: "Intermediate Schools Esports Qualifiers"
+        }
+      },
+      {
+        id: "ES-02",
+        pageKey: "esports",
+        date: "2026-11-19",
+        time: "08:30 AM",
+        score: "",
+        ar: {
+          tournament: "بطولة الألعاب الإلكترونية",
+          teamA: "المتأهل من المجموعة A",
+          teamB: "المتأهل من المجموعة B",
+          location: "صالة وزارة التربية والتعليم (مدينة عيسى)",
+          notes: "مباريات الدور ربع النهائي لبطولة الألعاب الإلكترونية"
+        },
+        en: {
+          tournament: "MOE Esports Championship",
+          teamA: "Group A Qualifier",
+          teamB: "Group B Qualifier",
+          location: "Ministry of Education Hall (Isa Town)",
+          notes: "Quarter-Finals Stage"
+        }
+      },
+
+      // Student Excellence Award (Source: PDF Invitation & Program)
+      {
+        id: "EX-01",
+        pageKey: "excellence",
+        date: "2026-11-29",
+        time: "09:00 AM",
+        score: "",
+        ar: {
+          tournament: "جائزة الطالب المتميز",
+          teamA: "مدارس المرحلة الثانوية (بنين)",
+          teamB: "سباق F1 للمدارس",
+          location: "مدرسة غازي القصيبي الثانوية للبنات",
+          notes: "الجولة الأولى ونهائيات البنين برعاية سعادة أ. كفاية العنزور"
+        },
+        en: {
+          tournament: "Student Excellence Award",
+          teamA: "Secondary Schools (Boys)",
+          teamB: "Schools F1 Race Challenge",
+          location: "Ghazi Al Gosaibi Secondary Girls School",
+          notes: "Boys Round 1, Finals & F1 Race under patronage of Ms. Kefaya Al Anzoor"
+        }
+      },
+      {
+        id: "EX-02",
+        pageKey: "excellence",
+        date: "2026-11-30",
+        time: "09:00 AM",
+        score: "",
+        ar: {
+          tournament: "جائزة الطالب المتميز",
+          teamA: "مدارس المرحلة الثانوية (بنات)",
+          teamB: "سباق F1 للمدارس والتتويج",
+          location: "مدرسة غازي القصيبي الثانوية للبنات",
+          notes: "نهائيات الفتيات وسباق F1 وتتويج الفائزين الساعة 12:00 ظهراً"
+        },
+        en: {
+          tournament: "Student Excellence Award",
+          teamA: "Secondary Schools (Girls)",
+          teamB: "Schools F1 Race & Podium",
+          location: "Ghazi Al Gosaibi Secondary Girls School",
+          notes: "Girls Finals, F1 Challenge & Award Ceremony at 12:00 PM"
+        }
       }
     ];
 
     // ========================================================
-    // LANGUAGE ENGINE
+    // CALENDAR HIGHLIGHTS (Bilingual)
     // ========================================================
+    const calendarEventsData = {
+      "2026-11-08": {
+        color: "stripe-blue",
+        ar: { title: "⚽ 2 قدم (إعدادي - بنين)", t: "كرة قدم إعدادي", venue: "نادي مدينة عيسى", notes: "افتتاح بطولة كرة القدم الإعدادية" },
+        en: { title: "⚽ Football (Inter. Boys)", t: "Intermediate Football", venue: "Isa Town Sports Club", notes: "Intermediate Football Opener" }
+      },
+      "2026-11-09": {
+        color: "stripe-blue",
+        ar: { title: "⚽ 2 قدم (إعدادي - بنات)", t: "كرة قدم إعدادي", venue: "صالة وزارة التربية", notes: "تصفيات مدارس الفتيات لكرة القدم" },
+        en: { title: "⚽ Football (Inter. Girls)", t: "Intermediate Football", venue: "Ministry of Education Hall", notes: "Girls Intermediate Football" }
+      },
+      "2026-11-10": {
+        color: "stripe-blue",
+        ar: { title: "⚽ 2 قدم (ثانوي - بنين)", t: "كرة قدم ثانوي", venue: "نادي الاتحاد الرياضي", notes: "الجولة الأولى لبطولة ناصر بن حمد" },
+        en: { title: "⚽ Football (Sec. Boys)", t: "Secondary Football", venue: "Al Ittihad Sports Club", notes: "Nasser bin Hamad Cup Round 1" }
+      },
+      "2026-11-11": {
+        color: "stripe-blue",
+        ar: { title: "⚽ 2 قدم (ثانوي - بنات)", t: "كرة قدم ثانوي", venue: "صالة الوزارة", notes: "منافسات المرحلة الثانوية للفتيات" },
+        en: { title: "⚽ Football (Sec. Girls)", t: "Secondary Football", venue: "Ministry of Education Hall", notes: "Girls Secondary Football Fixtures" }
+      },
+      "2026-11-12": {
+        color: "stripe-orange",
+        ar: { title: "🎮 ألعاب إلكترونية", t: "بطولة الألعاب الإلكترونية", venue: "صالة مدينة عيسى", notes: "انطلاق المنافسات الرسمية لبطولة الألعاب الإلكترونية" },
+        en: { title: "🎮 Esports Championship", t: "MOE Esports", venue: "Isa Town MOE Hall", notes: "Official Esports Competitions Launch" }
+      },
+      "2026-11-15": {
+        color: "stripe-yellow",
+        ar: { title: "🏀 سلة (ابتدائي - بنين)", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "افتتاح دوري المدارس الابتدائية للسلة" },
+        en: { title: "🏀 Basketball (Prim. Boys)", t: "Basketball League", venue: "BBA Arena (Um Al Hassam)", notes: "Primary Basketball League Opening" }
+      },
+      "2026-11-16": {
+        color: "stripe-yellow",
+        ar: { title: "🏀 سلة (ابتدائي - بنات)", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "مباريات دوري السلة لمدارس الفتيات" },
+        en: { title: "🏀 Basketball (Prim. Girls)", t: "Basketball League", venue: "BBA Arena (Um Al Hassam)", notes: "Girls Primary Basketball Fixtures" }
+      },
+      "2026-11-17": {
+        color: "stripe-yellow",
+        ar: { title: "🏀 سلة (إعدادي)", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "تصفيات المرحلة الإعدادية لكرة السلة" },
+        en: { title: "🏀 Basketball (Intermediate)", t: "Basketball League", venue: "BBA Arena (Um Al Hassam)", notes: "Intermediate Basketball Qualifiers" }
+      },
+      "2026-11-18": {
+        color: "stripe-blue",
+        ar: { title: "زيارات ميدانية", t: "التنظيم الميداني", venue: "ملاعب المدارس", notes: "جولات المتابعة الميدانية للفرق" },
+        en: { title: "Field Inspections", t: "Field Organization", venue: "School Facilities", notes: "Field Follow-up & Evaluation Visits" }
+      },
+      "2026-11-19": {
+        color: "stripe-orange",
+        ar: { title: "🎮 ربع نهائي الإلكترونية", t: "بطولة الألعاب الإلكترونية", venue: "صالة الوزارة", notes: "مباريات الدور ربع النهائي" },
+        en: { title: "🎮 Esports Quarter-Finals", t: "MOE Esports", venue: "Ministry Hall (Isa Town)", notes: "Quarter-Finals Matches" }
+      },
+      "2026-11-22": {
+        color: "stripe-orange",
+        ar: { title: "🎓 بطولة الجامعات", t: "بطولة الألعاب الإلكترونية", venue: "صالة الوزارة", notes: "منافسات بطولة الجامعات للألعاب الإلكترونية" },
+        en: { title: "🎓 Universities Esports", t: "MOE Esports", venue: "Ministry Hall (Isa Town)", notes: "Universities Esports Championship" }
+      },
+      "2026-11-25": {
+        color: "stripe-orange",
+        ar: { title: "🏆 ختام الألعاب الإلكترونية", t: "بطولة الألعاب الإلكترونية", venue: "صالة الوزارة", notes: "اليوم الختامي والتتويج" },
+        en: { title: "🏆 Esports Finals Day", t: "MOE Esports", venue: "Ministry Hall (Isa Town)", notes: "Finals Day & Award Ceremony" }
+      },
+      "2026-11-29": {
+        color: "stripe-yellow",
+        ar: { title: "🏆 الطالب المتميز (بنين)", t: "جائزة الطالب المتميز", venue: "مدرسة غازي القصيبي", notes: "افتتاح الجائزة وسباق F1 للبنين" },
+        en: { title: "🏆 Excellence Award (Boys)", t: "Student Excellence Award", venue: "Ghazi Al Gosaibi Secondary Girls School", notes: "Boys Award Opening & F1 Race" }
+      },
+      "2026-11-30": {
+        color: "stripe-yellow",
+        ar: { title: "🏆 الطالب المتميز (بنات)", t: "جائزة الطالب المتميز", venue: "مدرسة غازي القصيبي", notes: "نهائيات الفتيات وتتويج الفائزين" },
+        en: { title: "🏆 Excellence Award (Girls)", t: "Student Excellence Award", venue: "Ghazi Al Gosaibi Secondary Girls School", notes: "Girls Finals & Podium Ceremony" }
+      }
+    };
+
+    // Media Gallery
+    const mediaGallery = [
+      {
+        pageKey: "football",
+        imgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80",
+        ar: { title: "قرعة بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية", tournament: "بطولة ناصر بن حمد" },
+        en: { title: "Nasser bin Hamad Football Draw Ceremony", tournament: "Nasser bin Hamad Football" }
+      },
+      {
+        pageKey: "football",
+        imgUrl: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80",
+        ar: { title: "مباريات المجموعة الثانية ضمن الجولة الأولى", tournament: "كرة قدم ثانوية" },
+        en: { title: "Group 2 Match Action - Round 1", tournament: "Secondary Schools Football" }
+      },
+      {
+        pageKey: "esports",
+        imgUrl: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80",
+        ar: { title: "مدرسة الحكمة الدولية - مسابقة الألعاب الإلكترونية", tournament: "بطولة الألعاب الإلكترونية" },
+        en: { title: "Al Hekma International School - Esports Fixture", tournament: "MOE Esports Championship" }
+      }
+    ];
+
+    // ========================================================
+    // SPREADSHEET URL (Published CSV)
+    // ========================================================
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFrEKvM8AglCT3swkTUdmsnX2zhkMvnS2SrYMCSCHDFLBRFRXT1uCPDmHY2Nr33rNJswpFbfTu-E6A/pub?output=csv";
+
+    let activeRoster = [...verifiedMatchesData];
+
+    async function syncGoogleSheetData() {
+      try {
+        const res = await fetch(SHEET_CSV_URL);
+        const text = await res.text();
+        const rows = text.trim().split("\n").slice(1);
+
+        if (rows.length > 0) {
+          const sheetMatches = [];
+          rows.forEach((row, i) => {
+            const cols = row.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
+            if (cols[2] && cols[3]) {
+              const t = cols[1] || "";
+              let pKey = "home";
+              if (t.includes("قدم") || t.includes("ناصر") || t.toLowerCase().includes("foot")) pKey = "football";
+              else if (t.includes("سلة") || t.toLowerCase().includes("basket")) pKey = "basketball";
+              else if (t.includes("إلكترونية") || t.toLowerCase().includes("esport")) pKey = "esports";
+              else if (t.includes("طالب") || t.includes("متميز") || t.toLowerCase().includes("award")) pKey = "excellence";
+
+              sheetMatches.push({
+                id: cols[0] || "SH-" + (i + 1),
+                pageKey: pKey,
+                date: cols[4] || "2026-11-15",
+                time: cols[5] || "08:30 AM",
+                score: cols[7] || "",
+                ar: {
+                  tournament: cols[1] || "بطولة مدرسية",
+                  teamA: cols[2],
+                  teamB: cols[3],
+                  location: cols[6] || "صالة وزارة التربية والتعليم",
+                  notes: cols[9] || ""
+                },
+                en: {
+                  tournament: cols[1] || "School Tournament",
+                  teamA: cols[2],
+                  teamB: cols[3],
+                  location: cols[6] || "Ministry of Education Hall",
+                  notes: cols[9] || ""
+                }
+              });
+            }
+          });
+
+          if (sheetMatches.length > 0) {
+            activeRoster = sheetMatches;
+          }
+        }
+      } catch (err) {
+        console.warn("Using offline verified tournament schedule:", err);
+      }
+
+      distributeMatches(currentPage);
+    }
+
+    // ========================================================
+    // RENDERING FUNCTIONS
+    // ========================================================
+    function renderMatchCard(match) {
+      const data = match[currentLang] || match.ar;
+      const dict = i18n[currentLang];
+      const hasScore = match.score && match.score.trim() !== "";
+
+      return `
+        <div class="match-item" onclick="openGameModal('${match.id}')">
+          <!-- 1. Team Names with Orange V/S -->
+          <div class="match-teams-title">
+            <span>${data.teamA}</span>
+            <span class="vs-accent">V/S</span>
+            <span>${data.teamB}</span>
+          </div>
+
+          <!-- 2. Date -->
+          <div class="match-meta-line">
+            <span class="meta-label">${dict.dateLbl}</span>
+            <span>${match.date}</span>
+          </div>
+
+          <!-- 3. Time -->
+          <div class="match-meta-line">
+            <span class="meta-label">${dict.timeLbl}</span>
+            <span>${match.time}</span>
+          </div>
+
+          <!-- 4. Location -->
+          <div class="match-meta-line">
+            <span class="meta-label">${dict.locationLbl}</span>
+            <span>📍 ${data.location}</span>
+          </div>
+
+          <!-- 5. Score -->
+          <div class="match-score-footer">
+            <span class="meta-label">${dict.scoreLbl}</span>
+            <span class="score-badge ${hasScore ? '' : 'pending'}">
+              ${hasScore ? match.score : dict.scorePending}
+            </span>
+          </div>
+        </div>
+      `;
+    }
+
+    function distributeMatches(filterPage = "home") {
+      const today = new Date().toISOString().split("T")[0];
+      const upcomingGrid = document.getElementById("upcoming-matches-grid");
+      const finishedGrid = document.getElementById("finished-matches-grid");
+      const dict = i18n[currentLang];
+
+      let list = activeRoster;
+      if (filterPage !== "home" && filterPage !== "all" && filterPage !== "media") {
+        list = activeRoster.filter(g => g.pageKey === filterPage);
+      }
+
+      const upcoming = [];
+      const finished = [];
+
+      list.forEach(game => {
+        if ((game.score && game.score.trim() !== "") || (game.date && game.date < today)) {
+          finished.push(game);
+        } else {
+          upcoming.push(game);
+        }
+      });
+
+      upcomingGrid.innerHTML = upcoming.length === 0
+        ? `<div class="empty-note">${dict.noUpcoming}</div>`
+        : upcoming.map(renderMatchCard).join("");
+
+      finishedGrid.innerHTML = finished.length === 0
+        ? `<div class="empty-note">${dict.noFinished}</div>`
+        : finished.map(renderMatchCard).join("");
+    }
+
+    function renderCalendarGrid() {
+      const tbody = document.getElementById("calendarTableBody");
+      const weeks = [
+        [1, 2, 3, 4, 5, 6, 7],
+        [8, 9, 10, 11, 12, 13, 14],
+        [15, 16, 17, 18, 19, 20, 21],
+        [22, 23, 24, 25, 26, 27, 28],
+        [29, 30, "", "", "", "", ""]
+      ];
+
+      tbody.innerHTML = weeks.map(week => `
+        <tr>
+          ${week.map(day => {
+            if (!day) return `<td></td>`;
+            const dateStr = `2026-11-${day < 10 ? '0' + day : day}`;
+            const event = calendarEventsData[dateStr];
+            const hasEvent = !!event;
+            const evData = hasEvent ? (event[currentLang] || event.ar) : null;
+
+            return `
+              <td class="${hasEvent ? 'has-event' : ''}" data-date="${dateStr}">
+                <span class="cell-date">${day}</span>
+                ${hasEvent ? `<span class="event-stripe ${event.color}">${evData.title}</span>` : ''}
+              </td>
+            `;
+          }).join('')}
+        </tr>
+      `).join('');
+
+      tbody.querySelectorAll("td.has-event").forEach(cell => {
+        cell.addEventListener("click", () => {
+          const dStr = cell.getAttribute("data-date");
+          const ev = calendarEventsData[dStr];
+          const evData = ev[currentLang] || ev.ar;
+          showModal({
+            title: evData.title,
+            tournament: evData.t,
+            teams: currentLang === "ar" ? "فعالية مجدولة بالتقويم" : "Scheduled Tournament Event",
+            date: dStr,
+            time: "08:30 AM",
+            venue: evData.venue,
+            score: currentLang === "ar" ? "مجدولة" : "Scheduled",
+            notes: evData.notes
+          });
+        });
+      });
+    }
+
+    function renderGallery(pageFilter = null) {
+      const gallery = document.getElementById("photo-gallery-grid");
+      const dict = i18n[currentLang];
+      let items = mediaGallery;
+      if (pageFilter) {
+        items = mediaGallery.filter(m => m.pageKey === pageFilter);
+      }
+
+      if (items.length === 0) {
+        gallery.innerHTML = `<div class="empty-note">${dict.noMedia}</div>`;
+        return;
+      }
+
+      gallery.innerHTML = items.map(item => {
+        const itemData = item[currentLang] || item.ar;
+        return `
+          <div class="media-card" title="${itemData.title}" onclick="showModal({title:'${itemData.title}', tournament:'${itemData.tournament}', teams:'${itemData.tournament}', date:'2026-11', location:'Ministry of Education', score:'', notes:''})">
+            <img src="${item.imgUrl}" alt="${itemData.title}" class="media-thumb" loading="lazy" />
+            <div class="media-caption-area">
+              <div class="media-custom-title">${itemData.title}</div>
+              <div class="media-tournament-tag">${itemData.tournament}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Modal Control
+    function showModal(data) {
+      document.getElementById("modalTitle").innerText = data.title || "";
+      document.getElementById("modalTournament").innerText = data.tournament || "";
+      document.getElementById("modalTeams").innerText = data.teams || "—";
+      document.getElementById("modalDateTime").innerText = `${data.date || ""} ${data.time ? " | " + data.time : ""}`;
+      document.getElementById("modalVenue").innerText = data.venue || data.location || "";
+      document.getElementById("modalScore").innerText = data.score || (currentLang === "ar" ? "قادمة" : "Upcoming");
+      document.getElementById("modalNotes").innerText = data.notes || "—";
+
+      document.getElementById("detailsModal").classList.add("active");
+    }
+
+    function closeModal() {
+      document.getElementById("detailsModal").classList.remove("active");
+    }
+
+    function openGameModal(matchId) {
+      const match = activeRoster.find(g => g.id === matchId);
+      if (!match) return;
+      const data = match[currentLang] || match.ar;
+      showModal({
+        title: `${data.teamA} V/S ${data.teamB}`,
+        tournament: data.tournament,
+        teams: `${data.teamA} V/S ${data.teamB}`,
+        date: match.date,
+        time: match.time,
+        location: data.location,
+        score: match.score,
+        notes: data.notes
+      });
+    }
+
+    // Page Switching
+    function switchTournamentPage(pageKey) {
+      currentPage = pageKey;
+      const pageInfo = tournamentPagesData[pageKey] || tournamentPagesData.home;
+      const infoText = pageInfo[currentLang] || pageInfo.ar;
+
+      document.querySelectorAll(".tournament-pill-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-page") === pageKey);
+      });
+
+      document.getElementById("calendarSection").style.display = pageInfo.showCalendar ? "block" : "none";
+      document.getElementById("tournamentAboutTitle").innerText = infoText.title;
+      document.getElementById("tournamentAboutDesc").innerText = infoText.desc;
+      document.getElementById("btnBackHome").style.display = pageKey === "home" ? "none" : "inline-block";
+
+      distributeMatches(pageKey);
+
+      const gallerySection = document.getElementById("gallerySection");
+      const upcomingCard = document.getElementById("upcomingMatchesCard");
+      const finishedCard = document.getElementById("finishedMatchesCard");
+
+      if (pageKey === "media") {
+        gallerySection.style.display = "block";
+        renderGallery(null);
+        upcomingCard.style.display = "none";
+        finishedCard.style.display = "none";
+      } else {
+        upcomingCard.style.display = "block";
+        finishedCard.style.display = "block";
+        if (pageInfo.showGallery) {
+          gallerySection.style.display = "block";
+          renderGallery(pageKey === "home" ? null : pageKey);
+        } else {
+          gallerySection.style.display = "none";
+        }
+      }
+    }
+
+    // Language Toggle
     function setLanguage(lang) {
       currentLang = lang;
       const dict = i18n[lang];
@@ -1006,283 +1660,28 @@
       document.getElementById("lblScore").innerText = dict.lblScore;
       document.getElementById("lblNotes").innerText = dict.lblNotes;
 
-      // Re-render week headers
-      const weekHead = document.getElementById("calendarWeekDays");
-      weekHead.innerHTML = dict.weekDays.map(d => `<th>${d}</th>`).join("");
+      // Update sidebar venues list
+      document.getElementById("venuesList").innerHTML = dict.venues.map(v => `<li class="venue-item">${v}</li>`).join("");
 
+      // Update calendar week headers
+      document.getElementById("calendarWeekDays").innerHTML = dict.weekDays.map(d => `<th>${d}</th>`).join("");
+
+      renderCalendarGrid();
       switchTournamentPage(currentPage);
     }
 
     // ========================================================
-    // TOURNAMENT NAVIGATION & PAGE SWITCHING
-    // ========================================================
-    function switchTournamentPage(pageKey) {
-      currentPage = pageKey;
-      const pageInfo = tournamentPagesData[pageKey] || tournamentPagesData.home;
-      const infoText = pageInfo[currentLang] || pageInfo.ar;
-
-      document.querySelectorAll(".tournament-pill-btn").forEach(btn => {
-        if (btn.getAttribute("data-page") === pageKey) {
-          btn.classList.add("active");
-        } else {
-          btn.classList.remove("active");
-        }
-      });
-
-      const calendarSection = document.getElementById("calendarSection");
-      calendarSection.style.display = pageInfo.showCalendar ? "block" : "none";
-
-      document.getElementById("tournamentAboutTitle").innerText = infoText.title;
-      document.getElementById("tournamentAboutDesc").innerText = infoText.desc;
-      document.getElementById("btnBackHome").style.display = pageKey === "home" ? "none" : "inline-block";
-
-      distributeMatches(pageKey);
-
-      const gallerySection = document.getElementById("gallerySection");
-      const upcomingCard = document.getElementById("upcomingMatchesCard");
-      const finishedCard = document.getElementById("finishedMatchesCard");
-
-      if (pageKey === "media") {
-        gallerySection.style.display = "block";
-        renderGallery(null);
-        upcomingCard.style.display = "none";
-        finishedCard.style.display = "none";
-      } else {
-        upcomingCard.style.display = "block";
-        finishedCard.style.display = "block";
-        if (pageInfo.showGallery) {
-          gallerySection.style.display = "block";
-          renderGallery(pageKey === "home" ? null : pageKey);
-        } else {
-          gallerySection.style.display = "none";
-        }
-      }
-    }
-
-    // ========================================================
-    // LIVE GOOGLE SHEETS FETCHER
-    // ========================================================
-    async function loadMatchesFromGoogleSheet() {
-      try {
-        const response = await fetch(SHEET_CSV_URL);
-        const csvText = await response.text();
-        const lines = csvText.trim().split("\n").slice(1);
-
-        if (lines.length > 0) {
-          const loaded = [];
-          lines.forEach((line, idx) => {
-            const cols = line.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
-            if (cols[2] && cols[3]) {
-              const t = cols[1] || "";
-              let pKey = "home";
-              if (t.includes("قدم") || t.includes("ناصر") || t.toLowerCase().includes("foot")) pKey = "football";
-              else if (t.includes("سلة") || t.toLowerCase().includes("basket")) pKey = "basketball";
-              else if (t.includes("إلكترونية") || t.toLowerCase().includes("esport")) pKey = "esports";
-              else if (t.includes("طالب") || t.includes("متميز") || t.toLowerCase().includes("award")) pKey = "excellence";
-
-              loaded.push({
-                id: cols[0] || "G" + (idx + 1),
-                tournament: cols[1] || "بطولة مدرسية",
-                pageKey: pKey,
-                teamA: cols[2],
-                teamB: cols[3],
-                date: cols[4] || "",
-                time: cols[5] || "",
-                location: cols[6] || "",
-                score: cols[7] || "",
-                notes: cols[9] || ""
-              });
-            }
-          });
-
-          if (loaded.length > 0) {
-            gamesRoster = loaded;
-          }
-        }
-      } catch (err) {
-        console.warn("Could not fetch live sheet, using offline backup:", err);
-      }
-
-      distributeMatches(currentPage);
-    }
-
-    // ========================================================
-    // MATCH CARDS & DISTRIBUTION
-    // ========================================================
-    function renderMatchCard(game) {
-      const hasScore = game.score && game.score.trim() !== "";
-      const dict = i18n[currentLang];
-
-      return `
-        <div class="match-item" onclick="openGameModal('${game.id}')">
-          <div class="match-teams-title">
-            <span>${game.teamA}</span>
-            <span class="vs-accent">V/S</span>
-            <span>${game.teamB}</span>
-          </div>
-          <div class="match-meta-line">
-            <span class="meta-label">${dict.dateLbl}</span>
-            <span>${game.date}</span>
-          </div>
-          <div class="match-meta-line">
-            <span class="meta-label">${dict.timeLbl}</span>
-            <span>${game.time}</span>
-          </div>
-          <div class="match-meta-line">
-            <span class="meta-label">${dict.locationLbl}</span>
-            <span>📍 ${game.location}</span>
-          </div>
-          <div class="match-score-footer">
-            <span class="meta-label">${dict.scoreLbl}</span>
-            <span class="score-badge ${hasScore ? '' : 'pending'}">
-              ${hasScore ? game.score : dict.scorePending}
-            </span>
-          </div>
-        </div>
-      `;
-    }
-
-    function distributeMatches(filterPage = "home") {
-      const today = new Date().toISOString().split("T")[0];
-      const upcomingGrid = document.getElementById("upcoming-matches-grid");
-      const finishedGrid = document.getElementById("finished-matches-grid");
-      const dict = i18n[currentLang];
-
-      let list = gamesRoster;
-      if (filterPage !== "home" && filterPage !== "all" && filterPage !== "media") {
-        list = gamesRoster.filter(g => g.pageKey === filterPage);
-      }
-
-      const upcoming = [];
-      const finished = [];
-
-      list.forEach(game => {
-        if ((game.score && game.score.trim() !== "") || (game.date && game.date < today)) {
-          finished.push(game);
-        } else {
-          upcoming.push(game);
-        }
-      });
-
-      upcomingGrid.innerHTML = upcoming.length === 0
-        ? `<div class="empty-note">${dict.noUpcoming}</div>`
-        : upcoming.map(renderMatchCard).join("");
-
-      finishedGrid.innerHTML = finished.length === 0
-        ? `<div class="empty-note">${dict.noFinished}</div>`
-        : finished.map(renderMatchCard).join("");
-    }
-
-    // ========================================================
-    // CALENDAR GRID & MODALS
-    // ========================================================
-    function renderCalendarGrid() {
-      const tbody = document.getElementById("calendarTableBody");
-      const weeks = [
-        [1, 2, 3, 4, 5, 6, 7],
-        [8, 9, 10, 11, 12, 13, 14],
-        [15, 16, 17, 18, 19, 20, 21]
-      ];
-
-      tbody.innerHTML = weeks.map(week => `
-        <tr>
-          ${week.map(day => {
-            const dateStr = `2026-11-${day < 10 ? '0' + day : day}`;
-            const event = calendarEventsData[dateStr];
-            const hasEvent = !!event;
-
-            return `
-              <td class="${hasEvent ? 'has-event' : ''}" data-date="${dateStr}">
-                <span class="cell-date">${day}</span>
-                ${hasEvent ? `<span class="event-stripe ${event.color}">${event.title}</span>` : ''}
-              </td>
-            `;
-          }).join('')}
-        </tr>
-      `).join('');
-
-      tbody.querySelectorAll("td.has-event").forEach(cell => {
-        cell.addEventListener("click", () => {
-          const dStr = cell.getAttribute("data-date");
-          const ev = calendarEventsData[dStr];
-          showModal({
-            title: ev.title,
-            tournament: ev.t,
-            teams: currentLang === "ar" ? "فعالية مجدولة" : "Scheduled Event",
-            date: dStr,
-            time: "08:30 AM",
-            venue: ev.venue,
-            score: currentLang === "ar" ? "مجدولة في التقويم" : "Scheduled",
-            notes: ev.notes
-          });
-        });
-      });
-    }
-
-    function renderGallery(pageFilter = null) {
-      const gallery = document.getElementById("photo-gallery-grid");
-      const dict = i18n[currentLang];
-      let items = mediaGallery;
-      if (pageFilter) {
-        items = mediaGallery.filter(m => m.pageKey === pageFilter);
-      }
-
-      if (items.length === 0) {
-        gallery.innerHTML = `<div class="empty-note">${dict.noMedia}</div>`;
-        return;
-      }
-
-      gallery.innerHTML = items.map(item => `
-        <div class="media-card" title="${item.title}" onclick="showModal({title:'${item.title}', tournament:'${item.tournament}', teams:'Photo Highlight', date:'2026-11', location:'MOE Bahrain', score:'Media', notes:''})">
-          <img src="${item.imgUrl}" alt="${item.title}" class="media-thumb" loading="lazy" />
-          <div class="media-caption-area">
-            <div class="media-custom-title">${item.title}</div>
-            <div class="media-tournament-tag">${item.tournament}</div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function showModal(data) {
-      document.getElementById("modalTitle").innerText = data.title || "";
-      document.getElementById("modalTournament").innerText = data.tournament || "";
-      document.getElementById("modalTeams").innerText = data.teams || "—";
-      document.getElementById("modalDateTime").innerText = `${data.date || ""} ${data.time ? " | " + data.time : ""}`;
-      document.getElementById("modalVenue").innerText = data.location || data.venue || "";
-      document.getElementById("modalScore").innerText = data.score || "";
-      document.getElementById("modalNotes").innerText = data.notes || "—";
-
-      document.getElementById("detailsModal").classList.add("active");
-    }
-
-    function closeModal() {
-      document.getElementById("detailsModal").classList.remove("active");
-    }
-
-    function openGameModal(gameId) {
-      const game = gamesRoster.find(g => g.id === gameId);
-      if (!game) return;
-      showModal({
-        title: `${game.teamA} V/S ${game.teamB}`,
-        tournament: game.tournament,
-        teams: `${game.teamA} V/S ${game.teamB}`,
-        date: game.date,
-        time: game.time,
-        location: game.location,
-        score: game.score,
-        notes: game.notes
-      });
-    }
-
-    // ========================================================
-    // SETUP EVENT LISTENERS ON PAGE LOAD
+    // INITIALIZATION & EVENT LISTENERS
     // ========================================================
     document.addEventListener("DOMContentLoaded", () => {
+      // Set initial sidebar venues
+      document.getElementById("venuesList").innerHTML = i18n.ar.venues.map(v => `<li class="venue-item">${v}</li>`).join("");
+
       renderCalendarGrid();
       renderGallery();
-      loadMatchesFromGoogleSheet();
+      syncGoogleSheetData();
 
-      // Top Arrows Carousel (RTL/LTR Adaptive)
+      // Top Arrows Carousel (Adaptive RTL/LTR scroll)
       const track = document.getElementById("tournamentsTrack");
       document.getElementById("scrollPrevBtn").addEventListener("click", () => {
         const isRtl = document.documentElement.dir === "rtl";
@@ -1293,20 +1692,19 @@
         track.scrollBy({ left: isRtl ? -160 : 160, behavior: "smooth" });
       });
 
-      // Top Tournament Buttons
+      // Tournament Pill Buttons
       document.querySelectorAll(".tournament-pill-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-          const page = btn.getAttribute("data-page");
-          switchTournamentPage(page);
+          switchTournamentPage(btn.getAttribute("data-page"));
         });
       });
 
-      // Back Home Button
+      // Back Home
       document.getElementById("btnBackHome").addEventListener("click", () => {
         switchTournamentPage("home");
       });
 
-      // Language Switcher
+      // Language Switcher Button
       document.getElementById("langToggleBtn").addEventListener("click", () => {
         setLanguage(currentLang === "ar" ? "en" : "ar");
       });
