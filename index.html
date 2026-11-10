@@ -53,6 +53,7 @@
       }
     }
 
+    /* Top Bar Header */
     header.top-bar {
       width: 100%;
       max-width: 1380px;
@@ -130,8 +131,13 @@
       gap: 4px;
       cursor: pointer;
       white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-upload:hover {
+      background-color: var(--accent-orange-hover);
     }
 
+    /* Top Tournament Carousel with Adaptive Arrows */
     .top-tournaments-bar {
       width: 100%;
       max-width: 1380px;
@@ -205,6 +211,7 @@
       font-weight: 700;
     }
 
+    /* Layout Grid */
     .dashboard-layout {
       width: 100%;
       max-width: 1380px;
@@ -255,6 +262,7 @@
       color: var(--accent-orange);
     }
 
+    /* Interactive Calendar Months */
     .calendar-month-selector {
       display: flex;
       gap: 6px;
@@ -358,6 +366,7 @@
     .stripe-orange { background: #5c2b0c; color: #fdba74; }
     .stripe-yellow { background: #4d380c; color: #fde047; }
 
+    /* About Tournament Box */
     .about-tournament-box {
       background: var(--card-inner);
       border: 1px solid var(--border-subtle);
@@ -399,6 +408,7 @@
       line-height: 1.5;
     }
 
+    /* Match Roster Cards: Team Names V/S -> Date -> Time -> Location -> Score */
     .matches-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -477,6 +487,7 @@
       border-style: dashed;
     }
 
+    /* Media Gallery Cards */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -565,6 +576,7 @@
       border-radius: 8px;
     }
 
+    /* Pop-up Modal */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -648,19 +660,21 @@
 </head>
 <body>
 
+  <!-- Top Navigation Header -->
   <header class="top-bar">
     <div class="brand-group">
       <h1 id="brandTitle">قسم الأنشطة والتربية الرياضية</h1>
       <p id="brandSubtitle">وزارة التربية والتعليم - مملكة البحرين</p>
     </div>
     <div class="header-actions">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSe_Example/viewform" target="_blank" class="btn-upload" id="uploadBtn">
+      <a href="https://docs.google.com/forms/d/1lZHjiN_uzkPByu0bfIARRFyUx3oAFLdUne0uXE-tk6Q/viewform" target="_blank" class="btn-upload" id="uploadBtn">
         &#8593; <span id="uploadBtnText">رفع صور وفيديوهات</span>
       </a>
       <button class="btn-lang" id="langToggleBtn">English</button>
     </div>
   </header>
 
+  <!-- Top Tournament Switcher Bar with Adaptive Arrows -->
   <nav class="top-tournaments-bar" aria-label="Tournaments Bar">
     <button class="carousel-nav-btn" id="scrollPrevBtn" title="Previous">&#8250;</button>
     <div class="tournaments-track" id="tournamentsTrack">
@@ -1180,7 +1194,7 @@
             }
           });
 
-          // Merge: sheet entries update scores or append to verified roster
+          // Update scores or append new matches
           if (sheetMatches.length > 0) {
             sheetMatches.forEach(sm => {
               const matchIdx = activeRoster.findIndex(r => r.id === sm.id);
@@ -1227,7 +1241,6 @@
       const totalDays = new Date(selectedYear, selectedMonth, 0).getDate();
 
       let html = "<tr>";
-      let dayCounter = 1;
 
       for (let i = 0; i < firstDay; i++) {
         html += `<td></td>`;
@@ -1286,32 +1299,23 @@
 
       return `
         <div class="match-item" onclick="openGameModal('${match.id}')">
-          <!-- 1. Team Names with Orange V/S -->
           <div class="match-teams-title">
             <span>${data.teamA}</span>
             <span class="vs-accent">V/S</span>
             <span>${data.teamB}</span>
           </div>
-
-          <!-- 2. Date -->
           <div class="match-meta-line">
             <span class="meta-label">${dict.dateLbl}</span>
             <span>${match.date}</span>
           </div>
-
-          <!-- 3. Time -->
           <div class="match-meta-line">
             <span class="meta-label">${dict.timeLbl}</span>
             <span>${match.time}</span>
           </div>
-
-          <!-- 4. Location -->
           <div class="match-meta-line">
             <span class="meta-label">${dict.locationLbl}</span>
             <span>📍 ${data.location}</span>
           </div>
-
-          <!-- 5. Score -->
           <div class="match-score-footer">
             <span class="meta-label">${dict.scoreLbl}</span>
             <span class="score-badge ${hasScore ? '' : 'pending'}">
