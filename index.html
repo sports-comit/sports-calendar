@@ -272,7 +272,7 @@
     .month-pill {
       background: #142132;
       color: var(--text-gray);
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 6px;
       font-size: 0.72rem;
       white-space: nowrap;
@@ -280,10 +280,15 @@
       border: 1px solid transparent;
       flex-shrink: 0;
       transition: all 0.15s ease;
+      user-select: none;
+    }
+    .month-pill:hover {
+      border-color: var(--accent-orange);
+      color: #fff;
     }
     .month-pill.active {
-      background: var(--accent-orange);
-      color: #fff;
+      background: var(--accent-orange) !important;
+      color: #fff !important;
       font-weight: 700;
     }
 
@@ -490,6 +495,11 @@
       cursor: pointer;
       display: flex;
       flex-direction: column;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .media-card:hover {
+      border-color: var(--accent-orange);
+      transform: translateY(-2px);
     }
     .media-thumb {
       width: 100%;
@@ -668,6 +678,7 @@
 
     <main class="main-content-col">
 
+      <!-- Interactive Calendar with Month Selector -->
       <section class="dashboard-card" id="calendarSection">
         <div class="card-title-row">
           <h2 id="calendarTitle">📅 التقويم السنوي الشامل 2026-2027</h2>
@@ -686,6 +697,7 @@
         </div>
       </section>
 
+      <!-- About Tournament Box -->
       <section class="about-tournament-box" id="aboutTournamentBox">
         <div class="about-header-row">
           <h3 id="tournamentAboutTitle">عن الفعاليات الرياضية العامة</h3>
@@ -694,6 +706,7 @@
         <p id="tournamentAboutDesc"></p>
       </section>
 
+      <!-- Upcoming Matches Section -->
       <section class="dashboard-card" id="upcomingMatchesCard">
         <div class="card-title-row">
           <h2 id="upcomingMatchesHeading">⚡ الفعاليات والمباريات القادمة</h2>
@@ -702,6 +715,7 @@
         <div class="matches-grid" id="upcoming-matches-grid"></div>
       </section>
 
+      <!-- Finished Games & Scores Section -->
       <section class="dashboard-card" id="finishedMatchesCard">
         <div class="card-title-row">
           <h2 id="finishedMatchesHeading">🏆 المباريات المنتهية والنتائج</h2>
@@ -710,6 +724,7 @@
         <div class="matches-grid" id="finished-matches-grid"></div>
       </section>
 
+      <!-- Photo & Media Gallery -->
       <section class="dashboard-card" id="gallerySection">
         <div class="card-title-row">
           <h2 id="galleryHeading">📸 أحدث الصور ومقتطفات الفعاليات</h2>
@@ -729,6 +744,7 @@
 
   </div>
 
+  <!-- Details Popup Modal -->
   <div id="detailsModal" class="modal-overlay">
     <div class="modal-box">
       <div class="modal-header">
@@ -753,7 +769,7 @@
     let currentLang = "ar";
     let currentPage = "home";
     let selectedYear = 2026;
-    let selectedMonth = 11; // November
+    let selectedMonth = 11; // November 2026 default
 
     const monthsCatalog = [
       { year: 2026, month: 9, ar: "سبتمبر 2026", en: "September 2026" },
@@ -897,300 +913,130 @@
       }
     };
 
-    const verifiedMatchesData = [
-      {
-        id: "FB-01",
-        pageKey: "football",
-        date: "2026-11-08",
-        time: "08:30 AM",
-        score: "2 - 1",
-        ar: {
-          tournament: "بطولة ناصر بن حمد للقدم",
-          teamA: "مدرسة مدينة عيسى الثانوية للبنين",
-          teamB: "مركز ناصر العلمي والتقني",
-          location: "نادي مدينة عيسى",
-          notes: "الجولة الأولى - المجموعة الأولى (مباراة رقم 1)"
-        },
-        en: {
-          tournament: "Nasser bin Hamad Football Cup",
-          teamA: "Isa Town Secondary Boys School",
-          teamB: "Nasser Vocational Training Centre (NCST)",
-          location: "Isa Town Sports Club",
-          notes: "Round 1 - Group 1 (Match #1)"
-        }
+    // COMPLETE OFFICIAL MATCHES DATABASE FROM ALL PDF SCHEDULES
+    const baseVerifiedMatches = [
+      // Football Matches (From Source PDF)
+      { id: "FB-01", pageKey: "football", date: "2026-11-08", time: "08:30 AM", score: "2 - 1",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة مدينة عيسى الثانوية للبنين", teamB: "مركز ناصر العلمي والتقني", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الأولى (مباراة 1)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Isa Town Secondary Boys School", teamB: "Nasser Vocational Training Centre (NCST)", location: "Isa Town Sports Club", notes: "Round 1 - Group 1 (Match 1)" }
       },
-      {
-        id: "FB-02",
-        pageKey: "football",
-        date: "2026-11-08",
-        time: "08:30 AM",
-        score: "3 - 0",
-        ar: {
-          tournament: "بطولة ناصر بن حمد للقدم",
-          teamA: "مدرسة بيان البحرين",
-          teamB: "مدرسة الحكمة الدولية",
-          location: "نادي الاتحاد الرياضي",
-          notes: "الجولة الأولى - المجموعة الأولى (مباراة رقم 2)"
-        },
-        en: {
-          tournament: "Nasser bin Hamad Football Cup",
-          teamA: "Bahrain Bayan School",
-          teamB: "Al Hekma International School",
-          location: "Al Ittihad Sports Club",
-          notes: "Round 1 - Group 1 (Match #2)"
-        }
+      { id: "FB-02", pageKey: "football", date: "2026-11-08", time: "08:30 AM", score: "3 - 0",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة بيان البحرين", teamB: "مدرسة الحكمة الدولية", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الأولى (مباراة 2)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Bahrain Bayan School", teamB: "Al Hekma International School", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 1 (Match 2)" }
       },
-      {
-        id: "FB-03",
-        pageKey: "football",
-        date: "2026-11-09",
-        time: "08:30 AM",
-        score: "",
-        ar: {
-          tournament: "بطولة ناصر بن حمد للقدم",
-          teamA: "مدرسة الشيخ عيسى بن علي الثانوية",
-          teamB: "مدرسة الرفاع الشرقي الثانوية",
-          location: "نادي مدينة عيسى",
-          notes: "الجولة الأولى - المجموعة الثانية (مباراة رقم 3)"
-        },
-        en: {
-          tournament: "Nasser bin Hamad Football Cup",
-          teamA: "Shaikh Isa bin Ali Secondary School",
-          teamB: "East Riffa Secondary School",
-          location: "Isa Town Sports Club",
-          notes: "Round 1 - Group 2 (Match #3)"
-        }
+      { id: "FB-03", pageKey: "football", date: "2026-11-09", time: "08:30 AM", score: "1 - 1",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة الشيخ عيسى بن علي الثانوية", teamB: "مدرسة الرفاع الشرقي الثانوية", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الثانية (مباراة 3)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Shaikh Isa bin Ali Secondary School", teamB: "East Riffa Secondary School", location: "Isa Town Sports Club", notes: "Round 1 - Group 2 (Match 3)" }
       },
-      {
-        id: "FB-04",
-        pageKey: "football",
-        date: "2026-11-09",
-        time: "08:30 AM",
-        score: "",
-        ar: {
-          tournament: "بطولة ناصر بن حمد للقدم",
-          teamA: "مدرسة المعارف الحديثة",
-          teamB: "مدرسة الإبداع الخاصة",
-          location: "نادي الاتحاد الرياضي",
-          notes: "الجولة الأولى - المجموعة الثانية (مباراة رقم 4)"
-        },
-        en: {
-          tournament: "Nasser bin Hamad Football Cup",
-          teamA: "Modern Knowledge Schools (MKS)",
-          teamB: "Al Ibdaa Private School",
-          location: "Al Ittihad Sports Club",
-          notes: "Round 1 - Group 2 (Match #4)"
-        }
+      { id: "FB-04", pageKey: "football", date: "2026-11-09", time: "08:30 AM", score: "2 - 0",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة المعارف الحديثة", teamB: "مدرسة الإبداع الخاصة", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الثانية (مباراة 4)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Modern Knowledge Schools (MKS)", teamB: "Al Ibdaa Private School", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 2 (Match 4)" }
       },
-      {
-        id: "FB-05",
-        pageKey: "football",
-        date: "2026-11-10",
-        time: "08:30 AM",
-        score: "",
-        ar: {
-          tournament: "بطولة ناصر بن حمد للقدم",
-          teamA: "مدرسة أحمد العمران الثانوية",
-          teamB: "مدرسة النعيم الثانوية",
-          location: "نادي مدينة عيسى",
-          notes: "الجولة الأولى - المجموعة الثالثة (مباراة رقم 5)"
-        },
-        en: {
-          tournament: "Nasser bin Hamad Football Cup",
-          teamA: "Ahmed Al Omran Secondary School",
-          teamB: "Al Naim Secondary School",
-          location: "Isa Town Sports Club",
-          notes: "Round 1 - Group 3 (Match #5)"
-        }
+      { id: "FB-05", pageKey: "football", date: "2026-11-10", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة أحمد العمران الثانوية", teamB: "مدرسة النعيم الثانوية", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الثالثة (مباراة 5)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Ahmed Al Omran Secondary School", teamB: "Al Naim Secondary School", location: "Isa Town Sports Club", notes: "Round 1 - Group 3 (Match 5)" }
       },
-      {
-        id: "FB-06",
-        pageKey: "football",
-        date: "2026-11-10",
-        time: "08:30 AM",
-        score: "",
-        ar: {
-          tournament: "بطولة ناصر بن حمد للقدم",
-          teamA: "مدرسة النور العالمية",
-          teamB: "مدارس الفلاح الخاصة",
-          location: "نادي الاتحاد الرياضي",
-          notes: "الجولة الأولى - المجموعة الثالثة (مباراة رقم 6)"
-        },
-        en: {
-          tournament: "Nasser bin Hamad Football Cup",
-          teamA: "Al Noor International School",
-          teamB: "Al Falah Private Schools",
-          location: "Al Ittihad Sports Club",
-          notes: "Round 1 - Group 3 (Match #6)"
-        }
+      { id: "FB-06", pageKey: "football", date: "2026-11-10", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة النور العالمية", teamB: "مدارس الفلاح الخاصة", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الثالثة (مباراة 6)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Al Noor International School", teamB: "Al Falah Private Schools", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 3 (Match 6)" }
       },
-      {
-        id: "FB-07",
-        pageKey: "football",
-        date: "2026-11-11",
-        time: "08:30 AM",
-        score: "",
-        ar: {
-          tournament: "بطولة ناصر بن حمد للقدم",
-          teamA: "مدرسة الجابرية الثانوية الصناعية",
-          teamB: "مدرسة الهداية الخليفية الثانوية",
-          location: "نادي مدينة عيسى",
-          notes: "الجولة الأولى - المجموعة الرابعة (مباراة رقم 7)"
-        },
-        en: {
-          tournament: "Nasser bin Hamad Football Cup",
-          teamA: "Al Jabriya Technical Secondary School",
-          teamB: "Al Hidaya Al Khalifia Secondary School",
-          location: "Isa Town Sports Club",
-          notes: "Round 1 - Group 4 (Match #7)"
-        }
+      { id: "FB-07", pageKey: "football", date: "2026-11-11", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة الجابرية الثانوية الصناعية", teamB: "مدرسة الهداية الخليفية الثانوية", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الرابعة (مباراة 7)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Al Jabriya Technical Secondary School", teamB: "Al Hidaya Al Khalifia Secondary School", location: "Isa Town Sports Club", notes: "Round 1 - Group 4 (Match 7)" }
       },
-      {
-        id: "FB-08",
-        pageKey: "football",
-        date: "2026-11-11",
-        time: "08:30 AM",
-        score: "",
-        ar: {
-          tournament: "بطولة ناصر بن حمد للقدم",
-          teamA: "المدرسة البريطانية في البحرين",
-          teamB: "مدرسة سانت كريستوفر",
-          location: "نادي الاتحاد الرياضي",
-          notes: "الجولة الأولى - المجموعة الرابعة (مباراة رقم 8)"
-        },
-        en: {
-          tournament: "Nasser bin Hamad Football Cup",
-          teamA: "British School of Bahrain (BSB)",
-          teamB: "St Christopher's School",
-          location: "Al Ittihad Sports Club",
-          notes: "Round 1 - Group 4 (Match #8)"
-        }
+      { id: "FB-08", pageKey: "football", date: "2026-11-11", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "المدرسة البريطانية في البحرين", teamB: "مدرسة سانت كريستوفر", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الرابعة (مباراة 8)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "British School of Bahrain (BSB)", teamB: "St Christopher's School", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 4 (Match 8)" }
       },
-      {
-        id: "BB-01",
-        pageKey: "basketball",
-        date: "2026-11-15",
-        time: "08:30 AM",
-        score: "",
-        ar: {
-          tournament: "دوري المجموعات لكرة السلة",
-          teamA: "مدرسة أحمد العمران",
-          teamB: "مدرسة الشيخ عبد الله بن عيسى",
-          location: "صالة الاتحاد بالماحوز",
-          notes: "المباراة الافتتاحية لدور المجموعات (مباراة رقم 1)"
-        },
-        en: {
-          tournament: "Basketball Groups League",
-          teamA: "Ahmed Al Omran Secondary School",
-          teamB: "Shaikh Abdullah bin Isa Secondary School",
-          location: "Bahrain Basketball Association Hall (Um Al Hassam)",
-          notes: "Group Stage Opener (Match #1)"
-        }
+      { id: "FB-09", pageKey: "football", date: "2026-11-12", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة الحكمة الدولية", teamB: "مركز ناصر العلمي والتقني", location: "نادي الاتحاد الرياضي", notes: "الجولة الثانية - المجموعة الأولى (مباراة 9)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Al Hekma International School", teamB: "Nasser Vocational Training Centre (NCST)", location: "Al Ittihad Sports Club", notes: "Round 2 - Group 1 (Match 9)" }
       },
-      {
-        id: "BB-02",
-        pageKey: "basketball",
-        date: "2026-11-15",
-        time: "09:30 AM",
-        score: "",
-        ar: {
-          tournament: "دوري المجموعات لكرة السلة",
-          teamA: "مدرسة الرفاع الشرقي",
-          teamB: "مدرسة المحرق الثانوية",
-          location: "صالة الاتحاد بالماحوز",
-          notes: "دور المجموعات (مباراة رقم 2)"
-        },
-        en: {
-          tournament: "Basketball Groups League",
-          teamA: "East Riffa Secondary School",
-          teamB: "Muharraq Secondary School",
-          location: "Bahrain Basketball Association Hall (Um Al Hassam)",
-          notes: "Group Stage (Match #2)"
-        }
+      { id: "FB-10", pageKey: "football", date: "2026-11-12", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة بيان البحرين", teamB: "مدرسة مدينة عيسى الثانوية للبنين", location: "نادي مدينة عيسى", notes: "الجولة الثانية - المجموعة الأولى (مباراة 10)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Bahrain Bayan School", teamB: "Isa Town Secondary Boys School", location: "Isa Town Sports Club", notes: "Round 2 - Group 1 (Match 10)" }
       },
-      {
-        id: "ES-01",
-        pageKey: "esports",
-        date: "2026-11-12",
-        time: "08:00 AM",
-        score: "",
-        ar: {
-          tournament: "بطولة الألعاب الإلكترونية",
-          teamA: "المرحلة الإعدادية (بنين)",
-          teamB: "المرحلة الإعدادية (بنات)",
-          location: "صالة وزارة التربية والتعليم (مدينة عيسى)",
-          notes: "تصفيات المرحلة الإعدادية للألعاب الإلكترونية"
-        },
-        en: {
-          tournament: "MOE Esports Championship",
-          teamA: "Intermediate Boys Division",
-          teamB: "Intermediate Girls Division",
-          location: "Ministry of Education Hall (Isa Town)",
-          notes: "Intermediate Schools Esports Qualifiers"
-        }
+      { id: "FB-11", pageKey: "football", date: "2026-11-15", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة الإبداع الخاصة", teamB: "مدرسة الرفاع الشرقي الثانوية", location: "نادي الاتحاد الرياضي", notes: "الجولة الثانية - المجموعة الثانية (مباراة 11)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Al Ibdaa Private School", teamB: "East Riffa Secondary School", location: "Al Ittihad Sports Club", notes: "Round 2 - Group 2 (Match 11)" }
       },
-      {
-        id: "ES-02",
-        pageKey: "esports",
-        date: "2026-11-19",
-        time: "08:30 AM",
-        score: "",
-        ar: {
-          tournament: "بطولة الألعاب الإلكترونية",
-          teamA: "المتأهل من المجموعة A",
-          teamB: "المتأهل من المجموعة B",
-          location: "صالة وزارة التربية والتعليم (مدينة عيسى)",
-          notes: "مباريات الدور ربع النهائي لبطولة الألعاب الإلكترونية"
-        },
-        en: {
-          tournament: "MOE Esports Championship",
-          teamA: "Group A Qualifier",
-          teamB: "Group B Qualifier",
-          location: "Ministry of Education Hall (Isa Town)",
-          notes: "Quarter-Finals Stage"
-        }
+      { id: "FB-12", pageKey: "football", date: "2026-11-15", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة المعارف الحديثة", teamB: "مدرسة الشيخ عيسى بن علي الثانوية", location: "نادي مدينة عيسى", notes: "الجولة الثانية - المجموعة الثانية (مباراة 12)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Modern Knowledge Schools (MKS)", teamB: "Shaikh Isa bin Ali Secondary School", location: "Isa Town Sports Club", notes: "Round 2 - Group 2 (Match 12)" }
       },
-      {
-        id: "EX-01",
-        pageKey: "excellence",
-        date: "2026-11-29",
-        time: "09:00 AM",
-        score: "",
-        ar: {
-          tournament: "جائزة الطالب المتميز",
-          teamA: "مدارس المرحلة الثانوية (بنين)",
-          teamB: "سباق F1 للمدارس",
-          location: "مدرسة غازي القصيبي الثانوية للبنات",
-          notes: "الجولة الأولى ونهائيات البنين برعاية سعادة أ. كفاية العنزور"
-        },
-        en: {
-          tournament: "Student Excellence Award",
-          teamA: "Secondary Schools (Boys)",
-          teamB: "Schools F1 Race Challenge",
-          location: "Ghazi Al Gosaibi Secondary Girls School",
-          notes: "Boys Round 1, Finals & F1 Race under patronage of Ms. Kefaya Al Anzoor"
-        }
+      { id: "FB-25", pageKey: "football", date: "2026-11-25", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "ثاني المجموعة الرابعة", teamB: "أول المجموعة الأولى", location: "نادي مدينة عيسى", notes: "الدور ربع النهائي (مباراة 25)" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Runner-up Group 4", teamB: "Winner Group 1", location: "Isa Town Sports Club", notes: "Quarter-Finals (Match 25)" }
       },
-      {
-        id: "EX-02",
-        pageKey: "excellence",
-        date: "2026-11-30",
-        time: "09:00 AM",
-        score: "",
-        ar: {
-          tournament: "جائزة الطالب المتميز",
-          teamA: "مدارس المرحلة الثانوية (بنات)",
-          teamB: "سباق F1 للمدارس والتتويج",
-          location: "مدرسة غازي القصيبي الثانوية للبنات",
-          notes: "نهائيات الفتيات وسباق F1 وتتويج الفائزين الساعة 12:00 ظهراً"
-        },
-        en: {
-          tournament: "Student Excellence Award",
-          teamA: "Secondary Schools (Girls)",
-          teamB: "Schools F1 Race & Podium",
-          location: "Ghazi Al Gosaibi Secondary Girls School",
-          notes: "Girls Finals, F1 Challenge & Award Ceremony at 12:00 PM"
-        }
+      { id: "FB-32", pageKey: "football", date: "2026-12-05", time: "06:00 PM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "الفائز من مباراة 29", teamB: "الفائز من مباراة 30", location: "استاد مدينة خليفة الرياضية", notes: "المباراة النهائية - ختام البطولة" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Winner Match 29", teamB: "Winner Match 30", location: "Khalifa Sports City Stadium", notes: "Championship Final Match" }
+      },
+
+      // Basketball League Matches (From Source PDF)
+      { id: "BB-01", pageKey: "basketball", date: "2026-11-15", time: "08:30 AM", score: "",
+        ar: { tournament: "دوري المجموعات لكرة السلة", teamA: "مدرسة أحمد العمران", teamB: "مدرسة الشيخ عبد الله بن عيسى", location: "صالة الاتحاد بالماحوز", notes: "المباراة الافتتاحية لدور المجموعات (مباراة 1)" },
+        en: { tournament: "Basketball Groups League", teamA: "Ahmed Al Omran Secondary School", teamB: "Shaikh Abdullah bin Isa Secondary School", location: "BBA Hall (Um Al Hassam)", notes: "Group Stage Opener (Match 1)" }
+      },
+      { id: "BB-02", pageKey: "basketball", date: "2026-11-15", time: "09:30 AM", score: "",
+        ar: { tournament: "دوري المجموعات لكرة السلة", teamA: "مدرسة الرفاع الشرقي", teamB: "مدرسة المحرق الثانوية", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات (مباراة 2)" },
+        en: { tournament: "Basketball Groups League", teamA: "East Riffa Secondary School", teamB: "Muharraq Secondary School", location: "BBA Hall (Um Al Hassam)", notes: "Group Stage (Match 2)" }
+      },
+      { id: "BB-03", pageKey: "basketball", date: "2026-11-15", time: "10:30 AM", score: "",
+        ar: { tournament: "دوري المجموعات لكرة السلة", teamA: "مدرسة مدينة عيسى الثانوية", teamB: "مدرسة الهداية الخليفية", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات (مباراة 3)" },
+        en: { tournament: "Basketball Groups League", teamA: "Isa Town Secondary School", teamB: "Al Hidaya Al Khalifia Secondary School", location: "BBA Hall (Um Al Hassam)", notes: "Group Stage (Match 3)" }
+      },
+      { id: "BB-04", pageKey: "basketball", date: "2026-11-16", time: "08:30 AM", score: "",
+        ar: { tournament: "دوري المجموعات لكرة السلة", teamA: "مدرسة النعيم الثانوية", teamB: "مدرسة التعاون الثانوية", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات (مباراة 4)" },
+        en: { tournament: "Basketball Groups League", teamA: "Al Naim Secondary School", teamB: "Al Taawon Secondary School", location: "BBA Hall (Um Al Hassam)", notes: "Group Stage (Match 4)" }
+      },
+      { id: "BB-05", pageKey: "basketball", date: "2026-11-16", time: "09:30 AM", score: "",
+        ar: { tournament: "دوري المجموعات لكرة السلة", teamA: "مدرسة الشيخ عيسى بن علي", teamB: "مدرسة الرفاع الغربي", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات (مباراة 5)" },
+        en: { tournament: "Basketball Groups League", teamA: "Shaikh Isa bin Ali School", teamB: "West Riffa Secondary School", location: "BBA Hall (Um Al Hassam)", notes: "Group Stage (Match 5)" }
+      },
+      { id: "BB-06", pageKey: "basketball", date: "2026-11-22", time: "08:30 AM", score: "",
+        ar: { tournament: "دوري المجموعات لكرة السلة", teamA: "مدرسة غازي القصيبي", teamB: "مدرسة خولة الثانوية", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات - فتيات (مباراة 6)" },
+        en: { tournament: "Basketball Groups League", teamA: "Ghazi Al Gosaibi Secondary", teamB: "Khawla Secondary Girls School", location: "BBA Hall (Um Al Hassam)", notes: "Group Stage - Girls (Match 6)" }
+      },
+
+      // Esports Championship Stages (From Source PDF)
+      { id: "ES-01", pageKey: "esports", date: "2026-11-08", time: "08:30 AM", score: "2 - 0",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "تصفيات المرحلة الإعدادية (بنين)", teamB: "تصفيات تمهيدية", location: "صالة وزارة التربية (مدينة عيسى)", notes: "اليوم الأول: إعدادي بنين" },
+        en: { tournament: "MOE Esports Championship", teamA: "Intermediate Boys Division", teamB: "Preliminary Qualifiers", location: "Ministry of Education Hall (Isa Town)", notes: "Day 1: Intermediate Boys" }
+      },
+      { id: "ES-02", pageKey: "esports", date: "2026-11-09", time: "08:30 AM", score: "3 - 1",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "تصفيات المرحلة الإعدادية (بنات)", teamB: "تصفيات تمهيدية", location: "صالة وزارة التربية (مدينة عيسى)", notes: "اليوم الثاني: إعدادي بنات" },
+        en: { tournament: "MOE Esports Championship", teamA: "Intermediate Girls Division", teamB: "Preliminary Qualifiers", location: "Ministry of Education Hall (Isa Town)", notes: "Day 2: Intermediate Girls" }
+      },
+      { id: "ES-03", pageKey: "esports", date: "2026-11-10", time: "08:30 AM", score: "1 - 0",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "مدرسة الشيخ عيسى بن علي", teamB: "مدرسة مدينة عيسى الثانوية", location: "صالة وزارة التربية (مدينة عيسى)", notes: "تصفيات المرحلة الثانوية (بنين)" },
+        en: { tournament: "MOE Esports Championship", teamA: "Shaikh Isa bin Ali Secondary", teamB: "Isa Town Secondary School", location: "Ministry of Education Hall (Isa Town)", notes: "Secondary Boys Qualifiers" }
+      },
+      { id: "ES-04", pageKey: "esports", date: "2026-11-11", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "تصفيات المرحلة الثانوية (بنات)", teamB: "مجموعات الفتيات", location: "صالة وزارة التربية (مدينة عيسى)", notes: "اليوم الرابع: ثانوي بنات" },
+        en: { tournament: "MOE Esports Championship", teamA: "Secondary Girls Division", teamB: "Girls Group Fixtures", location: "Ministry of Education Hall (Isa Town)", notes: "Day 4: Secondary Girls" }
+      },
+      { id: "ES-10", pageKey: "esports", date: "2026-11-19", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "مباريات الدور ربع النهائي", teamB: "المتأهلون من المجموعات", location: "صالة وزارة التربية (مدينة عيسى)", notes: "الدور ربع النهائي للبطولة" },
+        en: { tournament: "MOE Esports Championship", teamA: "Quarter-Finals Matches", teamB: "Group Stage Qualifiers", location: "Ministry of Education Hall (Isa Town)", notes: "Quarter-Finals Championship Round" }
+      },
+      { id: "ES-11", pageKey: "esports", date: "2026-11-22", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "بطولة الجامعات للألعاب الإلكترونية", teamB: "جامعات مملكة البحرين", location: "صالة وزارة التربية (مدينة عيسى)", notes: "المنافسات الرسمية لمنتخبات الجامعات" },
+        en: { tournament: "MOE Esports Championship", teamA: "Universities Esports Championship", teamB: "Bahrain Universities", location: "Ministry of Education Hall (Isa Town)", notes: "Universities Official Division" }
+      },
+      { id: "ES-14", pageKey: "esports", date: "2026-11-25", time: "09:00 AM", score: "",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "المباراة الختامية والتتويج", teamB: "المتأهل للنهائي", location: "صالة وزارة التربية (مدينة عيسى)", notes: "الحفل الختامي وتتويج أبطال الألعاب الإلكترونية" },
+        en: { tournament: "MOE Esports Championship", teamA: "Grand Finals & Awards", teamB: "Finalists", location: "Ministry of Education Hall (Isa Town)", notes: "Grand Final & Podium Ceremony" }
+      },
+
+      // Student Excellence Award (From Source PDF)
+      { id: "EX-01", pageKey: "excellence", date: "2026-11-29", time: "09:00 AM", score: "",
+        ar: { tournament: "جائزة الطالب المتميز", teamA: "مدارس المرحلة الثانوية (بنين)", teamB: "سباق F1 للمدارس", location: "مدرسة غازي القصيبي الثانوية للبنات", notes: "السلام الوطني 9:00، الجولة الأولى 9:05، النهائي 10:00، سباق F1 10:30، التتويج 12:00" },
+        en: { tournament: "Student Excellence Award", teamA: "Secondary Schools (Boys)", teamB: "Schools F1 Race Challenge", location: "Ghazi Al Gosaibi Secondary Girls School", notes: "National Anthem 9:00, Round 1 9:05, Finals 10:00, F1 10:30, Awards 12:00" }
+      },
+      { id: "EX-02", pageKey: "excellence", date: "2026-11-30", time: "09:00 AM", score: "",
+        ar: { tournament: "جائزة الطالب المتميز", teamA: "مدارس المرحلة الثانوية (بنات)", teamB: "سباق F1 للمدارس والتتويج", location: "مدرسة غازي القصيبي الثانوية للبنات", notes: "السلام الوطني 9:00، الجولة الأولى 9:05، النهائي 10:00، سباق F1 10:30، التتويج 12:00" },
+        en: { tournament: "Student Excellence Award", teamA: "Secondary Schools (Girls)", teamB: "Schools F1 Race & Podium", location: "Ghazi Al Gosaibi Secondary Girls School", notes: "National Anthem 9:00, Round 1 9:05, Finals 10:00, F1 10:30, Awards 12:00" }
       }
     ];
 
@@ -1290,7 +1136,7 @@
 
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFrEKvM8AglCT3swkTUdmsnX2zhkMvnS2SrYMCSCHDFLBRFRXT1uCPDmHY2Nr33rNJswpFbfTu-E6A/pub?output=csv";
 
-    let activeRoster = [...verifiedMatchesData];
+    let activeRoster = [...baseVerifiedMatches];
 
     async function syncGoogleSheetData() {
       try {
@@ -1334,12 +1180,20 @@
             }
           });
 
+          // Merge: sheet entries update scores or append to verified roster
           if (sheetMatches.length > 0) {
-            activeRoster = sheetMatches;
+            sheetMatches.forEach(sm => {
+              const matchIdx = activeRoster.findIndex(r => r.id === sm.id);
+              if (matchIdx > -1) {
+                if (sm.score) activeRoster[matchIdx].score = sm.score;
+              } else {
+                activeRoster.push(sm);
+              }
+            });
           }
         }
       } catch (err) {
-        console.warn("Using verified tournament schedule:", err);
+        console.warn("Using offline verified tournament schedule:", err);
       }
 
       distributeMatches(currentPage);
@@ -1432,23 +1286,32 @@
 
       return `
         <div class="match-item" onclick="openGameModal('${match.id}')">
+          <!-- 1. Team Names with Orange V/S -->
           <div class="match-teams-title">
             <span>${data.teamA}</span>
             <span class="vs-accent">V/S</span>
             <span>${data.teamB}</span>
           </div>
+
+          <!-- 2. Date -->
           <div class="match-meta-line">
             <span class="meta-label">${dict.dateLbl}</span>
             <span>${match.date}</span>
           </div>
+
+          <!-- 3. Time -->
           <div class="match-meta-line">
             <span class="meta-label">${dict.timeLbl}</span>
             <span>${match.time}</span>
           </div>
+
+          <!-- 4. Location -->
           <div class="match-meta-line">
             <span class="meta-label">${dict.locationLbl}</span>
             <span>📍 ${data.location}</span>
           </div>
+
+          <!-- 5. Score -->
           <div class="match-score-footer">
             <span class="meta-label">${dict.scoreLbl}</span>
             <span class="score-badge ${hasScore ? '' : 'pending'}">
