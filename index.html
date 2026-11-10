@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>قسم الأنشطة والتربية الرياضية - وزارة التربية والتعليم</title>
 
   <!-- Google Fonts: Cairo & Tajawal -->
@@ -36,52 +36,66 @@
       font-variant-numeric: lining-nums;
     }
 
-    body {
-      font-family: 'Cairo', 'Tajawal', sans-serif;
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
       background-color: var(--bg-dark);
       color: var(--text-white);
+      font-family: 'Cairo', 'Tajawal', sans-serif;
       line-height: 1.5;
-      padding: 20px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      padding: 12px;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 20px;
+      }
     }
 
     /* Top Header Bar */
     header.top-bar {
       max-width: 1380px;
-      margin: 0 auto 20px auto;
+      margin: 0 auto 14px auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 4px;
+      padding: 6px 2px;
+      gap: 10px;
     }
 
     .brand-group {
       text-align: right;
     }
     .brand-group h1 {
-      font-size: 1.3rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--text-white);
       letter-spacing: -0.3px;
     }
     .brand-group p {
-      font-size: 0.82rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       margin-top: 2px;
     }
 
     .header-actions {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       align-items: center;
+      flex-shrink: 0;
     }
 
     .btn-lang {
       background: transparent;
       border: 1px solid var(--border-dark);
       color: var(--text-gray);
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 20px;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       cursor: pointer;
       font-family: inherit;
       transition: all 0.2s;
@@ -95,29 +109,110 @@
       background-color: var(--accent-orange);
       color: #fff;
       border: none;
-      padding: 8px 18px;
+      padding: 6px 14px;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       cursor: pointer;
       transition: background 0.2s;
       font-family: inherit;
+      white-space: nowrap;
     }
     .btn-upload:hover {
       background-color: var(--accent-orange-hover);
     }
 
-    /* Main Dashboard Layout (Right Main, Left Sidebar in RTL) */
+    /* =========================================================
+       NEW: TOP TOURNAMENT NAV CAROUSEL WITH ARROWS
+       ========================================================= */
+    .top-tournaments-bar {
+      max-width: 1380px;
+      margin: 0 auto 16px auto;
+      background: var(--sidebar-bg);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .carousel-nav-btn {
+      background: var(--card-inner);
+      border: 1px solid var(--border-dark);
+      color: var(--text-gray);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .carousel-nav-btn:hover {
+      background: var(--active-blue);
+      color: #fff;
+      border-color: var(--active-blue);
+    }
+
+    .tournaments-track {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none; /* Firefox */
+      -webkit-overflow-scrolling: touch;
+      flex-grow: 1;
+      padding: 2px 0;
+    }
+    .tournaments-track::-webkit-scrollbar {
+      display: none; /* Chrome, Safari */
+    }
+
+    .tournament-pill-btn {
+      background: var(--card-inner);
+      border: 1px solid var(--border-dark);
+      color: var(--text-gray);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .tournament-pill-btn:hover {
+      border-color: var(--text-gray);
+      color: var(--text-white);
+    }
+    .tournament-pill-btn.active {
+      background: var(--active-blue);
+      border-color: var(--active-blue);
+      color: #fff;
+    }
+
+    /* Main Dashboard Layout */
     .dashboard-layout {
       max-width: 1380px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 310px;
-      gap: 20px;
+      grid-template-columns: 1fr 280px;
+      gap: 16px;
       align-items: start;
     }
 
@@ -127,55 +222,61 @@
       }
     }
 
-    /* Common Card Wrappers */
+    /* Cards */
     .dashboard-card {
       background: var(--card-bg);
       border: 1px solid var(--border-dark);
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 20px;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      width: 100%;
     }
 
     .card-title-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 6px;
     }
     .card-title-row h2 {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-white);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .card-title-row .hint-text {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--accent-orange);
     }
 
-    /* =========================================================
-       Requirement 2: Full Calendar System (At the Top)
-       ========================================================= */
+    /* Calendar System */
     .calendar-month-selector {
       display: flex;
       gap: 6px;
       overflow-x: auto;
-      padding-bottom: 10px;
-      margin-bottom: 14px;
-      scrollbar-width: thin;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
+    .calendar-month-selector::-webkit-scrollbar {
+      display: none;
+    }
+
     .month-pill {
       background: #142132;
       color: var(--text-gray);
-      padding: 5px 14px;
+      padding: 4px 12px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       white-space: nowrap;
       cursor: pointer;
       border: 1px solid transparent;
-      transition: all 0.2s;
+      flex-shrink: 0;
     }
     .month-pill.active {
       background: var(--accent-orange);
@@ -183,28 +284,37 @@
       font-weight: 700;
     }
 
+    /* Mobile Table Scroll Container to fit screen */
+    .calendar-scroll-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 6px;
+    }
+
     .calendar-table {
       width: 100%;
+      min-width: 580px; /* Ensures clean grid columns on small screens */
       border-collapse: collapse;
       text-align: center;
       table-layout: fixed;
     }
     .calendar-table th {
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
-      padding: 8px 4px;
+      padding: 6px 2px;
       border-bottom: 1px solid var(--border-dark);
     }
     .calendar-table td {
       border: 1px solid var(--border-dark);
-      height: 75px;
+      height: 68px;
       vertical-align: top;
       padding: 4px;
       background: rgba(17, 28, 42, 0.4);
     }
     .calendar-table .cell-date {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       text-align: right;
       display: block;
@@ -212,8 +322,8 @@
       font-weight: 600;
     }
     .calendar-table .event-stripe {
-      font-size: 0.68rem;
-      padding: 2px 4px;
+      font-size: 0.65rem;
+      padding: 2px 3px;
       border-radius: 4px;
       margin-bottom: 2px;
       white-space: nowrap;
@@ -226,37 +336,32 @@
     .stripe-orange { background: #5c2b0c; color: #fdba74; }
     .stripe-yellow { background: #4d380c; color: #fde047; }
 
-    /* =========================================================
-       Requirement 6: About Tournament Box Placeholder
-       ========================================================= */
+    /* About Tournament Box */
     .about-tournament-box {
       background: var(--card-inner);
       border: 1px solid var(--border-subtle);
       border-right: 4px solid var(--accent-orange);
       border-radius: 10px;
-      padding: 14px 18px;
-      margin-bottom: 20px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
     }
     .about-tournament-box h3 {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--text-white);
       margin-bottom: 4px;
     }
     .about-tournament-box p {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text-gray);
       line-height: 1.5;
     }
 
-    /* =========================================================
-       Requirements 3, 4, 5: Match Cards & Grid
-       ========================================================= */
+    /* Match Cards */
     .matches-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-bottom: 10px;
+      gap: 12px;
     }
     @media (max-width: 768px) {
       .matches-grid {
@@ -268,19 +373,14 @@
       background: var(--card-inner);
       border: 1px solid var(--border-dark);
       border-radius: 10px;
-      padding: 14px 16px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      transition: border-color 0.2s;
-    }
-    .match-item:hover {
-      border-color: var(--border-subtle);
+      gap: 6px;
     }
 
-    /* Req 4 & 5: Teams with Orange V/S */
     .match-teams-title {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--text-white);
       display: flex;
@@ -292,23 +392,22 @@
     .vs-accent {
       color: var(--accent-orange) !important;
       font-weight: 800;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       letter-spacing: 0.5px;
       padding: 0 4px;
     }
 
-    /* Req 5 Order: Date, Time, Location, Score */
     .match-meta-line {
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-gray);
     }
     .match-meta-line .meta-label {
       color: var(--text-muted);
-      font-size: 0.76rem;
-      min-width: 48px;
+      font-size: 0.74rem;
+      min-width: 44px;
     }
     .match-meta-line .venue-text {
       color: #cbd5e1;
@@ -319,45 +418,42 @@
       align-items: center;
       justify-content: space-between;
       margin-top: 4px;
-      padding-top: 8px;
+      padding-top: 6px;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
     .score-badge {
       background: #0f1c2d;
       border: 1px solid var(--border-dark);
       color: var(--accent-orange);
-      padding: 2px 10px;
+      padding: 2px 8px;
       border-radius: 4px;
       font-weight: 700;
-      letter-spacing: 1px;
     }
     .score-badge.pending {
       color: var(--text-muted);
       border-style: dashed;
     }
 
-    /* =========================================================
-       Requirement 1: Photo & Video Gallery Cards
-       ========================================================= */
+    /* Gallery Cards */
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 480px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
     .media-card {
       background: var(--card-inner);
       border: 1px solid var(--border-dark);
-      border-radius: 10px;
+      border-radius: 8px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s ease, border-color 0.2s ease;
       cursor: pointer;
-    }
-    .media-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--accent-orange);
     }
     .media-thumb {
       width: 100%;
@@ -367,14 +463,13 @@
       display: block;
     }
     .media-caption-area {
-      padding: 10px 12px;
+      padding: 8px 10px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
-    /* Shows photo title, never the date and time */
     .media-custom-title {
-      font-size: 0.84rem;
+      font-size: 0.78rem;
       font-weight: 700;
       color: var(--text-white);
       white-space: nowrap;
@@ -382,58 +477,28 @@
       text-overflow: ellipsis;
     }
     .media-tournament-tag {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--accent-orange);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* =========================================================
-       Sidebar Navigation & Venues (Dark Minimalist Theme)
-       ========================================================= */
+    /* Official Venues Block in Sidebar */
     .sidebar-block {
       background: var(--sidebar-bg);
       border: 1px solid var(--border-dark);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
     }
     .sidebar-header {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       text-align: right;
     }
-
-    .nav-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .nav-item a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 12px;
-      border-radius: 8px;
-      color: var(--text-gray);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: background 0.15s, color 0.15s;
-    }
-    .nav-item a:hover {
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text-white);
-    }
-    .nav-item.active a {
-      background: var(--active-blue);
-      color: #fff;
-    }
-
     .venue-list {
       list-style: none;
       display: flex;
@@ -441,12 +506,11 @@
       gap: 8px;
     }
     .venue-item {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-gray);
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 0;
     }
     .venue-pin {
       color: var(--tag-red);
@@ -456,9 +520,9 @@
     .empty-note {
       grid-column: 1 / -1;
       text-align: center;
-      padding: 18px;
+      padding: 14px;
       color: var(--text-muted);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       border: 1px dashed var(--border-dark);
       border-radius: 8px;
     }
@@ -473,7 +537,6 @@
       <p>وزارة التربية والتعليم - مملكة البحرين</p>
     </div>
     <div class="header-actions">
-      <!-- Media upload button -->
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSe_Example/viewform" target="_blank" class="btn-upload">
         &#8593; رفع صور وفيديوهات
       </a>
@@ -481,22 +544,40 @@
     </div>
   </header>
 
+  <!-- ========================================================
+       TOP TOURNAMENT BAR WITH ARROWS (Shifted to Top)
+       ======================================================== -->
+  <nav class="top-tournaments-bar" aria-label="شريط البطولات">
+    <!-- Right arrow for RTL (scroll forward) -->
+    <button class="carousel-nav-btn" id="scrollRightBtn" title="السابق" aria-label="التالي">›</button>
+
+    <!-- Scrollable Pills Track -->
+    <div class="tournaments-track" id="tournamentsTrack">
+      <a href="#" class="tournament-pill-btn active">🏠 الرئيسية والتقويم</a>
+      <a href="#" class="tournament-pill-btn">⚽ بطولة ناصر بن حمد للقدم</a>
+      <a href="#" class="tournament-pill-btn">🏀 دوري المجموعات لكرة السلة</a>
+      <a href="#" class="tournament-pill-btn">🎮 بطولة الألعاب الإلكترونية</a>
+      <a href="#" class="tournament-pill-btn">🏆 جائزة الطالب المتميز</a>
+      <a href="#" class="tournament-pill-btn">📷 معرض الوسائط الكامل</a>
+    </div>
+
+    <!-- Left arrow for RTL (scroll backward) -->
+    <button class="carousel-nav-btn" id="scrollLeftBtn" title="التالي" aria-label="السابق">‹</button>
+  </nav>
+
   <!-- Dashboard Container -->
   <div class="dashboard-layout">
 
-    <!-- MAIN RIGHT CONTENT COLUMN -->
+    <!-- MAIN CONTENT COLUMN -->
     <main class="main-content-col">
 
-      <!-- ========================================================
-           Requirement 2: Full Annual Calendar Moved to Top
-           ======================================================== -->
+      <!-- 1. Full Annual Calendar -->
       <section class="dashboard-card">
         <div class="card-title-row">
           <h2>📅 التقويم السنوي الشامل 2026-2027</h2>
           <span class="hint-text">نوفمبر 2026</span>
         </div>
 
-        <!-- Month Navigation Pills -->
         <div class="calendar-month-selector">
           <div class="month-pill">سبتمبر 2026</div>
           <div class="month-pill">أكتوبر 2026</div>
@@ -509,162 +590,128 @@
           <div class="month-pill">مايو 2027</div>
         </div>
 
-        <!-- 7-Day Calendar Grid (RTL: الأحد to السبت) -->
-        <table class="calendar-table">
-          <thead>
-            <tr>
-              <th>الأحد</th>
-              <th>الإثنين</th>
-              <th>الثلاثاء</th>
-              <th>الأربعاء</th>
-              <th>الخميس</th>
-              <th>الجمعة</th>
-              <th>السبت</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="cell-date">1</span></td>
-              <td><span class="cell-date">2</span></td>
-              <td><span class="cell-date">3</span></td>
-              <td><span class="cell-date">4</span></td>
-              <td><span class="cell-date">5</span></td>
-              <td><span class="cell-date">6</span></td>
-              <td><span class="cell-date">7</span></td>
-            </tr>
-            <tr>
-              <td>
-                <span class="cell-date">8</span>
-                <span class="event-stripe stripe-blue">⚽ 2 قدم (إعدادي - بنين)</span>
-              </td>
-              <td>
-                <span class="cell-date">9</span>
-                <span class="event-stripe stripe-blue">⚽ 2 قدم (إعدادي - بنات)</span>
-              </td>
-              <td>
-                <span class="cell-date">10</span>
-                <span class="event-stripe stripe-blue">⚽ 2 قدم (ثانوي - بنين)</span>
-              </td>
-              <td>
-                <span class="cell-date">11</span>
-                <span class="event-stripe stripe-blue">⚽ 2 قدم (ثانوي - بنات)</span>
-              </td>
-              <td>
-                <span class="cell-date">12</span>
-                <span class="event-stripe stripe-orange">🎮 ألعاب إلكترونية</span>
-              </td>
-              <td><span class="cell-date">13</span></td>
-              <td><span class="cell-date">14</span></td>
-            </tr>
-            <tr>
-              <td>
-                <span class="cell-date">15</span>
-                <span class="event-stripe stripe-yellow">🏀 سلة (ابتدائي - بنين)</span>
-              </td>
-              <td>
-                <span class="cell-date">16</span>
-                <span class="event-stripe stripe-yellow">🏀 سلة (ابتدائي - بنات)</span>
-              </td>
-              <td>
-                <span class="cell-date">17</span>
-                <span class="event-stripe stripe-yellow">🏀 سلة (إعدادي)</span>
-              </td>
-              <td>
-                <span class="cell-date">18</span>
-                <span class="event-stripe stripe-blue">زيارات ميدانية</span>
-              </td>
-              <td>
-                <span class="cell-date">19</span>
-                <span class="event-stripe stripe-blue">مباريات الدوري</span>
-              </td>
-              <td><span class="cell-date">20</span></td>
-              <td><span class="cell-date">21</span></td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- Horizontal scroll wrapper for mobile fit -->
+        <div class="calendar-scroll-wrapper">
+          <table class="calendar-table">
+            <thead>
+              <tr>
+                <th>الأحد</th>
+                <th>الإثنين</th>
+                <th>الثلاثاء</th>
+                <th>الأربعاء</th>
+                <th>الخميس</th>
+                <th>الجمعة</th>
+                <th>السبت</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="cell-date">1</span></td>
+                <td><span class="cell-date">2</span></td>
+                <td><span class="cell-date">3</span></td>
+                <td><span class="cell-date">4</span></td>
+                <td><span class="cell-date">5</span></td>
+                <td><span class="cell-date">6</span></td>
+                <td><span class="cell-date">7</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="cell-date">8</span>
+                  <span class="event-stripe stripe-blue">⚽ 2 قدم (إعدادي - بنين)</span>
+                </td>
+                <td>
+                  <span class="cell-date">9</span>
+                  <span class="event-stripe stripe-blue">⚽ 2 قدم (إعدادي - بنات)</span>
+                </td>
+                <td>
+                  <span class="cell-date">10</span>
+                  <span class="event-stripe stripe-blue">⚽ 2 قدم (ثانوي - بنين)</span>
+                </td>
+                <td>
+                  <span class="cell-date">11</span>
+                  <span class="event-stripe stripe-blue">⚽ 2 قدم (ثانوي - بنات)</span>
+                </td>
+                <td>
+                  <span class="cell-date">12</span>
+                  <span class="event-stripe stripe-orange">🎮 ألعاب إلكترونية</span>
+                </td>
+                <td><span class="cell-date">13</span></td>
+                <td><span class="cell-date">14</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="cell-date">15</span>
+                  <span class="event-stripe stripe-yellow">🏀 سلة (ابتدائي - بنين)</span>
+                </td>
+                <td>
+                  <span class="cell-date">16</span>
+                  <span class="event-stripe stripe-yellow">🏀 سلة (ابتدائي - بنات)</span>
+                </td>
+                <td>
+                  <span class="cell-date">17</span>
+                  <span class="event-stripe stripe-yellow">🏀 سلة (إعدادي)</span>
+                </td>
+                <td>
+                  <span class="cell-date">18</span>
+                  <span class="event-stripe stripe-blue">زيارات ميدانية</span>
+                </td>
+                <td>
+                  <span class="cell-date">19</span>
+                  <span class="event-stripe stripe-blue">مباريات الدوري</span>
+                </td>
+                <td><span class="cell-date">20</span></td>
+                <td><span class="cell-date">21</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
-      <!-- ========================================================
-           Requirement 6: About Tournament Section Placeholder
-           ======================================================== -->
+      <!-- 2. About Tournament Box -->
       <section class="about-tournament-box">
         <h3 id="tournament-about-title">عن البطولة (About the Tournament)</h3>
         <p id="tournament-about-desc">
-          <!-- Text ready for when you receive your boss's notes -->
           سيتم إضافة لوائح وقواعد وشروط البطولة وجدول المجموعات التفصيلي فور اعتمادها من اللجنة المنظمة.
         </p>
       </section>
 
-      <!-- ========================================================
-           Requirement 3: Upcoming Matches Section
-           ======================================================== -->
+      <!-- 3. Upcoming Matches -->
       <section class="dashboard-card">
         <div class="card-title-row">
           <h2>⚡ الفعاليات والمباريات القادمة</h2>
           <span class="hint-text">اضغط لعرض تفاصيل كل مباراة في صندوق مستقل</span>
         </div>
         <div class="matches-grid" id="upcoming-matches-grid">
-          <!-- Dynamically populated via JS -->
+          <!-- Populated via JS -->
         </div>
       </section>
 
-      <!-- ========================================================
-           Requirement 3: Finished Games & Scores Section
-           ======================================================== -->
+      <!-- 4. Finished Games & Scores -->
       <section class="dashboard-card">
         <div class="card-title-row">
           <h2>🏆 المباريات المنتهية والنتائج</h2>
           <span class="hint-text">تُحدث النتائج دورياً فور انتهاء المباريات</span>
         </div>
         <div class="matches-grid" id="finished-matches-grid">
-          <!-- Dynamically populated via JS -->
+          <!-- Populated via JS -->
         </div>
       </section>
 
-      <!-- ========================================================
-           Requirement 1: Photo Gallery (Hover shows title, not date/time)
-           ======================================================== -->
+      <!-- 5. Photo Gallery (Hover shows title, not date/time) -->
       <section class="dashboard-card">
         <div class="card-title-row">
           <h2>📸 أحدث الصور ومقتطفات الفعاليات</h2>
           <span class="hint-text">تمرير الفأرة يعرض عنوان الصورة</span>
         </div>
         <div class="gallery-grid" id="photo-gallery-grid">
-          <!-- Dynamically populated via JS -->
+          <!-- Populated via JS -->
         </div>
       </section>
 
     </main>
 
-    <!-- SIDEBAR COLUMN (Navigation & Venues) -->
+    <!-- SIDEBAR COLUMN: Official Venues -->
     <aside class="sidebar-col">
-      
-      <!-- Tournaments Navigation Menu -->
-      <div class="sidebar-block">
-        <div class="sidebar-header">البطولات والفعاليات</div>
-        <ul class="nav-list">
-          <li class="nav-item active">
-            <a href="#">🏠 الرئيسية والتقويم</a>
-          </li>
-          <li class="nav-item">
-            <a href="#">⚽ بطولة ناصر بن حمد للقدم</a>
-          </li>
-          <li class="nav-item">
-            <a href="#">🏀 دوري المجموعات لكرة السلة</a>
-          </li>
-          <li class="nav-item">
-            <a href="#">🎮 بطولة الألعاب الإلكترونية</a>
-          </li>
-          <li class="nav-item">
-            <a href="#">🏆 جائزة الطالب المتميز</a>
-          </li>
-          <li class="nav-item">
-            <a href="#">📷 معرض الوسائط الكامل</a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Official Venues & Courts Block -->
       <div class="sidebar-block">
         <div class="sidebar-header">المواقع والملاعب الرسمية</div>
         <ul class="venue-list">
@@ -675,16 +722,12 @@
           <li class="venue-item"><span class="venue-pin">📍</span> مدرسة غازي القصيبي الثانوية للبنات</li>
         </ul>
       </div>
-
     </aside>
 
   </div>
 
   <script>
-    /**
-     * Complete Game Data
-     * Requirement 5 order: Teams (with V/S) -> Date -> Time -> Location -> Score
-     */
+    // Games Roster Data
     const gamesRoster = [
       {
         id: "G1",
@@ -728,10 +771,7 @@
       }
     ];
 
-    /**
-     * Requirement 1: Media Items
-     * Contains custom photo titles to display on hover/card, removing date & time.
-     */
+    // Media Gallery Data
     const mediaGallery = [
       {
         title: "قرعة بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية",
@@ -750,45 +790,38 @@
       }
     ];
 
-    /**
-     * Requirements 4 & 5: Card Renderer
-     * 1. Team Names with Orange V/S
-     * 2. Date
-     * 3. Time
-     * 4. Location
-     * 5. Score
-     */
+    // Render Match Card
     function renderMatchCard(game) {
       const hasScore = game.score && game.score.trim() !== "";
 
       return `
         <div class="match-item">
-          <!-- 1. Team Names separated by V/S in brand orange -->
+          <!-- Team names separated by V/S in Orange -->
           <div class="match-teams-title">
             <span>${game.teamA}</span>
             <span class="vs-accent">V/S</span>
             <span>${game.teamB}</span>
           </div>
 
-          <!-- 2. Date -->
+          <!-- Date -->
           <div class="match-meta-line">
             <span class="meta-label">التاريخ:</span>
             <span>${game.date}</span>
           </div>
 
-          <!-- 3. Time -->
+          <!-- Time -->
           <div class="match-meta-line">
             <span class="meta-label">الوقت:</span>
             <span>${game.time}</span>
           </div>
 
-          <!-- 4. Location -->
+          <!-- Location -->
           <div class="match-meta-line">
             <span class="meta-label">المكان:</span>
             <span class="venue-text">📍 ${game.location}</span>
           </div>
 
-          <!-- 5. Score -->
+          <!-- Score -->
           <div class="match-score-footer">
             <span class="meta-label">النتيجة:</span>
             <span class="score-badge ${hasScore ? '' : 'pending'}">
@@ -799,11 +832,9 @@
       `;
     }
 
-    /**
-     * Requirement 3: Automatic separation of Upcoming vs Finished Games
-     */
+    // Auto-distribute matches into Upcoming and Finished
     function distributeMatches() {
-      const today = new Date().toISOString().split('T')[0]; // Current date "YYYY-MM-DD"
+      const today = new Date().toISOString().split('T')[0];
       const upcomingGrid = document.getElementById('upcoming-matches-grid');
       const finishedGrid = document.getElementById('finished-matches-grid');
 
@@ -811,7 +842,6 @@
       const finished = [];
 
       gamesRoster.forEach(game => {
-        // If a game already has a score OR the date has passed, move to finished
         if ((game.score && game.score.trim() !== "") || game.date < today) {
           finished.push(game);
         } else {
@@ -819,24 +849,16 @@
         }
       });
 
-      // Render Upcoming
-      if (upcoming.length === 0) {
-        upcomingGrid.innerHTML = `<div class="empty-note">لا توجد مباريات قادمة مجدولة حالياً.</div>`;
-      } else {
-        upcomingGrid.innerHTML = upcoming.map(renderMatchCard).join('');
-      }
+      upcomingGrid.innerHTML = upcoming.length === 0
+        ? `<div class="empty-note">لا توجد مباريات قادمة مجدولة حالياً.</div>`
+        : upcoming.map(renderMatchCard).join('');
 
-      // Render Finished
-      if (finished.length === 0) {
-        finishedGrid.innerHTML = `<div class="empty-note">لا توجد نتائج مسجلة للمباريات السابقة بعد.</div>`;
-      } else {
-        finishedGrid.innerHTML = finished.map(renderMatchCard).join('');
-      }
+      finishedGrid.innerHTML = finished.length === 0
+        ? `<div class="empty-note">لا توجد نتائج مسجلة للمباريات السابقة بعد.</div>`
+        : finished.map(renderMatchCard).join('');
     }
 
-    /**
-     * Requirement 1: Photo Gallery with photo title on hover (title attribute), not date/time
-     */
+    // Render Gallery
     function renderGallery() {
       const gallery = document.getElementById('photo-gallery-grid');
       gallery.innerHTML = mediaGallery.map(item => `
@@ -850,8 +872,29 @@
       `).join('');
     }
 
-    // Initialize layout components
+    // Setup Top Tournament Arrow Navigation
+    function initTournamentCarousel() {
+      const track = document.getElementById('tournamentsTrack');
+      const leftBtn = document.getElementById('scrollLeftBtn');
+      const rightBtn = document.getElementById('scrollRightBtn');
+
+      if (!track || !leftBtn || !rightBtn) return;
+
+      const scrollStep = 180;
+
+      leftBtn.addEventListener('click', () => {
+        // Scroll left (in RTL, positive or negative depending on browser standard)
+        track.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+      });
+
+      rightBtn.addEventListener('click', () => {
+        // Scroll right
+        track.scrollBy({ left: scrollStep, behavior: 'smooth' });
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      initTournamentCarousel();
       distributeMatches();
       renderGallery();
     });
