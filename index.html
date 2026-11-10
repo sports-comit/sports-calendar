@@ -2,34 +2,25 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>قسم التربية الرياضية - جدول الفعاليات والبطولات | Sports Activities Calendar</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>قسم الأنشطة الرياضية - الفعاليات والبطولات الرياضية</title>
+  
+  <!-- Google Fonts: Cairo & Tajawal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+
   <style>
     :root {
-      --color-black: #0A0C12;
-      --color-navy: #023661;
-      --color-slate-dark: #3F3A42;
-      --color-slate-light: #76828E;
-      --color-accent-orange: #DB5227;
-
-      --bg-dark: #0A0C12;
-      --bg-surface: #0f1523;
-      --bg-card: #131a2c;
-      --bg-card-alt: #18233a;
-      --border-subtle: #202b40;
-      --font-stack: 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
-    }
-
-    html, body {
-      width: 100%;
-      max-width: 100vw;
-      overflow-x: hidden;
-      margin: 0;
-      padding: 0;
-      position: relative;
+      --primary-navy: #0B192C;
+      --secondary-blue: #1E3E62;
+      --accent-orange: #F37021;
+      --light-bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border-color: #E2E8F0;
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --success-green: #10B981;
     }
 
     * {
@@ -37,2119 +28,562 @@
       margin: 0;
       padding: 0;
       font-variant-numeric: lining-nums;
-      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: #f8fafc;
-      font-family: var(--font-stack);
-      min-height: 100vh;
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    /* Top Navigation / Header */
+    header.main-header {
+      background-color: var(--primary-navy);
+      color: #fff;
+      padding: 1rem 2rem;
       display: flex;
-      flex-direction: column;
-      line-height: 1.5;
-    }
-
-    body.lang-en {
-      direction: ltr;
-      text-align: left;
-    }
-
-    header {
-      background: rgba(10, 12, 18, 0.96);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-subtle);
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       position: sticky;
       top: 0;
       z-index: 100;
-      padding: 0.65rem 0.85rem;
+    }
+
+    .brand-title h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .brand-title p {
+      font-size: 0.85rem;
+      color: #94A3B8;
+    }
+
+    .nav-actions {
       display: flex;
+      gap: 12px;
       align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      width: 100%;
-      max-width: 100vw;
     }
 
-    .brand-wrap {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .brand-main {
-      font-size: 0.98rem;
-      font-weight: 800;
+    .btn-submit-media {
+      background-color: var(--accent-orange);
       color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .brand-sub {
-      font-size: 0.7rem;
-      color: var(--color-slate-light);
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
       font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      flex-shrink: 0;
-    }
-
-    .btn-lang {
-      background: var(--color-slate-dark);
-      color: #fff;
-      border: 1px solid var(--color-slate-light);
-      padding: 0.38rem 0.65rem;
-      border-radius: 9999px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-
-    .btn-lang:hover {
-      background: var(--color-navy);
-      border-color: #fff;
-    }
-
-    .btn-upload-top {
-      background: var(--color-accent-orange);
-      color: #fff;
-      text-decoration: none;
-      padding: 0.42rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.76rem;
-      font-weight: 700;
+      transition: background 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      box-shadow: 0 4px 12px rgba(219, 82, 39, 0.35);
-      white-space: nowrap;
+      gap: 6px;
+    }
+    .btn-submit-media:hover {
+      background-color: #e05e10;
     }
 
-    @media (max-width: 480px) {
-      .brand-main { font-size: 0.88rem; }
-      .brand-sub { display: none; }
-      .btn-upload-top span { font-size: 0.72rem; }
-      .btn-upload-top svg { width: 14px; height: 14px; }
-      .btn-lang { padding: 0.35rem 0.55rem; font-size: 0.7rem; }
+    .container {
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 16px;
     }
 
-    .dashboard-layout {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 0.75rem;
-      gap: 0.85rem;
-      min-width: 0;
-    }
-
-    @media (min-width: 992px) {
-      .dashboard-layout {
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 1.25rem;
-        gap: 1.25rem;
-      }
-    }
-
-    .sidebar-area {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      flex-shrink: 0;
-      min-width: 0;
-    }
-
-    @media (min-width: 992px) {
-      .sidebar-area {
-        width: 300px;
-      }
-    }
-
-    .ui-panel {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 0.85rem;
-      width: 100%;
-      min-width: 0;
-    }
-
-    .panel-header {
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: var(--color-slate-light);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.65rem;
-    }
-
-    .nav-items-wrapper {
-      display: flex;
-      flex-direction: row;
-      gap: 0.35rem;
-      overflow-x: auto;
-      padding-bottom: 0.25rem;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-      width: 100%;
-      min-width: 0;
-    }
-
-    .nav-items-wrapper::-webkit-scrollbar {
-      display: none;
-    }
-
-    @media (min-width: 992px) {
-      .nav-items-wrapper {
-        flex-direction: column;
-        overflow-x: visible;
-        padding-bottom: 0;
-      }
-    }
-
-    .nav-tab-btn {
-      flex: 0 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.55rem 0.75rem;
-      border-radius: 8px;
-      background: transparent;
-      color: #94a3b8;
-      border: 1px solid transparent;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-align: inherit;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-
-    @media (min-width: 992px) {
-      .nav-tab-btn {
-        width: 100%;
-        white-space: normal;
-      }
-    }
-
-    .nav-tab-btn:hover {
-      background: var(--bg-card);
-      color: #fff;
-    }
-
-    .nav-tab-btn.active {
-      background: rgba(2, 54, 97, 0.5);
-      border-color: var(--color-navy);
-      color: #fff;
-      border-inline-start: 3px solid var(--color-accent-orange);
-    }
-
-    .venue-links-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-      font-size: 0.78rem;
-    }
-
-    .venue-item-anchor {
-      color: #cbd5e1;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.25rem 0;
-      line-height: 1.35;
-    }
-
-    .venue-item-anchor:hover {
-      color: var(--color-accent-orange);
-    }
-
-    .main-area {
-      flex: 1;
-      min-width: 0;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-
-    .view-container {
-      display: none;
-      flex-direction: column;
-      gap: 0.85rem;
-      width: 100%;
-      min-width: 0;
-    }
-
-    .view-container.active {
-      display: flex;
-    }
-
-    .content-box {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 0.85rem;
-      width: 100%;
-      min-width: 0;
-    }
-
-    .content-box-title {
-      font-size: 0.98rem;
-      font-weight: 800;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.75rem;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-
-    .upcoming-matches-flow {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.65rem;
-      width: 100%;
-      min-width: 0;
-    }
-
-    @media (min-width: 600px) {
-      .upcoming-matches-flow {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (min-width: 1200px) {
-      .upcoming-matches-flow {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-    }
-
-    .upcoming-event-pill {
-      background: var(--bg-card);
-      border: 1px solid #1c263c;
-      border-radius: 10px;
-      padding: 0.75rem;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      min-width: 0;
-      transition: border-color 0.2s;
-    }
-
-    .upcoming-event-pill:hover {
-      border-color: var(--color-accent-orange);
-    }
-
-    .event-type-badge {
-      font-size: 0.68rem;
-      font-weight: 800;
-      color: var(--color-accent-orange);
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .event-match-title {
-      font-size: 0.84rem;
-      font-weight: 800;
-      color: #fff;
-      line-height: 1.35;
-      word-break: break-word;
-    }
-
-    .event-location-stamp {
-      font-size: 0.72rem;
-      color: var(--color-slate-light);
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .month-scroll-track {
-      display: flex;
-      gap: 0.3rem;
-      overflow-x: auto;
-      padding-bottom: 0.4rem;
-      margin-bottom: 0.65rem;
-      scrollbar-width: thin;
-      -webkit-overflow-scrolling: touch;
-      width: 100%;
-      min-width: 0;
-    }
-
-    .month-pill-btn {
-      flex: 0 0 auto;
-      background: var(--bg-card);
-      color: #94a3b8;
-      border: 1px solid #23304a;
-      padding: 0.35rem 0.65rem;
-      border-radius: 9999px;
-      font-family: inherit;
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .month-pill-btn.active {
-      background: var(--color-accent-orange);
-      border-color: var(--color-accent-orange);
-      color: #fff;
-    }
-
-    .calendar-wrapper {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .cal-header-row {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      text-align: center;
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: var(--color-slate-light);
-      padding-bottom: 0.3rem;
-      border-bottom: 1px solid #1c263c;
-      width: 100%;
-      min-width: 0;
-    }
-
-    .cal-cells-matrix {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 0.2rem;
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    .day-cell-node {
-      background: #0d131f;
-      border: 1px solid #1a2436;
-      border-radius: 6px;
-      min-height: 58px;
-      padding: 0.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      cursor: pointer;
-      overflow: hidden;
-      min-width: 0;
-      max-width: 100%;
-    }
-
-    @media (min-width: 600px) {
-      .day-cell-node {
-        min-height: 80px;
-        padding: 0.35rem;
-        gap: 0.2rem;
-      }
-    }
-
-    .day-cell-node:hover {
-      background: var(--bg-card-alt);
-      border-color: var(--color-slate-light);
-    }
-
-    .day-cell-node.empty {
-      background: transparent;
-      border: 1px dashed #141c2a;
-      cursor: default;
-    }
-
-    .day-num-indicator {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: #94a3b8;
-    }
-
-    .day-event-chip {
-      font-size: 0.58rem;
-      font-weight: 700;
-      padding: 1px 2px;
-      border-radius: 3px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: #fff;
-      line-height: 1.25;
-      min-width: 0;
-      max-width: 100%;
-      display: block;
-    }
-
-    .chip-fb { background: #023661; border-inline-start: 2px solid #3b82f6; }
-    .chip-bb { background: #5a2e16; border-inline-start: 2px solid var(--color-accent-orange); }
-    .chip-es { background: #37333a; border-inline-start: 2px solid #a855f7; }
-    .chip-ex { background: #134e4a; border-inline-start: 2px solid #14b8a6; }
-
-    .table-responsive-box {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      overflow-x: auto;
-      border-radius: 8px;
-      border: 1px solid #1c263c;
-      -webkit-overflow-scrolling: touch;
-      display: block;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: inherit;
-      font-size: 0.8rem;
-      min-width: 520px;
-    }
-
-    th {
-      background: #0a0f18;
-      color: var(--color-slate-light);
-      padding: 0.6rem 0.75rem;
-      font-weight: 700;
-      border-bottom: 1px solid #1c263c;
-      white-space: nowrap;
-    }
-
-    td {
-      padding: 0.6rem 0.75rem;
-      border-bottom: 1px solid #141c2c;
-      color: #e2e8f0;
-      white-space: nowrap;
-    }
-
-    tr:hover td {
-      background: #111a2c;
-    }
-
-    .btn-table-action {
-      background: var(--color-navy);
-      color: #fff;
-      border: none;
-      padding: 0.28rem 0.55rem;
-      border-radius: 5px;
-      font-size: 0.72rem;
-      cursor: pointer;
-      font-family: inherit;
-      white-space: nowrap;
-    }
-
-    .photo-grid-layout {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
-      gap: 0.6rem;
-      width: 100%;
-    }
-
-    .empty-media-badge {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 1.2rem;
-      color: var(--color-slate-light);
-      font-size: 0.8rem;
-      background: rgba(19, 26, 44, 0.4);
-      border-radius: 8px;
-    }
-
-    /* Media Card with Hover Title Overlay */
-    .media-card-wrap {
-      background: #131a2c;
-      border: 1px solid #1c263c;
-      border-radius: 10px;
-      overflow: hidden;
-      aspect-ratio: 1;
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .media-card-wrap:hover {
-      transform: translateY(-2px);
-      border-color: var(--color-accent-orange);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
-    }
-
-    .media-hover-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(10, 12, 18, 0.96) 0%, rgba(10, 12, 18, 0.8) 75%, transparent 100%);
-      padding: 22px 8px 8px;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    .media-card-wrap:hover .media-hover-overlay {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (hover: none) {
-      .media-hover-overlay {
-        opacity: 0.92;
-        transform: translateY(0);
-      }
-    }
-
-    .hover-title-text {
-      font-size: 0.72rem;
-      font-weight: 700;
-      line-height: 1.3;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .hover-type-badge {
-      font-size: 0.6rem;
-      color: var(--color-accent-orange);
-      font-weight: 800;
-    }
-
-    .play-video-icon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 40px;
-      height: 40px;
-      background: rgba(0, 0, 0, 0.78);
-      border: 2px solid var(--color-accent-orange);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 1.05rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-      z-index: 2;
-      transition: transform 0.2s;
-    }
-
-    .media-card-wrap:hover .play-video-icon {
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(10, 12, 18, 0.88);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 0.75rem;
-      box-sizing: border-box;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
-    .modal-window {
-      background: #111724;
-      border: 1px solid rgba(219, 82, 39, 0.4);
+    /* Requirement 2: Calendar Container Placed at Top */
+    .calendar-card {
+      background: var(--card-bg);
       border-radius: 14px;
-      width: 100%;
-      max-width: 560px;
-      max-height: 84vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-      overflow: hidden;
-      min-width: 0;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border-color);
+      margin-bottom: 32px;
     }
 
-    .modal-topbar {
-      background: #162033;
-      padding: 0.8rem 1rem;
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-navy);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #1f2d47;
-      flex-shrink: 0;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #EDF2F7;
+    }
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 20px;
+      background-color: var(--accent-orange);
+      border-radius: 3px;
     }
 
-    .modal-topbar-title {
-      font-size: 0.94rem;
-      font-weight: 800;
-      color: #fff;
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+      text-align: center;
+    }
+
+    .calendar-day-box {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 6px;
+      background: #FAFAFA;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .calendar-day-box.has-event {
+      background: #EFF6FF;
+      border-color: #BFDBFE;
+      font-weight: 600;
+    }
+    .calendar-day-box .date-num {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      display: block;
+    }
+    .calendar-day-box .event-tag {
+      font-size: 0.75rem;
+      color: var(--accent-orange);
+      margin-top: 4px;
+      display: block;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .modal-close-icon {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      font-size: 1.4rem;
-      cursor: pointer;
-      line-height: 1;
-      padding: 0 0.3rem;
-    }
-
-    .modal-scroll-body {
-      padding: 0.85rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      -webkit-overflow-scrolling: touch;
-      min-width: 0;
-    }
-
-    .individual-event-card {
-      background: #161e30;
-      border: 1px solid #23304a;
+    /* Requirement 6: About Tournament Section Box */
+    .tournament-about-box {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-right: 5px solid var(--secondary-blue);
       border-radius: 10px;
-      padding: 0.75rem;
+      padding: 18px 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+    .tournament-about-box h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      margin-bottom: 6px;
+    }
+    .tournament-about-box p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Matches Grid & Roster Cards */
+    .matches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+
+    .match-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      position: relative;
-      min-width: 0;
+      gap: 10px;
     }
 
-    .individual-event-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      width: 4px;
-      background: var(--color-accent-orange);
-      border-radius: 0 10px 10px 0;
+    /* Requirement 4 & 5: Team Names with V/S in Orange, followed by Date, Time, Location, Score */
+    .match-teams {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    .vs-badge {
+      color: var(--accent-orange) !important;
+      font-weight: 900;
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+      margin: 0 4px;
     }
 
-    body.lang-en .individual-event-card::before {
-      right: auto;
-      left: 0;
-      border-radius: 10px 0 0 10px;
+    .match-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .match-meta-row span.label {
+      font-weight: 600;
+      color: var(--secondary-blue);
+      min-width: 60px;
+    }
+    .match-meta-row span.val {
+      color: var(--text-main);
     }
 
-    .event-card-header {
+    .match-score-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #202b40;
-      padding-bottom: 0.35rem;
-      gap: 0.5rem;
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-color);
     }
-
-    .card-tag-text {
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: var(--color-accent-orange);
-    }
-
-    .card-stage-badge {
-      background: rgba(2, 54, 97, 0.6);
-      color: #93c5fd;
-      padding: 0.18rem 0.45rem;
-      border-radius: 4px;
-      font-size: 0.68rem;
-      font-weight: 700;
-    }
-
-    .card-detail-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-      min-width: 0;
-    }
-
-    .detail-ico {
-      font-size: 0.95rem;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .detail-meta-text {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .detail-lbl {
-      font-size: 0.66rem;
-      color: var(--color-slate-light);
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    .detail-val {
-      font-size: 0.84rem;
-      font-weight: 700;
-      color: #f1f5f9;
-      line-height: 1.35;
-      word-break: break-word;
-    }
-
-    .btn-maps-direct {
-      align-self: flex-start;
-      margin-top: 0.2rem;
-      background: var(--color-navy);
-      color: #fff;
-      text-decoration: none;
-      padding: 0.32rem 0.7rem;
+    .score-badge {
+      background-color: #F1F5F9;
+      color: var(--primary-navy);
+      padding: 4px 14px;
       border-radius: 6px;
-      font-size: 0.72rem;
       font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+    .score-badge.completed {
+      background-color: #ECFDF5;
+      color: var(--success-green);
+      border: 1px solid #A7F3D0;
     }
 
-    .lightbox-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.94);
-      backdrop-filter: blur(10px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: 1rem;
+    /* Requirement 1: Photo Gallery & Title Hover */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
     }
 
-    .lightbox-modal.open {
-      display: flex;
-    }
-
-    .lightbox-content-box {
-      width: 100%;
-      max-width: 900px;
-      max-height: 88vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    .photo-card {
       position: relative;
-    }
-
-    .lightbox-title-bar {
-      width: 100%;
-      max-width: 860px;
-      padding: 0.5rem 0.75rem;
-      color: #fff;
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 0.4rem;
-      background: rgba(19, 26, 44, 0.7);
-      border-radius: 8px;
-    }
-
-    .lightbox-img {
-      max-width: 92vw;
-      max-height: 82vh;
-      border-radius: 10px;
-      object-fit: contain;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    }
-
-    .lightbox-iframe {
-      width: 92vw;
-      max-width: 860px;
-      height: 520px;
-      max-height: 72vh;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
       background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .photo-card:hover img {
+      transform: scale(1.05);
+      opacity: 0.85;
+    }
+    .photo-title-banner {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, transparent 0%, rgba(11, 25, 44, 0.9) 100%);
+      color: #FFFFFF;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border: 1px dashed var(--border-color);
+      border-radius: 10px;
+      grid-column: 1 / -1;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="brand-wrap">
-      <div class="brand-main" id="t-brand-title">قسم الأنشطة والتربية الرياضية</div>
-      <div class="brand-sub" id="t-brand-sub">وزارة التربية والتعليم - مملكة البحرين</div>
+  <!-- Top Navigation Header -->
+  <header class="main-header">
+    <div class="brand-title">
+      <h1>قسم الأنشطة الرياضية</h1>
+      <p>إدارة التربية الرياضية - وزارة التربية والتعليم</p>
     </div>
-    <div class="header-actions">
-      <a href="https://docs.google.com/forms/d/1lZHjiN_uzkPByu0bfIARRFyUx3oAFLdUne0uXE-tk6Q/viewform" target="_blank" class="btn-upload-top" id="t-btn-upload">
-        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
-        <span>رفع صور وفيديوهات</span>
+    <div class="nav-actions">
+      <!-- Media Upload Form Link -->
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSe_Example/viewform" target="_blank" class="btn-submit-media">
+        + رفع صور وفيديوهات
       </a>
-      <button class="btn-lang" onclick="toggleLanguage()" id="lang-btn">English</button>
     </div>
   </header>
 
-  <div class="dashboard-layout">
-    
-    <aside class="sidebar-area">
-      <div class="ui-panel">
-        <div class="panel-header" id="t-nav-title">البطولات والفعاليات</div>
-        <div class="nav-items-wrapper">
-          <button class="nav-tab-btn active" onclick="switchView('home-view', this)">
-            <span>🏠</span>
-            <span id="t-nav-home">الرئيسية والتقويم</span>
-          </button>
-          <button class="nav-tab-btn" onclick="switchView('football-view', this)">
-            <span>⚽</span>
-            <span id="t-nav-fb">بطولة ناصر بن حمد للقدم</span>
-          </button>
-          <button class="nav-tab-btn" onclick="switchView('basketball-view', this)">
-            <span>🏀</span>
-            <span id="t-nav-bb">دوري المجموعات لكرة السلة</span>
-          </button>
-          <button class="nav-tab-btn" onclick="switchView('esports-view', this)">
-            <span>🎮</span>
-            <span id="t-nav-es">بطولة الألعاب الإلكترونية</span>
-          </button>
-          <button class="nav-tab-btn" onclick="switchView('excellence-view', this)">
-            <span>🏆</span>
-            <span id="t-nav-ex">جائزة الطالب المتميز</span>
-          </button>
-          <button class="nav-tab-btn" onclick="switchView('media-view', this)">
-            <span>📸</span>
-            <span id="t-nav-media">معرض الوسائط الكامل</span>
-          </button>
-        </div>
+  <div class="container">
+
+    <!-- Requirement 2: The Calendar is placed at the top of the home page -->
+    <section class="calendar-card">
+      <div class="section-title">التقويم الرياضي العام (Calendar)</div>
+      <div class="calendar-grid" id="main-calendar-grid">
+        <!-- Rendered dynamically via JS -->
       </div>
+    </section>
 
-      <div class="ui-panel">
-        <div class="panel-header" id="t-venues-title">المواقع والملاعب الرسمية</div>
-        <div class="venue-links-group">
-          <a href="https://maps.google.com/?cid=13083863488950478055" target="_blank" class="venue-item-anchor">
-            <span>📍</span>
-            <span id="t-venue-1">الاتحاد البحريني لكرة السلة (الماحوز)</span>
-          </a>
-          <a href="https://maps.google.com/?cid=12361665426147690921" target="_blank" class="venue-item-anchor">
-            <span>📍</span>
-            <span id="t-venue-2">صالة وزارة التربية والتعليم (مدينة عيسى)</span>
-          </a>
-          <a href="https://maps.google.com/?cid=9845700810332841646" target="_blank" class="venue-item-anchor">
-            <span>📍</span>
-            <span id="t-venue-3">نادي مدينة عيسى</span>
-          </a>
-          <a href="https://maps.google.com/?cid=3545199616238861163" target="_blank" class="venue-item-anchor">
-            <span>📍</span>
-            <span id="t-venue-4">نادي الاتحاد الرياضي (البلاد القديم)</span>
-          </a>
-          <a href="https://maps.google.com/?q=Ghazi+Al-Gosaibi+Secondary+Girls+School+Bahrain" target="_blank" class="venue-item-anchor">
-            <span>📍</span>
-            <span id="t-venue-5">مدرسة غازي القصيبي الثانوية للبنات</span>
-          </a>
-        </div>
-      </div>
-    </aside>
-
-    <main class="main-area">
-      
-      <!-- ================= 1. HOME VIEW ================= -->
-      <section id="home-view" class="view-container active">
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-up-title">⚡ الفعاليات والمباريات القادمة</span>
-            <span style="font-size:0.72rem; color:var(--color-accent-orange); font-weight:600;" id="t-click-hint">اضغط لعرض تفاصيل كل مباراة في صندوق مستقل</span>
-          </div>
-          <div class="upcoming-matches-flow" id="upcoming-cards-mount"></div>
-        </div>
-
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-cal-title">📅 التقويم السنوي الشامل 2026-2027</span>
-            <span id="cal-current-label" style="font-size:0.8rem; color:var(--color-accent-orange);">نوفمبر 2026</span>
-          </div>
-
-          <div class="month-scroll-track" id="month-buttons-mount"></div>
-
-          <div class="calendar-wrapper">
-            <div class="cal-header-row" id="cal-weekdays-mount">
-              <span>الأحد</span><span>الاثنين</span><span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span><span>السبت</span>
-            </div>
-            <div class="cal-cells-matrix" id="cal-days-mount"></div>
-          </div>
-        </div>
-
-        <!-- Live Uploaded Media Section on Home Page -->
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-home-media-title">📸 أحدث الصور ومقاطع الفيديو المرفوعة</span>
-            <button onclick="fetchLiveMedia()" style="background:var(--color-navy); color:#fff; border:none; padding:0.28rem 0.65rem; border-radius:6px; font-size:0.72rem; font-weight:700; cursor:pointer;" id="t-btn-refresh-home">🔄 تحديث</button>
-          </div>
-          <div class="photo-grid-layout" id="home-live-media-grid"></div>
-        </div>
-      </section>
-
-      <!-- ================= 2. FOOTBALL VIEW ================= -->
-      <section id="football-view" class="view-container">
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-fb-head">⚽ بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية 2026-2027</span>
-          </div>
-          <div class="table-responsive-box">
-            <table>
-              <thead>
-                <tr>
-                  <th id="th-fb-num">رقم</th>
-                  <th id="th-fb-date">التاريخ</th>
-                  <th id="th-fb-time">الوقت</th>
-                  <th id="th-fb-venue">الملعب</th>
-                  <th id="th-fb-teams">المباراة (الفريقان)</th>
-                  <th id="th-fb-group">المجموعة / الدور</th>
-                  <th id="th-fb-action">التفاصيل</th>
-                </tr>
-              </thead>
-              <tbody id="football-table-mount"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-fb-media-title">📸 صور وفيديوهات بطولة كرة القدم</span>
-          </div>
-          <div class="photo-grid-layout" id="football-live-media-grid"></div>
-        </div>
-      </section>
-
-      <!-- ================= 3. BASKETBALL VIEW ================= -->
-      <section id="basketball-view" class="view-container">
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-bb-head">🏀 دوري المجموعات لكرة السلة - الاتحاد البحريني لكرة السلة</span>
-          </div>
-          <div class="table-responsive-box">
-            <table>
-              <thead>
-                <tr>
-                  <th id="th-bb-num">المباراة</th>
-                  <th id="th-bb-date">التاريخ</th>
-                  <th id="th-bb-day">اليوم</th>
-                  <th id="th-bb-time">الوقت</th>
-                  <th id="th-bb-hall">الصالة والموقع</th>
-                  <th id="th-bb-action">التفاصيل</th>
-                </tr>
-              </thead>
-              <tbody id="basketball-table-mount"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-bb-media-title">📸 صور وفيديوهات دوري كرة السلة</span>
-          </div>
-          <div class="photo-grid-layout" id="basketball-live-media-grid"></div>
-        </div>
-      </section>
-
-      <!-- ================= 4. ESPORTS VIEW ================= -->
-      <section id="esports-view" class="view-container">
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-es-head">🎮 البرنامج الزمني لبطولة وزارة التربية والتعليم للألعاب الإلكترونية</span>
-          </div>
-          <div class="table-responsive-box">
-            <table>
-              <thead>
-                <tr>
-                  <th id="th-es-num">م</th>
-                  <th id="th-es-stage">المرحلة والفعالية</th>
-                  <th id="th-es-date">التاريخ</th>
-                  <th id="th-es-day">اليوم</th>
-                  <th id="th-es-venue">المكان</th>
-                  <th id="th-es-action">التفاصيل</th>
-                </tr>
-              </thead>
-              <tbody id="esports-table-mount"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-es-media-title">📸 صور وفيديوهات بطولة الألعاب الإلكترونية</span>
-          </div>
-          <div class="photo-grid-layout" id="esports-live-media-grid"></div>
-        </div>
-      </section>
-
-      <!-- ================= 5. EXCELLENCE AWARD VIEW ================= -->
-      <section id="excellence-view" class="view-container">
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-ex-head">🏆 جائزة الطالب المتميز في المجال الثقافي والرياضي للمرحلة الثانوية</span>
-          </div>
-          <p style="color:var(--color-slate-light); font-size:0.8rem; margin-bottom:0.65rem;" id="t-ex-desc">
-            بحضور سعادة الأستاذة / كفاية حبيب العنزور - الوكيل المساعد للخدمات التعليمية. المكان: مدرسة غازي القصيبي الثانوية للبنات.
-          </p>
-          <div class="table-responsive-box">
-            <table>
-              <thead>
-                <tr>
-                  <th id="th-ex-date">اليوم والتاريخ</th>
-                  <th id="th-ex-target">الفئة المستهدفة</th>
-                  <th id="th-ex-time">التوقيت</th>
-                  <th id="th-ex-prog">البرنامج والفعاليات</th>
-                  <th id="th-ex-action">التفاصيل</th>
-                </tr>
-              </thead>
-              <tbody id="excellence-table-mount"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-ex-media-title">📸 صور وفيديوهات جائزة الطالب المتميز</span>
-          </div>
-          <div class="photo-grid-layout" id="excellence-live-media-grid"></div>
-        </div>
-      </section>
-
-      <!-- ================= 6. ALL MEDIA VIEW ================= -->
-      <section id="media-view" class="view-container">
-        <div class="content-box">
-          <div class="content-box-title">
-            <span id="t-media-title">📸 معرض وسائط الفعاليات والبطولات</span>
-            <button onclick="fetchLiveMedia()" style="background:var(--color-navy); color:#fff; border:none; padding:0.3rem 0.75rem; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;" id="t-btn-refresh-all">🔄 تحديث الصور</button>
-          </div>
-          <div class="photo-grid-layout" id="live-media-grid"></div>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <!-- Multi-Event Modal -->
-  <div class="modal-backdrop" id="event-modal-dialog" onclick="onOverlayDismiss(event)">
-    <div class="modal-window">
-      <div class="modal-topbar">
-        <div class="modal-topbar-title" id="m-dialog-title">تفاصيل الفعاليات والمباريات</div>
-        <button class="modal-close-icon" onclick="closeModalWindow()">&times;</button>
-      </div>
-      <div class="modal-scroll-body" id="modal-cards-mount"></div>
+    <!-- Requirement 6: About Section directly above tournament schedules -->
+    <div class="tournament-about-box">
+      <h3 id="tournament-about-title">عن البطولة (About the Tournament)</h3>
+      <p id="tournament-about-desc">
+        <!-- Placeholder text ready for your incoming notes -->
+        سيتم إضافة تفاصيل وقواعد وشروط البطولة وجدول المجموعات فور اعتمادها.
+      </p>
     </div>
-  </div>
 
-  <!-- Lightbox Player Modal -->
-  <div class="lightbox-modal" id="lightbox-modal" onclick="closeLightbox(event)">
-    <div class="lightbox-content-box" id="lightbox-box"></div>
+    <!-- Requirement 3: Upcoming Games (Games that have passed move out automatically) -->
+    <section>
+      <div class="section-title">المباريات القادمة (Upcoming Matches)</div>
+      <div class="matches-grid" id="upcoming-matches-container">
+        <!-- Populated via JS -->
+      </div>
+    </section>
+
+    <!-- Requirement 3: Finished Games Section with Results -->
+    <section>
+      <div class="section-title">نتائج المباريات المنتهية (Finished Games & Results)</div>
+      <div class="matches-grid" id="finished-matches-container">
+        <!-- Populated via JS -->
+      </div>
+    </section>
+
+    <!-- Requirement 1: Photo Gallery showing Photo Title instead of Date & Time -->
+    <section class="calendar-card">
+      <div class="section-title">معرض الصور الرياضية (Photo Gallery)</div>
+      <div class="gallery-grid" id="media-gallery-container">
+        <!-- Populated via JS -->
+      </div>
+    </section>
+
   </div>
 
   <script>
-    const VENUES = {
-      isaClub: { nameAr: "نادي مدينة عيسى", nameEn: "Isa Town Club Ground", map: "https://maps.google.com/?cid=9845700810332841646" },
-      ettihadClub: { nameAr: "نادي الاتحاد الرياضي", nameEn: "Al Ettihad Club Ground", map: "https://maps.google.com/?cid=3545199616238861163" },
-      bbaArena: { nameAr: "صالة الاتحاد البحريني لكرة السلة (الماحوز)", nameEn: "Bahrain Basketball Association Arena (Mahooz)", map: "https://maps.google.com/?cid=13083863488950478055" },
-      moeHall: { nameAr: "صالة وزارة التربية والتعليم (مدينة عيسى)", nameEn: "Ministry of Education Hall (Isa Town)", map: "https://maps.google.com/?cid=12361665426147690921" },
-      khalifaStadium: { nameAr: "مدينة خليفة الرياضية", nameEn: "Khalifa Sports City", map: "https://maps.google.com/?q=Khalifa+Sports+City+Bahrain" },
-      gosaibiSchool: { nameAr: "مدرسة غازي القصيبي الثانوية للبنات", nameEn: "Ghazi Al Gosaibi Secondary Girls School", map: "https://maps.google.com/?q=Ghazi+Al-Gosaibi+Secondary+Girls+School+Bahrain" }
-    };
-
-    const FOOTBALL_MATCHES = [
-      { id: 1, date: "2026-11-08", time: "8:30 AM", venueKey: "isaClub", groupAr: "الأولى", groupEn: "Group 1", t1Ar: "مدرسة مدينة عيسى الثانوية", t1En: "Isa Town Secondary", t2Ar: "مركز ناصر العلمي والتقني", t2En: "Nasser Vocational Training Centre" },
-      { id: 2, date: "2026-11-08", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الأولى", groupEn: "Group 1", t1Ar: "مدرسة بيان البحرين", t1En: "Bahrain Bayan School", t2Ar: "مدرسة الحكمة الدولية", t2En: "Al Hekma International" },
-      { id: 3, date: "2026-11-09", time: "8:30 AM", venueKey: "isaClub", groupAr: "الثانية", groupEn: "Group 2", t1Ar: "مدرسة الشيخ عيسى بن علي", t1En: "Shaikh Isa bin Ali Sec", t2Ar: "مدرسة الرفاع الشرقي الثانوية", t2En: "East Riffa Sec" },
-      { id: 4, date: "2026-11-09", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الثانية", groupEn: "Group 2", t1Ar: "مدرسة المعارف الحديثة", t1En: "Modern Knowledge School", t2Ar: "مدرسة الإبداع الخاصة", t2En: "Al Ibdaa Private School" },
-      { id: 5, date: "2026-11-10", time: "8:30 AM", venueKey: "isaClub", groupAr: "الثالثة", groupEn: "Group 3", t1Ar: "مدرسة أحمد العمران الثانوية", t1En: "Ahmed Al Omran Sec", t2Ar: "مدرسة النعيم الثانوية", t2En: "Al Naim Sec" },
-      { id: 6, date: "2026-11-10", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الثالثة", groupEn: "Group 3", t1Ar: "مدرسة النور العالمية", t1En: "Al Noor International", t2Ar: "مدارس الفلاح الخاصة", t2En: "Al Falah Private School" },
-      { id: 7, date: "2026-11-11", time: "8:30 AM", venueKey: "isaClub", groupAr: "الرابعة", groupEn: "Group 4", t1Ar: "مدرسة الجابرية الصناعية", t1En: "Al Jabriya Industrial", t2Ar: "مدرسة الهداية الخليفية", t2En: "Al Hidaya Al Khalifia" },
-      { id: 8, date: "2026-11-11", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الرابعة", groupEn: "Group 4", t1Ar: "المدرسة البريطانية", t1En: "British School of Bahrain", t2Ar: "مدرسة سانت كريستوفر", t2En: "St Christopher's School" },
-      { id: 9, date: "2026-11-12", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الأولى", groupEn: "Group 1", t1Ar: "مدرسة الحكمة الدولية", t1En: "Al Hekma", t2Ar: "مركز ناصر العلمي والتقني", t2En: "Nasser Vocational" },
-      { id: 10, date: "2026-11-12", time: "8:30 AM", venueKey: "isaClub", groupAr: "الأولى", groupEn: "Group 1", t1Ar: "مدرسة بيان البحرين", t1En: "Bahrain Bayan", t2Ar: "مدرسة مدينة عيسى الثانوية", t2En: "Isa Town Sec" },
-      { id: 11, date: "2026-11-15", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الثانية", groupEn: "Group 2", t1Ar: "مدرسة الإبداع الخاصة", t1En: "Al Ibdaa", t2Ar: "مدرسة الرفاع الشرقي الثانوية", t2En: "East Riffa Sec" },
-      { id: 12, date: "2026-11-15", time: "8:30 AM", venueKey: "isaClub", groupAr: "الثانية", groupEn: "Group 2", t1Ar: "مدرسة المعارف الحديثة", t1En: "Modern Knowledge", t2Ar: "مدرسة الشيخ عيسى بن علي", t2En: "Shaikh Isa bin Ali" },
-      { id: 13, date: "2026-11-16", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الثالثة", groupEn: "Group 3", t1Ar: "مدارس الفلاح الخاصة", t1En: "Al Falah", t2Ar: "مدرسة النعيم الثانوية", t2En: "Al Naim Sec" },
-      { id: 14, date: "2026-11-16", time: "8:30 AM", venueKey: "isaClub", groupAr: "الثالثة", groupEn: "Group 3", t1Ar: "مدرسة النور العالمية", t1En: "Al Noor", t2Ar: "مدرسة أحمد العمران", t2En: "Ahmed Al Omran" },
-      { id: 15, date: "2026-11-17", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الرابعة", groupEn: "Group 4", t1Ar: "مدرسة سانت كريستوفر", t1En: "St Christopher's", t2Ar: "مدرسة الهداية الخليفية", t2En: "Al Hidaya" },
-      { id: 16, date: "2026-11-17", time: "8:30 AM", venueKey: "isaClub", groupAr: "الرابعة", groupEn: "Group 4", t1Ar: "المدرسة البريطانية", t1En: "British School", t2Ar: "مدرسة الجابرية الصناعية", t2En: "Al Jabriya" },
-      { id: 17, date: "2026-11-18", time: "8:30 AM", venueKey: "isaClub", groupAr: "الأولى", groupEn: "Group 1", t1Ar: "مدرسة بيان البحرين", t1En: "Bahrain Bayan", t2Ar: "مركز ناصر العلمي والتقني", t2En: "Nasser Vocational" },
-      { id: 18, date: "2026-11-18", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الأولى", groupEn: "Group 1", t1Ar: "مدرسة الحكمة الدولية", t1En: "Al Hekma", t2Ar: "مدرسة مدينة عيسى الثانوية", t2En: "Isa Town Sec" },
-      { id: 19, date: "2026-11-19", time: "8:30 AM", venueKey: "isaClub", groupAr: "الثانية", groupEn: "Group 2", t1Ar: "مدرسة المعارف الحديثة", t1En: "Modern Knowledge", t2Ar: "مدرسة الرفاع الشرقي الثانوية", t2En: "East Riffa" },
-      { id: 20, date: "2026-11-19", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الثانية", groupEn: "Group 2", t1Ar: "مدرسة الإبداع الخاصة", t1En: "Al Ibdaa", t2Ar: "مدرسة الشيخ عيسى بن علي", t2En: "Shaikh Isa bin Ali" },
-      { id: 21, date: "2026-11-22", time: "8:30 AM", venueKey: "isaClub", groupAr: "الثالثة", groupEn: "Group 3", t1Ar: "مدرسة النور العالمية", t1En: "Al Noor", t2Ar: "مدرسة النعيم الثانوية", t2En: "Al Naim Sec" },
-      { id: 22, date: "2026-11-22", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الثالثة", groupEn: "Group 3", t1Ar: "مدارس الفلاح الخاصة", t1En: "Al Falah", t2Ar: "مدرسة أحمد العمران", t2En: "Ahmed Al Omran" },
-      { id: 23, date: "2026-11-23", time: "8:30 AM", venueKey: "isaClub", groupAr: "الرابعة", groupEn: "Group 4", t1Ar: "المدرسة البريطانية", t1En: "British School", t2Ar: "مدرسة الهداية الخليفية", t2En: "Al Hidaya" },
-      { id: 24, date: "2026-11-23", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "الرابعة", groupEn: "Group 4", t1Ar: "مدرسة سانت كريستوفر", t1En: "St Christopher's", t2Ar: "مدرسة الجابرية الصناعية", t2En: "Al Jabriya" },
-      { id: 25, date: "2026-11-25", time: "8:30 AM", venueKey: "isaClub", groupAr: "ربع النهائي", groupEn: "Quarter-Final", t1Ar: "أول المجموعة الأولى", t1En: "1st Group 1", t2Ar: "ثاني المجموعة الرابعة", t2En: "2nd Group 4" },
-      { id: 26, date: "2026-11-25", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "ربع النهائي", groupEn: "Quarter-Final", t1Ar: "أول المجموعة الثانية", t1En: "1st Group 2", t2Ar: "ثاني المجموعة الثالثة", t2En: "2nd Group 3" },
-      { id: 27, date: "2026-11-26", time: "8:30 AM", venueKey: "isaClub", groupAr: "ربع النهائي", groupEn: "Quarter-Final", t1Ar: "أول المجموعة الثالثة", t1En: "1st Group 3", t2Ar: "ثاني المجموعة الثانية", t2En: "2nd Group 2" },
-      { id: 28, date: "2026-11-26", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "ربع النهائي", groupEn: "Quarter-Final", t1Ar: "أول المجموعة الرابعة", t1En: "1st Group 4", t2Ar: "ثاني المجموعة الأولى", t2En: "2nd Group 1" },
-      { id: 29, date: "2026-11-29", time: "8:30 AM", venueKey: "isaClub", groupAr: "نصف النهائي", groupEn: "Semi-Final", t1Ar: "الفائز من مباراة (25)", t1En: "Winner Match 25", t2Ar: "الفائز من مباراة (26)", t2En: "Winner Match 26" },
-      { id: 30, date: "2026-11-30", time: "8:30 AM", venueKey: "ettihadClub", groupAr: "نصف النهائي", groupEn: "Semi-Final", t1Ar: "الفائز من مباراة (27)", t1En: "Winner Match 27", t2Ar: "الفائز من مباراة (28)", t2En: "Winner Match 28" },
-      { id: 31, date: "2026-12-05", time: "3:00 PM", venueKey: "khalifaStadium", groupAr: "تحديد المركز 3-4", groupEn: "3rd & 4th Place", t1Ar: "الخاسر من مباراة (29)", t1En: "Loser Match 29", t2Ar: "الخاسر من مباراة (30)", t2En: "Loser Match 30" },
-      { id: 32, date: "2026-12-05", time: "6:00 PM", venueKey: "khalifaStadium", groupAr: "المباراة النهائية", groupEn: "Final Match", t1Ar: "الفائز من مباراة (29)", t1En: "Winner Match 29", t2Ar: "الفائز من مباراة (30)", t2En: "Winner Match 30" }
-    ];
-
-    const BASKETBALL_MATCHES = [
-      { id: "1", date: "2026-11-15", dayAr: "الأحد", dayEn: "Sunday", time: "8:30 AM", venueKey: "bbaArena", descAr: "مباراة 1 - دور المجموعات", descEn: "Match 1 - Group Stage" },
-      { id: "2", date: "2026-11-15", dayAr: "الأحد", dayEn: "Sunday", time: "9:30 AM", venueKey: "bbaArena", descAr: "مباراة 2 - دور المجموعات", descEn: "Match 2 - Group Stage" },
-      { id: "3", date: "2026-11-15", dayAr: "الأحد", dayEn: "Sunday", time: "10:30 AM", venueKey: "bbaArena", descAr: "مباراة 3 - دور المجموعات", descEn: "Match 3 - Group Stage" },
-      { id: "4-7", date: "2026-11-16", dayAr: "الاثنين", dayEn: "Monday", time: "8:30 AM - 10:30 AM", venueKey: "bbaArena", descAr: "مباريات 4 إلى 7 - دور المجموعات", descEn: "Matches 4 to 7 - Group Stage" },
-      { id: "8", date: "2026-11-17", dayAr: "الثلاثاء", dayEn: "Tuesday", time: "9:30 AM", venueKey: "bbaArena", descAr: "مباراة 8 - دور المجموعات", descEn: "Match 8 - Group Stage" },
-      { id: "9-11", date: "2026-11-22", dayAr: "الأحد", dayEn: "Sunday", time: "8:30 AM - 10:30 AM", venueKey: "bbaArena", descAr: "مباريات 9 إلى 11", descEn: "Matches 9 to 11" },
-      { id: "12-14", date: "2026-11-23", dayAr: "الاثنين", dayEn: "Monday", time: "8:30 AM - 10:30 AM", venueKey: "bbaArena", descAr: "مباريات 12 إلى 14", descEn: "Matches 12 to 14" },
-      { id: "15-17", date: "2026-11-24", dayAr: "الثلاثاء", dayEn: "Tuesday", time: "8:30 AM - 10:30 AM", venueKey: "bbaArena", descAr: "مباريات 15 إلى 17", descEn: "Matches 15 to 17" },
-      { id: "18-21", date: "2026-11-25", dayAr: "الأربعاء", dayEn: "Wednesday", time: "8:30 AM - 10:30 AM", venueKey: "bbaArena", descAr: "مباريات 18 إلى 21", descEn: "Matches 18 to 21" },
-      { id: "22-23", date: "2026-11-26", dayAr: "الخميس", dayEn: "Thursday", time: "8:30 AM - 9:30 AM", venueKey: "bbaArena", descAr: "مباريات 22 و 23", descEn: "Matches 22 & 23" },
-      { id: "24-27", date: "2026-11-29", dayAr: "الأحد", dayEn: "Sunday", time: "8:30 AM - 10:30 AM", venueKey: "bbaArena", descAr: "مباريات 24 إلى 27", descEn: "Matches 24 to 27" },
-      { id: "28", date: "2026-11-30", dayAr: "الاثنين", dayEn: "Monday", time: "8:30 AM", venueKey: "bbaArena", descAr: "مباراة 28 - ختام المجموعات", descEn: "Match 28 - Stage Finale" }
-    ];
-
-    const ESPORTS_SCHEDULE = [
-      { id: 1, date: "2026-11-08", dayAr: "الأحد", dayEn: "Sunday", stageAr: "إعدادي - بنين", stageEn: "Intermediate - Boys", venueKey: "moeHall", time: "8:00 AM - 1:00 PM" },
-      { id: 2, date: "2026-11-09", dayAr: "الاثنين", dayEn: "Monday", stageAr: "إعدادي - بنات", stageEn: "Intermediate - Girls", venueKey: "moeHall", time: "8:00 AM - 1:00 PM" },
-      { id: 3, date: "2026-11-10", dayAr: "الثلاثاء", dayEn: "Tuesday", stageAr: "ثانوي - بنين", stageEn: "Secondary - Boys", venueKey: "moeHall", time: "8:00 AM - 1:00 PM" },
-      { id: 4, date: "2026-11-11", dayAr: "الأربعاء", dayEn: "Wednesday", stageAr: "ثانوي - بنات", stageEn: "Secondary - Girls", venueKey: "moeHall", time: "8:00 AM - 1:00 PM" },
-      { id: 5, date: "2026-11-12", dayAr: "الخميس", dayEn: "Thursday", stageAr: "زيارات - هيئة تعليمية إناث", stageEn: "Visits - Female Teaching Staff", venueKey: "moeHall", time: "9:00 AM" },
-      { id: 6, date: "2026-11-15", dayAr: "الأحد", dayEn: "Sunday", stageAr: "زيارات - ابتدائي بنين", stageEn: "Visits - Primary Boys", venueKey: "moeHall", time: "9:00 AM" },
-      { id: 7, date: "2026-11-16", dayAr: "الاثنين", dayEn: "Monday", stageAr: "زيارات - ابتدائي بنين", stageEn: "Visits - Primary Boys", venueKey: "moeHall", time: "9:00 AM" },
-      { id: 8, date: "2026-11-17", dayAr: "الثلاثاء", dayEn: "Tuesday", stageAr: "زيارات - ابتدائي بنات", stageEn: "Visits - Primary Girls", venueKey: "moeHall", time: "9:00 AM" },
-      { id: 9, date: "2026-11-18", dayAr: "الأربعاء", dayEn: "Wednesday", stageAr: "زيارات - ابتدائي بنات", stageEn: "Visits - Primary Girls", venueKey: "moeHall", time: "9:00 AM" },
-      { id: 10, date: "2026-11-19", dayAr: "الخميس", dayEn: "Thursday", stageAr: "مباريات الدور ربع النهائي", stageEn: "Quarter-Finals", venueKey: "moeHall", time: "8:30 AM" },
-      { id: 11, date: "2026-11-22", dayAr: "الأحد", dayEn: "Sunday", stageAr: "بطولة الجامعات", stageEn: "Universities Championship", venueKey: "moeHall", time: "9:00 AM" },
-      { id: 12, date: "2026-11-23", dayAr: "الاثنين", dayEn: "Monday", stageAr: "تدريبات العروض", stageEn: "Show Rehearsals", venueKey: "moeHall", time: "صباحاً (Morning)" },
-      { id: 13, date: "2026-11-24", dayAr: "الثلاثاء", dayEn: "Tuesday", stageAr: "تدريبات وبروفات", stageEn: "Rehearsals", venueKey: "moeHall", time: "صباحاً (Morning)" },
-      { id: 14, date: "2026-11-25", dayAr: "الأربعاء", dayEn: "Wednesday", stageAr: "مقترح اليوم الختامي", stageEn: "Final Day Proposal", venueKey: "moeHall", time: "9:00 AM" },
-      { id: 15, date: "2026-11-26", dayAr: "الخميس", dayEn: "Thursday", stageAr: "اليوم الختامي والتتويج", stageEn: "Grand Finale & Awards", venueKey: "moeHall", time: "10:00 AM" }
-    ];
-
-    const EXCELLENCE_AWARD = [
+    /**
+     * Complete Game Data Structure (Roster)
+     * Matches entered here (or linked from Google Sheets)
+     * Requirement 5 order: Teams (with V/S) -> Date -> Time -> Location -> Score
+     */
+    const gamesData = [
       {
-        id: "EX-1",
-        date: "2026-11-29",
-        dayAr: "الأحد",
-        dayEn: "Sunday",
-        targetAr: "مدارس المرحلة الثانوية - البنين",
-        targetEn: "Secondary Schools - Boys",
-        time: "9:00 AM - 12:00 PM",
-        venueKey: "gosaibiSchool",
-        progAr: "9:00 السلام الوطني | 9:05 الجولة الأولى | 10:00 النهائي | 10:30 سباق F1 لجميع المدارس | 12:00 تتويج الفائزين",
-        progEn: "9:00 Anthem | 9:05 Round 1 | 10:00 Finals | 10:30 F1 Race (All Schools) | 12:00 Awarding Winners"
+        id: "M101",
+        tournament: "بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية",
+        teamA: "مدرسة الشيخ عيسى بن علي",
+        teamB: "مدرسة الهداية الخليفية",
+        date: "2026-11-08",
+        time: "09:00",
+        location: "استاد مدينة خليفة الرياضية",
+        score: "2 - 1" // Finished
       },
       {
-        id: "EX-2",
-        date: "2026-11-30",
-        dayAr: "الاثنين",
-        dayEn: "Monday",
-        targetAr: "مدارس المرحلة الثانوية - البنات",
-        targetEn: "Secondary Schools - Girls",
-        time: "9:00 AM - 12:00 PM",
-        venueKey: "gosaibiSchool",
-        progAr: "9:00 السلام الوطني | 9:05 الجولة الأولى | 10:00 النهائي | 10:30 سباق F1 لجميع المدارس | 12:00 تتويج الفائزين",
-        progEn: "9:00 Anthem | 9:05 Round 1 | 10:00 Finals | 10:30 F1 Race (All Schools) | 12:00 Awarding Winners"
-      }
-    ];
-
-    let currentLang = 'ar';
-    let selectedYear = 2026;
-    let selectedMonth = 10;
-
-    const MONTHS = [
-      { y: 2026, m: 8, ar: "سبتمبر 2026", en: "Sep 2026" },
-      { y: 2026, m: 9, ar: "أكتوبر 2026", en: "Oct 2026" },
-      { y: 2026, m: 10, ar: "نوفمبر 2026", en: "Nov 2026" },
-      { y: 2026, m: 11, ar: "ديسمبر 2026", en: "Dec 2026" },
-      { y: 2027, m: 0, ar: "يناير 2027", en: "Jan 2027" },
-      { y: 2027, m: 1, ar: "فبراير 2027", en: "Feb 2027" },
-      { y: 2027, m: 2, ar: "مارس 2027", en: "Mar 2027" },
-      { y: 2027, m: 3, ar: "أبريل 2027", en: "Apr 2027" },
-      { y: 2027, m: 4, ar: "مايو 2027", en: "May 2027" },
-      { y: 2027, m: 5, ar: "يونيو 2027", en: "Jun 2027" },
-      { y: 2027, m: 6, ar: "يوليو 2027", en: "Jul 2027" },
-      { y: 2027, m: 7, ar: "أغسطس 2027", en: "Aug 2027" }
-    ];
-
-    const I18N = {
-      ar: {
-        brandTitle: "قسم الأنشطة والتربية الرياضية",
-        brandSub: "وزارة التربية والتعليم - مملكة البحرين",
-        uploadBtn: "رفع صور وفيديوهات",
-        navTitle: "البطولات والفعاليات",
-        navHome: "الرئيسية والتقويم",
-        navFb: "بطولة ناصر بن حمد للقدم",
-        navBb: "دوري المجموعات لكرة السلة",
-        navEs: "بطولة الألعاب الإلكترونية",
-        navEx: "جائزة الطالب المتميز",
-        navMedia: "معرض الوسائط الكامل",
-        venuesTitle: "المواقع والملاعب الرسمية",
-        upTitle: "⚡ الفعاليات والمباريات القادمة",
-        clickHint: "اضغط لعرض تفاصيل كل مباراة في صندوق مستقل",
-        calTitle: "📅 التقويم السنوي الشامل 2026-2027",
-        weekdays: ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
-        fbHead: "⚽ بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية 2026-2027",
-        bbHead: "🏀 دوري المجموعات لكرة السلة - الاتحاد البحريني لكرة السلة",
-        esHead: "🎮 البرنامج الزمني لبطولة وزارة التربية والتعليم للألعاب الإلكترونية",
-        exHead: "🏆 جائزة الطالب المتميز في المجال الثقافي والرياضي للمرحلة الثانوية",
-        exDesc: "بحضور سعادة الأستاذة / كفاية حبيب العنزور - الوكيل المساعد للخدمات التعليمية. المكان: مدرسة غازي القصيبي الثانوية للبنات.",
-        mediaTitle: "📸 معرض وسائط الفعاليات والبطولات",
-        homeMediaTitle: "📸 أحدث الصور ومقاطع الفيديو المرفوعة",
-        fbMediaTitle: "📸 صور وفيديوهات بطولة كرة القدم",
-        bbMediaTitle: "📸 صور وفيديوهات دوري كرة السلة",
-        esMediaTitle: "📸 صور وفيديوهات بطولة الألعاب الإلكترونية",
-        exMediaTitle: "📸 صور وفيديوهات جائزة الطالب المتميز",
-        mediaRefreshBtn: "🔄 تحديث الصور",
-        homeRefreshBtn: "🔄 تحديث",
-        mediaEmpty: "لا توجد وسائط معتمدة لهذه البطولة حالياً.",
-        detailsBtn: "عرض التفاصيل",
-        openMap: "فتح الموقع في خرائط Google",
-        modalPrefix: "فعاليات ومباريات يوم",
-        noEvents: "لا توجد فعاليات مسجلة في هذا اليوم",
-        lblWho: "المشاركون (Who)",
-        lblWhen: "التوقيت (When)",
-        lblWhere: "المكان والملعب (Where)",
-        lblStage: "المرحلة / الدور",
-        thNum: "رقم",
-        thDate: "التاريخ",
-        thDay: "اليوم",
-        thTime: "الوقت",
-        thVenue: "الملعب",
-        thHall: "الصالة والموقع",
-        thTeams: "المباراة (الفريقان)",
-        thGroup: "المجموعة / الدور",
-        thStage: "المرحلة والفعالية",
-        thAction: "التفاصيل",
-        thTarget: "الفئة المستهدفة",
-        thProgram: "البرنامج والفعاليات"
+        id: "M102",
+        tournament: "بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية",
+        teamA: "مدرسة الرفاع الشرقي الثانوية",
+        teamB: "مدرسة مدينة حمد الثانوية",
+        date: "2026-11-09",
+        time: "10:30",
+        location: "ملعب صالة مدينة عيسى",
+        score: "3 - 3 (4 - 2)" // Finished
       },
-      en: {
-        brandTitle: "Physical Education Activities Section",
-        brandSub: "Ministry of Education - Kingdom of Bahrain",
-        uploadBtn: "Upload Photos & Videos",
-        navTitle: "Tournaments & Events",
-        navHome: "Home & Calendar",
-        navFb: "Nasser bin Hamad Football",
-        navBb: "Basketball Group Stage",
-        navEs: "E-Sports Championship",
-        navEx: "Outstanding Student Award",
-        navMedia: "Media Gallery",
-        venuesTitle: "Official Venues & Halls",
-        upTitle: "⚡ Upcoming Events & Matches",
-        clickHint: "Click any date to view individual cards for each event",
-        calTitle: "📅 2026-2027 Master Calendar",
-        weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-        fbHead: "⚽ Nasser bin Hamad Secondary Schools Football Championship 2026-2027",
-        bbHead: "🏀 Basketball Group Stage - Bahrain Basketball Association",
-        esHead: "🎮 Ministry of Education E-Sports Championship Schedule",
-        exHead: "🏆 Outstanding Student Award in Cultural & Sports Field - Secondary Level",
-        exDesc: "Under the patronage of Assistant Undersecretary for Educational Services, Ms. Kefaya Habib Al Anzoor. Venue: Ghazi Al Gosaibi Secondary Girls School.",
-        mediaTitle: "📸 Tournaments Media Gallery",
-        homeMediaTitle: "📸 Latest Uploaded Photos & Videos",
-        fbMediaTitle: "📸 Football Tournament Media",
-        bbMediaTitle: "📸 Basketball League Media",
-        esMediaTitle: "📸 E-Sports Championship Media",
-        exMediaTitle: "📸 Outstanding Student Award Media",
-        mediaRefreshBtn: "🔄 Refresh Photos",
-        homeRefreshBtn: "🔄 Refresh",
-        mediaEmpty: "No approved media uploaded for this tournament yet.",
-        detailsBtn: "View Details",
-        openMap: "Open Venue on Google Maps",
-        modalPrefix: "Scheduled Events for",
-        noEvents: "No official events scheduled on this day",
-        lblWho: "Participants (Who)",
-        lblWhen: "Timing (When)",
-        lblWhere: "Venue (Where)",
-        lblStage: "Stage / Group",
-        thNum: "No.",
-        thDate: "Date",
-        thDay: "Day",
-        thTime: "Time",
-        thVenue: "Venue",
-        thHall: "Hall & Location",
-        thTeams: "Match (Teams)",
-        thGroup: "Group / Stage",
-        thStage: "Stage & Event",
-        thAction: "Details",
-        thTarget: "Target Group",
-        thProgram: "Program & Events"
+      {
+        id: "M103",
+        tournament: "بطولة وزارة التربية والتعليم للألعاب الإلكترونية",
+        teamA: "مدرسة الحكمة الدولية",
+        teamB: "مدرسة المحرق الثانوية",
+        date: "2026-11-12",
+        time: "09:00",
+        location: "الصالة الرياضية - أم الحصم",
+        score: "" // Upcoming
+      },
+      {
+        id: "M104",
+        tournament: "بطولة كرة اليد للمدارس الإعدادية",
+        teamA: "مدرسة القضيبية الإعدادية",
+        teamB: "مدرسة عثمان بن عفان",
+        date: "2026-11-15",
+        time: "11:00",
+        location: "صالة اتحاد اليد - أم الحصم",
+        score: "" // Upcoming
       }
-    };
+    ];
 
-    function init() {
-      renderMonthButtons();
-      renderCalendar(selectedYear, selectedMonth);
-      renderUpcomingCards();
-      renderFootballTable();
-      renderBasketballTable();
-      renderEsportsTable();
-      renderExcellenceTable();
-      applyLanguage();
-    }
-
-    function toggleLanguage() {
-      currentLang = currentLang === 'ar' ? 'en' : 'ar';
-      document.body.classList.toggle('lang-en', currentLang === 'en');
-      document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
-      document.documentElement.setAttribute('lang', currentLang);
-      document.getElementById('lang-btn').textContent = currentLang === 'ar' ? 'English' : 'العربية';
-      applyLanguage();
-      renderMonthButtons();
-      renderCalendar(selectedYear, selectedMonth);
-      renderUpcomingCards();
-      renderFootballTable();
-      renderBasketballTable();
-      renderEsportsTable();
-      renderExcellenceTable();
-    }
-
-    function applyLanguage() {
-      const t = I18N[currentLang];
-      document.getElementById('t-brand-title').textContent = t.brandTitle;
-      document.getElementById('t-brand-sub').textContent = t.brandSub;
-      document.getElementById('t-btn-upload').querySelector('span').textContent = t.uploadBtn;
-      document.getElementById('t-nav-title').textContent = t.navTitle;
-      document.getElementById('t-nav-home').textContent = t.navHome;
-      document.getElementById('t-nav-fb').textContent = t.navFb;
-      document.getElementById('t-nav-bb').textContent = t.navBb;
-      document.getElementById('t-nav-es').textContent = t.navEs;
-      document.getElementById('t-nav-ex').textContent = t.navEx;
-      document.getElementById('t-nav-media').textContent = t.navMedia;
-      document.getElementById('t-venues-title').textContent = t.venuesTitle;
-      document.getElementById('t-up-title').textContent = t.upTitle;
-      document.getElementById('t-click-hint').textContent = t.clickHint;
-      document.getElementById('t-cal-title').textContent = t.calTitle;
-      document.getElementById('t-fb-head').textContent = t.fbHead;
-      document.getElementById('t-bb-head').textContent = t.bbHead;
-      document.getElementById('t-es-head').textContent = t.esHead;
-      document.getElementById('t-ex-head').textContent = t.exHead;
-      document.getElementById('t-ex-desc').textContent = t.exDesc;
-      document.getElementById('t-media-title').textContent = t.mediaTitle;
-      document.getElementById('t-home-media-title').textContent = t.homeMediaTitle;
-      document.getElementById('t-fb-media-title').textContent = t.fbMediaTitle;
-      document.getElementById('t-bb-media-title').textContent = t.bbMediaTitle;
-      document.getElementById('t-es-media-title').textContent = t.esMediaTitle;
-      document.getElementById('t-ex-media-title').textContent = t.exMediaTitle;
-      document.getElementById('t-btn-refresh-home').textContent = t.homeRefreshBtn;
-      document.getElementById('t-btn-refresh-all').textContent = t.mediaRefreshBtn;
-
-      document.getElementById('th-fb-num').textContent = t.thNum;
-      document.getElementById('th-fb-date').textContent = t.thDate;
-      document.getElementById('th-fb-time').textContent = t.thTime;
-      document.getElementById('th-fb-venue').textContent = t.thVenue;
-      document.getElementById('th-fb-teams').textContent = t.thTeams;
-      document.getElementById('th-fb-group').textContent = t.thGroup;
-      document.getElementById('th-fb-action').textContent = t.thAction;
-
-      document.getElementById('th-bb-num').textContent = t.thNum;
-      document.getElementById('th-bb-date').textContent = t.thDate;
-      document.getElementById('th-bb-day').textContent = t.thDay;
-      document.getElementById('th-bb-time').textContent = t.thTime;
-      document.getElementById('th-bb-hall').textContent = t.thHall;
-      document.getElementById('th-bb-action').textContent = t.thAction;
-
-      document.getElementById('th-es-num').textContent = t.thNum;
-      document.getElementById('th-es-stage').textContent = t.thStage;
-      document.getElementById('th-es-date').textContent = t.thDate;
-      document.getElementById('th-es-day').textContent = t.thDay;
-      document.getElementById('th-es-venue').textContent = t.thVenue;
-      document.getElementById('th-es-action').textContent = t.thAction;
-
-      document.getElementById('th-ex-date').textContent = t.thDate;
-      document.getElementById('th-ex-target').textContent = t.thTarget;
-      document.getElementById('th-ex-time').textContent = t.thTime;
-      document.getElementById('th-ex-prog').textContent = t.thProgram;
-      document.getElementById('th-ex-action').textContent = t.thAction;
-
-      document.getElementById('t-venue-1').textContent = VENUES.bbaArena[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
-      document.getElementById('t-venue-2').textContent = VENUES.moeHall[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
-      document.getElementById('t-venue-3').textContent = VENUES.isaClub[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
-      document.getElementById('t-venue-4').textContent = VENUES.ettihadClub[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
-      document.getElementById('t-venue-5').textContent = VENUES.gosaibiSchool[currentLang === 'ar' ? 'nameAr' : 'nameEn'];
-    }
-
-    function renderMonthButtons() {
-      const mount = document.getElementById('month-buttons-mount');
-      mount.innerHTML = '';
-      MONTHS.forEach(item => {
-        const btn = document.createElement('button');
-        btn.className = `month-pill-btn ${item.y === selectedYear && item.m === selectedMonth ? 'active' : ''}`;
-        btn.textContent = currentLang === 'ar' ? item.ar : item.en;
-        btn.onclick = () => {
-          selectedYear = item.y;
-          selectedMonth = item.m;
-          document.querySelectorAll('.month-pill-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          document.getElementById('cal-current-label').textContent = currentLang === 'ar' ? item.ar : item.en;
-          renderCalendar(selectedYear, selectedMonth);
-        };
-        mount.appendChild(btn);
-      });
-    }
-
-    function renderCalendar(year, month) {
-      const weekdaysMount = document.getElementById('cal-weekdays-mount');
-      weekdaysMount.innerHTML = I18N[currentLang].weekdays.map(d => `<span>${d}</span>`).join('');
-
-      const daysMount = document.getElementById('cal-days-mount');
-      daysMount.innerHTML = '';
-
-      const firstDayIndex = new Date(year, month, 1).getDay();
-      const totalDays = new Date(year, month + 1, 0).getDate();
-
-      for (let i = 0; i < firstDayIndex; i++) {
-        const emptyCell = document.createElement('div');
-        emptyCell.className = 'day-cell-node empty';
-        daysMount.appendChild(emptyCell);
+    /**
+     * Uploaded Media Data (Synchronized from Google Form / Sheets)
+     * Requirement 1: Uses the photo title for hover and display, NOT the date/time.
+     */
+    const mediaItems = [
+      {
+        title: "قرعة بطولة ناصر بن حمد لكرة القدم للمدارس الثانوية",
+        imageUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80",
+        date: "11/5/2026 8:33:58"
+      },
+      {
+        title: "مباريات المجموعة الثانية ضمن الجولة الأولى",
+        imageUrl: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80",
+        date: "11/9/2026 18:39:47"
+      },
+      {
+        title: "مدرسة الحكمة الدولية - مسابقة الألعاب الإلكترونية",
+        imageUrl: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80",
+        date: "11/10/2026 8:24:05"
       }
+    ];
 
-      for (let day = 1; day <= totalDays; day++) {
-        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const cell = document.createElement('div');
-        cell.className = 'day-cell-node';
-
-        const numEl = document.createElement('div');
-        numEl.className = 'day-num-indicator';
-        numEl.textContent = day;
-        cell.appendChild(numEl);
-
-        const fbToday = FOOTBALL_MATCHES.filter(m => m.date === dateStr);
-        const bbToday = BASKETBALL_MATCHES.filter(m => m.date === dateStr);
-        const esToday = ESPORTS_SCHEDULE.filter(m => m.date === dateStr);
-        const exToday = EXCELLENCE_AWARD.filter(m => m.date === dateStr);
-
-        if (fbToday.length > 0) {
-          const chip = document.createElement('div');
-          chip.className = 'day-event-chip chip-fb';
-          chip.textContent = `⚽ ${fbToday.length} ${currentLang === 'ar' ? 'قدم' : 'Match'}`;
-          cell.appendChild(chip);
-        }
-        if (bbToday.length > 0) {
-          const chip = document.createElement('div');
-          chip.className = 'day-event-chip chip-bb';
-          chip.textContent = `🏀 ${currentLang === 'ar' ? 'سلة' : 'Basket'}`;
-          cell.appendChild(chip);
-        }
-        if (esToday.length > 0) {
-          const chip = document.createElement('div');
-          chip.className = 'day-event-chip chip-es';
-          chip.textContent = `🎮 ${esToday[0][currentLang === 'ar' ? 'stageAr' : 'stageEn']}`;
-          cell.appendChild(chip);
-        }
-        if (exToday.length > 0) {
-          const chip = document.createElement('div');
-          chip.className = 'day-event-chip chip-ex';
-          chip.textContent = `🏆 ${currentLang === 'ar' ? 'المتميز' : 'Award'}`;
-          cell.appendChild(chip);
-        }
-
-        cell.onclick = () => openMultiCardModalForDay(dateStr, fbToday, bbToday, esToday, exToday);
-        daysMount.appendChild(cell);
-      }
-    }
-
-    function renderUpcomingCards() {
-      const mount = document.getElementById('upcoming-cards-mount');
-      mount.innerHTML = '';
-
-      const showcases = [
-        {
-          tagAr: "كرة قدم ثانوية",
-          tagEn: "Secondary Football",
-          whoAr: "مدرسة مدينة عيسى vs مركز ناصر العلمي",
-          whoEn: "Isa Town Sec vs Nasser Vocational",
-          whenAr: "الأحد 8 نوفمبر 2026 - 8:30 صباحاً",
-          whenEn: "Sun 8 Nov 2026 - 8:30 AM",
-          venueKey: "isaClub",
-          stageAr: "المجموعة الأولى - الجولة 1",
-          stageEn: "Group 1 - Round 1"
-        },
-        {
-          tagAr: "كرة قدم ثانوية",
-          tagEn: "Secondary Football",
-          whoAr: "مدرسة بيان البحرين vs مدرسة الحكمة الدولية",
-          whoEn: "Bayan Bahrain vs Al Hekma School",
-          whenAr: "الأحد 8 نوفمبر 2026 - 8:30 صباحاً",
-          whenEn: "Sun 8 Nov 2026 - 8:30 AM",
-          venueKey: "ettihadClub",
-          stageAr: "المجموعة الأولى - الجولة 1",
-          stageEn: "Group 1 - Round 1"
-        },
-        {
-          tagAr: "بطولة الألعاب الإلكترونية",
-          tagEn: "E-Sports Tournament",
-          whoAr: "المرحلة الإعدادية - بنين",
-          whoEn: "Intermediate Boys Stage",
-          whenAr: "الأحد 8 نوفمبر 2026 - 8:00 صباحاً",
-          whenEn: "Sun 8 Nov 2026 - 8:00 AM",
-          venueKey: "moeHall",
-          stageAr: "اليوم الافتتاحي للبطولة",
-          stageEn: "Championship Opening Day"
-        },
-        {
-          tagAr: "جائزة الطالب المتميز",
-          tagEn: "Outstanding Student Award",
-          whoAr: "مدارس المرحلة الثانوية (بنين وبنات)",
-          whoEn: "Secondary Schools (Boys & Girls)",
-          whenAr: "29 - 30 نوفمبر 2026 - 9:00 صباحاً",
-          whenEn: "29 - 30 Nov 2026 - 9:00 AM",
-          venueKey: "gosaibiSchool",
-          stageAr: "نهائيات وسباق F1 وتتويج",
-          stageEn: "Finals, F1 Race & Awards"
-        }
-      ];
-
-      showcases.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'upcoming-event-pill';
-        card.onclick = () => {
-          const ev = {
-            tag: currentLang === 'ar' ? item.tagAr : item.tagEn,
-            badge: currentLang === 'ar' ? item.stageAr : item.stageEn,
-            who: currentLang === 'ar' ? item.whoAr : item.whoEn,
-            when: currentLang === 'ar' ? item.whenAr : item.whenEn,
-            where: VENUES[item.venueKey][currentLang === 'ar' ? 'nameAr' : 'nameEn'],
-            map: VENUES[item.venueKey].map,
-            stage: currentLang === 'ar' ? item.stageAr : item.stageEn
-          };
-          presentModalCards(ev.tag, [ev]);
-        };
-
-        card.innerHTML = `
-          <div class="event-type-badge">
-            <span>${currentLang === 'ar' ? item.tagAr : item.tagEn}</span>
-            <span>${item.whenAr.split('-')[1] || ''}</span>
-          </div>
-          <div class="event-match-title">${currentLang === 'ar' ? item.whoAr : item.whoEn}</div>
-          <div class="event-location-stamp">
-            <span>📍</span>
-            <span>${VENUES[item.venueKey][currentLang === 'ar' ? 'nameAr' : 'nameEn']}</span>
-          </div>
-        `;
-        mount.appendChild(card);
-      });
-    }
-
-    function renderFootballTable() {
-      const mount = document.getElementById('football-table-mount');
-      mount.innerHTML = '';
-      FOOTBALL_MATCHES.forEach(m => {
-        const tr = document.createElement('tr');
-        const v = VENUES[m.venueKey];
-        const teamsStr = currentLang === 'ar' ? `${m.t1Ar} ضد ${m.t2Ar}` : `${m.t1En} vs ${m.t2En}`;
-        const stageStr = currentLang === 'ar' ? m.groupAr : m.groupEn;
-
-        tr.innerHTML = `
-          <td><strong>${m.id}</strong></td>
-          <td>${m.date}</td>
-          <td>${m.time}</td>
-          <td><a href="${v.map}" target="_blank" style="color:#60a5fa; text-decoration:none;">📍 ${v[currentLang === 'ar' ? 'nameAr' : 'nameEn']}</a></td>
-          <td>${teamsStr}</td>
-          <td><span style="color:var(--color-accent-orange); font-weight:700;">${stageStr}</span></td>
-          <td>
-            <button class="btn-table-action" onclick="presentModalCards('${currentLang === 'ar' ? 'مباراة كرة قدم' : 'Football Match'} #${m.id}', [{
-              tag: '⚽ ${currentLang === 'ar' ? 'كرة قدم ثانوية' : 'Football'}',
-              badge: '${stageStr}',
-              who: '${teamsStr}',
-              when: '${m.date} • ${m.time}',
-              where: '${v[currentLang === 'ar' ? 'nameAr' : 'nameEn']}',
-              map: '${v.map}',
-              stage: '${stageStr}'
-            }])">${I18N[currentLang].detailsBtn}</button>
-          </td>
-        `;
-        mount.appendChild(tr);
-      });
-    }
-
-    function renderBasketballTable() {
-      const mount = document.getElementById('basketball-table-mount');
-      mount.innerHTML = '';
-      BASKETBALL_MATCHES.forEach(m => {
-        const tr = document.createElement('tr');
-        const v = VENUES[m.venueKey];
-        const dayStr = currentLang === 'ar' ? m.dayAr : m.dayEn;
-        const descStr = currentLang === 'ar' ? m.descAr : m.descEn;
-
-        tr.innerHTML = `
-          <td><strong>#${m.id}</strong></td>
-          <td>${m.date}</td>
-          <td>${dayStr}</td>
-          <td>${m.time}</td>
-          <td><a href="${v.map}" target="_blank" style="color:#60a5fa; text-decoration:none;">📍 ${v[currentLang === 'ar' ? 'nameAr' : 'nameEn']}</a></td>
-          <td>
-            <button class="btn-table-action" onclick="presentModalCards('${descStr}', [{
-              tag: '🏀 ${currentLang === 'ar' ? 'دوري كرة السلة' : 'Basketball'}',
-              badge: '${descStr}',
-              who: '${currentLang === 'ar' ? 'فرق المدارس المشاركة في دوري المجموعات' : 'Participating School Teams'}',
-              when: '${m.date} - ${dayStr} • ${m.time}',
-              where: '${v[currentLang === 'ar' ? 'nameAr' : 'nameEn']}',
-              map: '${v.map}',
-              stage: '${descStr}'
-            }])">${I18N[currentLang].detailsBtn}</button>
-          </td>
-        `;
-        mount.appendChild(tr);
-      });
-    }
-
-    function renderEsportsTable() {
-      const mount = document.getElementById('esports-table-mount');
-      mount.innerHTML = '';
-      ESPORTS_SCHEDULE.forEach(m => {
-        const tr = document.createElement('tr');
-        const v = VENUES[m.venueKey];
-        const dayStr = currentLang === 'ar' ? m.dayAr : m.dayEn;
-        const stageStr = currentLang === 'ar' ? m.stageAr : m.stageEn;
-
-        tr.innerHTML = `
-          <td><strong>${m.id}</strong></td>
-          <td><span style="color:var(--color-accent-orange); font-weight:700;">${stageStr}</span></td>
-          <td>${m.date}</td>
-          <td>${dayStr}</td>
-          <td><a href="${v.map}" target="_blank" style="color:#60a5fa; text-decoration:none;">📍 ${v[currentLang === 'ar' ? 'nameAr' : 'nameEn']}</a></td>
-          <td>
-            <button class="btn-table-action" onclick="presentModalCards('${stageStr}', [{
-              tag: '🎮 ${currentLang === 'ar' ? 'بطولة الألعاب الإلكترونية' : 'E-Sports Championship'}',
-              badge: '${stageStr}',
-              who: '${stageStr}',
-              when: '${m.date} - ${dayStr} • ${m.time}',
-              where: '${v[currentLang === 'ar' ? 'nameAr' : 'nameEn']}',
-              map: '${v.map}',
-              stage: '${stageStr}'
-            }])">${I18N[currentLang].detailsBtn}</button>
-          </td>
-        `;
-        mount.appendChild(tr);
-      });
-    }
-
-    function renderExcellenceTable() {
-      const mount = document.getElementById('excellence-table-mount');
-      mount.innerHTML = '';
-      EXCELLENCE_AWARD.forEach(m => {
-        const tr = document.createElement('tr');
-        const v = VENUES[m.venueKey];
-        const dayStr = currentLang === 'ar' ? m.dayAr : m.dayEn;
-        const targetStr = currentLang === 'ar' ? m.targetAr : m.targetEn;
-        const progStr = currentLang === 'ar' ? m.progAr : m.progEn;
-
-        tr.innerHTML = `
-          <td><strong>${dayStr} ${m.date}</strong></td>
-          <td><span style="color:var(--color-accent-orange); font-weight:700;">${targetStr}</span></td>
-          <td>${m.time}</td>
-          <td style="white-space:normal; min-width:240px; font-size:0.78rem; color:#cbd5e1;">${progStr}</td>
-          <td>
-            <button class="btn-table-action" onclick="presentModalCards('${targetStr}', [{
-              tag: '🏆 ${currentLang === 'ar' ? 'جائزة الطالب المتميز' : 'Outstanding Student Award'}',
-              badge: '${targetStr}',
-              who: '${targetStr}',
-              when: '${m.date} - ${dayStr} • ${m.time}',
-              where: '${v[currentLang === 'ar' ? 'nameAr' : 'nameEn']}',
-              map: '${v.map}',
-              stage: '${progStr}'
-            }])">${I18N[currentLang].detailsBtn}</button>
-          </td>
-        `;
-        mount.appendChild(tr);
-      });
-    }
-
-    function switchView(viewId, btnElem) {
-      document.querySelectorAll('.view-container').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
-
-      const target = document.getElementById(viewId);
-      if (target) target.classList.add('active');
-      if (btnElem) btnElem.classList.add('active');
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function openMultiCardModalForDay(dateStr, fb, bb, es, ex) {
-      const items = [];
-      const isAr = currentLang === 'ar';
-
-      fb.forEach(m => {
-        const v = VENUES[m.venueKey];
-        items.push({
-          tag: isAr ? `⚽ كرة قدم (مباراة #${m.id})` : `⚽ Football (Match #${m.id})`,
-          badge: isAr ? `المجموعة ${m.groupAr}` : m.groupEn,
-          who: isAr ? `${m.t1Ar} ضد ${m.t2Ar}` : `${m.t1En} vs ${m.t2En}`,
-          when: `${dateStr} • ${m.time}`,
-          where: v[isAr ? 'nameAr' : 'nameEn'],
-          map: v.map,
-          stage: isAr ? `الدور الرئيسي - المجموعة ${m.groupAr}` : `Group Stage - ${m.groupEn}`
-        });
-      });
-
-      bb.forEach(m => {
-        const v = VENUES[m.venueKey];
-        items.push({
-          tag: isAr ? `🏀 دوري كرة السلة (مباراة #${m.id})` : `🏀 Basketball (Match #${m.id})`,
-          badge: isAr ? m.descAr : m.descEn,
-          who: isAr ? 'فرق المدارس المشاركة في دوري المجموعات' : 'Participating School Teams',
-          when: `${dateStr} • ${m.time}`,
-          where: v[isAr ? 'nameAr' : 'nameEn'],
-          map: v.map,
-          stage: isAr ? m.descAr : m.descEn
-        });
-      });
-
-      es.forEach(m => {
-        const v = VENUES[m.venueKey];
-        items.push({
-          tag: isAr ? `🎮 الألعاب الإلكترونية (فعالية #${m.id})` : `🎮 E-Sports (Event #${m.id})`,
-          badge: isAr ? m.stageAr : m.stageEn,
-          who: isAr ? m.stageAr : m.stageEn,
-          when: `${dateStr} • ${m.time}`,
-          where: v[isAr ? 'nameAr' : 'nameEn'],
-          map: v.map,
-          stage: isAr ? 'بطولة وزارة التربية والتعليم للألعاب الإلكترونية' : 'MOE E-Sports Championship'
-        });
-      });
-
-      ex.forEach(m => {
-        const v = VENUES[m.venueKey];
-        items.push({
-          tag: isAr ? `🏆 جائزة الطالب المتميز` : `🏆 Outstanding Student Award`,
-          badge: isAr ? m.targetAr : m.targetEn,
-          who: isAr ? m.targetAr : m.targetEn,
-          when: `${dateStr} • ${m.time}`,
-          where: v[isAr ? 'nameAr' : 'nameEn'],
-          map: v.map,
-          stage: isAr ? m.progAr : m.progEn
-        });
-      });
-
-      const modalTitle = `${I18N[currentLang].modalPrefix} ${dateStr} (${items.length})`;
-      presentModalCards(modalTitle, items);
-    }
-
-    function presentModalCards(modalTitle, items) {
-      document.getElementById('m-dialog-title').textContent = modalTitle;
-      const mount = document.getElementById('modal-cards-mount');
-      mount.innerHTML = '';
-
-      if (items.length === 0) {
-        mount.innerHTML = `<div style="text-align:center; padding:2rem; color:var(--color-slate-light); font-weight:700;">${I18N[currentLang].noEvents}</div>`;
-      } else {
-        items.forEach(ev => {
-          const card = document.createElement('div');
-          card.className = 'individual-event-card';
-          card.innerHTML = `
-            <div class="event-card-header">
-              <span class="card-tag-text">${ev.tag}</span>
-              <span class="card-stage-badge">${ev.badge}</span>
-            </div>
-            <div class="card-detail-item">
-              <span class="detail-ico">👥</span>
-              <div class="detail-meta-text">
-                <span class="detail-lbl">${I18N[currentLang].lblWho}</span>
-                <span class="detail-val">${ev.who}</span>
-              </div>
-            </div>
-            <div class="card-detail-item">
-              <span class="detail-ico">⏰</span>
-              <div class="detail-meta-text">
-                <span class="detail-lbl">${I18N[currentLang].lblWhen}</span>
-                <span class="detail-val">${ev.when}</span>
-              </div>
-            </div>
-            <div class="card-detail-item">
-              <span class="detail-ico">📍</span>
-              <div class="detail-meta-text">
-                <span class="detail-lbl">${I18N[currentLang].lblWhere}</span>
-                <span class="detail-val">${ev.where}</span>
-              </div>
-            </div>
-            <div class="card-detail-item">
-              <span class="detail-ico">🏅</span>
-              <div class="detail-meta-text">
-                <span class="detail-lbl">${I18N[currentLang].lblStage}</span>
-                <span class="detail-val">${ev.stage}</span>
-              </div>
-            </div>
-            ${ev.map ? `
-              <a href="${ev.map}" target="_blank" class="btn-maps-direct">
-                <span>🗺️</span>
-                <span>${I18N[currentLang].openMap}</span>
-              </a>
-            ` : ''}
-          `;
-          mount.appendChild(card);
-        });
-      }
-
-      document.getElementById('event-modal-dialog').classList.add('open');
-    }
-
-    function closeModalWindow() {
-      document.getElementById('event-modal-dialog').classList.remove('open');
-    }
-
-    function onOverlayDismiss(e) {
-      if (e.target.id === 'event-modal-dialog') {
-        closeModalWindow();
-      }
-    }
-
-    // Interactive Lightbox Player
-    function openLightbox(fileId, isVideo, title) {
-      const box = document.getElementById('lightbox-box');
-      const cleanTitle = title || (isVideo ? 'عرض مقطع الفيديو' : 'عرض الصورة');
+    /**
+     * Requirement 4 & 5: Render Game Card with exact required sequence:
+     * 1. Team names with orange V/S
+     * 2. Date
+     * 3. Time
+     * 4. Location
+     * 5. Score
+     */
+    function createMatchCard(match) {
+      const isComplete = match.score && match.score.trim() !== "";
       
-      let contentHtml = `<div class="lightbox-title-bar">${cleanTitle}</div>`;
-      if (isVideo) {
-        contentHtml += `
-          <iframe class="lightbox-iframe" 
-                  src="https://drive.google.com/file/d/${fileId}/preview" 
-                  allow="autoplay; encrypted-media; fullscreen" 
-                  allowfullscreen></iframe>
-        `;
-      } else {
-        const imgUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
-        contentHtml += `<img class="lightbox-img" src="${imgUrl}" alt="${cleanTitle}" />`;
-      }
-      box.innerHTML = contentHtml;
-      document.getElementById('lightbox-modal').classList.add('open');
-    }
+      return `
+        <div class="match-card">
+          <!-- 1. Team Names with Orange V/S -->
+          <div class="match-teams">
+            <span class="team-name">${match.teamA}</span>
+            <span class="vs-badge">V/S</span>
+            <span class="team-name">${match.teamB}</span>
+          </div>
 
-    function closeLightbox(e) {
-      if (e.target.id === 'lightbox-modal' || e.target.classList.contains('lightbox-modal')) {
-        document.getElementById('lightbox-box').innerHTML = '';
-        document.getElementById('lightbox-modal').classList.remove('open');
-      }
-    }
+          <!-- 2. Date -->
+          <div class="match-meta-row">
+            <span class="label">التاريخ:</span>
+            <span class="val">${match.date}</span>
+          </div>
 
-    // Google Sheets Direct Data Pipeline
-    const SHEET_ID = "15kwFoT836RJ6JJ01vqYQG-6rzbW9btgoo6JQPyUc6LE";
-    const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+          <!-- 3. Time -->
+          <div class="match-meta-row">
+            <span class="label">الوقت:</span>
+            <span class="val">${match.time}</span>
+          </div>
 
-    // Baseline approved media with titles
-    const DEFAULT_APPROVED_MEDIA = [
-      { id: "1ynMxb1NJTmFndU1KKYJwL8S4WSMpsR8V", category: "esports", isVideo: false, title: "منافسات بطولة الألعاب الإلكترونية" },
-      { id: "1JBIkXaJ_cn6TcRmTW39J6FnDDQ4jLAsq", category: "esports", isVideo: false, title: "مباراة إلكترونية حماسية" },
-      { id: "1dqs1GEJm8gpa_LeQ__I6tKxjdarGfNqc", category: "esports", isVideo: false, title: "مشاركة طلاب المدارس في البطولة" },
-      { id: "1k1dKmDsk1zPRM4AgXnj_PBSVXttcikNH", category: "esports", isVideo: true, title: "لقطات فيديو من صالة الألعاب الإلكترونية" },
-      { id: "1RYybk_jXlGjHMfbpK2ZXz0JJdGdHSL4p", category: "general", isVideo: true, title: "تغطية الأنشطة الرياضية المدرسية" },
-      { id: "192_O5OoKcMl4XGBLISFLPLBRaiiZRjIv", category: "general", isVideo: false, title: "صورة تذكارية للفرق الرياضية" },
-      { id: "1NB-rL1Ud3oovcQqQ-2CCTHxAtuAbwBG-", category: "general", isVideo: false, title: "جانب من الفعاليات الطلابية" }
-    ];
+          <!-- 4. Location -->
+          <div class="match-meta-row">
+            <span class="label">المكان:</span>
+            <span class="val">${match.location}</span>
+          </div>
 
-    function createMediaCard(item) {
-      const card = document.createElement('div');
-      card.className = 'media-card-wrap';
-
-      const thumbUrl = `https://drive.google.com/thumbnail?id=${item.id}&sz=w800`;
-      const fallbackUrl = `https://lh3.googleusercontent.com/d/${item.id}`;
-      const itemTitle = item.title || (item.isVideo ? 'فيديو تذكاري' : 'صورة تذكارية');
-      const typeLabel = item.isVideo ? 'فيديو / Video' : 'صورة / Photo';
-
-      card.title = itemTitle; // Standard HTML browser hover tooltip
-      card.onclick = () => openLightbox(item.id, item.isVideo, itemTitle);
-
-      card.innerHTML = `
-        <img src="${thumbUrl}" 
-             style="width:100%; height:100%; object-fit:cover; display:block;" 
-             loading="lazy" 
-             onerror="this.onerror=null; this.src='${fallbackUrl}';" 
-             alt="${itemTitle}" />
-        ${item.isVideo ? `
-          <div class="play-video-icon">▶</div>
-        ` : ''}
-        <div class="media-hover-overlay">
-          <span class="hover-type-badge">${typeLabel}</span>
-          <span class="hover-title-text">${itemTitle}</span>
+          <!-- 5. Score -->
+          <div class="match-score-row">
+            <span class="label">النتيجة:</span>
+            <span class="score-badge ${isComplete ? 'completed' : ''}">
+              ${isComplete ? match.score : 'لم تبدأ بعد'}
+            </span>
+          </div>
         </div>
       `;
-      return card;
     }
 
-    function renderCategorizedMedia(items) {
-      const homeGrid = document.getElementById('home-live-media-grid');
-      const allGrid = document.getElementById('live-media-grid');
-      const fbGrid = document.getElementById('football-live-media-grid');
-      const bbGrid = document.getElementById('basketball-live-media-grid');
-      const esGrid = document.getElementById('esports-live-media-grid');
-      const exGrid = document.getElementById('excellence-live-media-grid');
+    /**
+     * Requirement 3: Categorize games by current date/time and score entry.
+     * Past games automatically move out of Upcoming and into Finished.
+     */
+    function renderMatches() {
+      const now = new Date();
+      const upcomingContainer = document.getElementById('upcoming-matches-container');
+      const finishedContainer = document.getElementById('finished-matches-container');
 
-      [homeGrid, allGrid, fbGrid, bbGrid, esGrid, exGrid].forEach(grid => {
-        if (grid) grid.innerHTML = '';
-      });
+      const upcomingMatches = [];
+      const finishedMatches = [];
 
-      const counts = { football: 0, basketball: 0, esports: 0, excellence: 0 };
+      gamesData.forEach(match => {
+        // Construct match Date object (fallback to midnight if time omitted)
+        const matchDateTime = new Date(`${match.date}T${match.time || '00:00'}:00`);
 
-      items.forEach((item, idx) => {
-        if (allGrid) allGrid.appendChild(createMediaCard(item));
-        if (homeGrid && idx < 8) homeGrid.appendChild(createMediaCard(item));
-
-        const cat = item.category || 'general';
-        if (cat === 'football' && fbGrid) { fbGrid.appendChild(createMediaCard(item)); counts.football++; }
-        else if (cat === 'basketball' && bbGrid) { bbGrid.appendChild(createMediaCard(item)); counts.basketball++; }
-        else if (cat === 'esports' && esGrid) { esGrid.appendChild(createMediaCard(item)); counts.esports++; }
-        else if (cat === 'excellence' && exGrid) { exGrid.appendChild(createMediaCard(item)); counts.excellence++; }
-      });
-
-      const emptyText = I18N[currentLang].mediaEmpty;
-      if (fbGrid && counts.football === 0) fbGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
-      if (bbGrid && counts.basketball === 0) bbGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
-      if (esGrid && counts.esports === 0) esGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
-      if (exGrid && counts.excellence === 0) exGrid.innerHTML = `<div class="empty-media-badge">${emptyText}</div>`;
-    }
-
-    function categorizeTournament(rawText) {
-      const text = String(rawText || '').toLowerCase();
-      if (text.includes('قدم') || text.includes('football') || text.includes('ناصر')) return 'football';
-      if (text.includes('سلة') || text.includes('basket')) return 'basketball';
-      if (text.includes('إلكترونية') || text.includes('الكترونية') || text.includes('esport')) return 'esports';
-      if (text.includes('متميز') || text.includes('excellence')) return 'excellence';
-      return 'general';
-    }
-
-    function detectIsVideo(rawText) {
-      const text = String(rawText || '').toLowerCase();
-      return text.includes('video') || text.includes('فيديو') || text.includes('.mp4') || text.includes('.mov');
-    }
-
-    async function fetchLiveMedia() {
-      // 1. Initial display of approved baseline media
-      renderCategorizedMedia(DEFAULT_APPROVED_MEDIA);
-
-      // 2. Query Google Sheet for live updates with titles and Status gating
-      try {
-        const response = await fetch(GVIZ_URL);
-        const text = await response.text();
-        
-        const jsonStart = text.indexOf('{');
-        const jsonEnd = text.lastIndexOf('}') + 1;
-        const jsonData = JSON.parse(text.substring(jsonStart, jsonEnd));
-        
-        const rows = jsonData.table.rows;
-        const liveItems = [];
-
-        rows.forEach(r => {
-          if (!r.c) return;
-          let fileId = null;
-          let tourCategory = 'general';
-          let isVideo = false;
-          let userTitle = '';
-          let isApproved = false;
-          let hasStatusColumn = false;
-
-          r.c.forEach((cell, colIndex) => {
-            if (!cell || cell.v === null || cell.v === undefined) return;
-            const str = String(cell.v).trim();
-            if (!str) return;
-
-            // Check Approval Status
-            const lowerStr = str.toLowerCase();
-            if (lowerStr === 'approved' || lowerStr === 'معتمد' || lowerStr === 'مقبول') {
-              isApproved = true;
-              hasStatusColumn = true;
-              return; // skip, this is status not title!
-            }
-            if (lowerStr === 'pending' || lowerStr === 'rejected' || lowerStr === 'قيد الانتظار' || lowerStr === 'مرفوض') {
-              hasStatusColumn = true;
-              return; // skip
-            }
-
-            // Extract Google Drive File Links
-            if (str.includes('drive.google.com') || str.includes('open?id=')) {
-              // Handles multiple links if comma separated
-              const matches = str.match(/[-\w]{25,}/g);
-              if (matches && matches.length > 0) {
-                fileId = matches[0]; // primary
-              }
-              return;
-            }
-
-            // Detect Tournament category
-            const cat = categorizeTournament(str);
-            if (cat !== 'general') {
-              tourCategory = cat;
-              return;
-            }
-
-            // Detect Video
-            if (detectIsVideo(str)) {
-              isVideo = true;
-            }
-
-            // Detect Custom User Title (ignore PINs, dates, timestamps, emails)
-            if (!str.includes('http') && !str.includes('@') && isNaN(str) && str.length >= 2 && str.length <= 100) {
-              if (lowerStr !== 'sports2026' && lowerStr !== 'pera' && lowerStr !== 'pera olympics' && lowerStr !== 'photograph' && lowerStr !== 'video') {
-                userTitle = str;
-              }
-            }
-          });
-
-          // Moderation Gate: If your sheet has a Status column, only show Approved items.
-          // If no Status column is used on that row, display it directly.
-          const allowedToShow = !hasStatusColumn || isApproved;
-
-          if (fileId && allowedToShow) {
-            liveItems.push({ 
-              id: fileId, 
-              category: tourCategory, 
-              isVideo: isVideo, 
-              title: userTitle || (isVideo ? 'مقطع فيديو رياضي' : 'صورة تذكارية') 
-            });
-          }
-        });
-
-        if (liveItems.length > 0) {
-          const merged = [];
-          const seen = new Set();
-          liveItems.reverse().concat(DEFAULT_APPROVED_MEDIA).forEach(item => {
-            if (!seen.has(item.id)) {
-              seen.add(item.id);
-              merged.push(item);
-            }
-          });
-          renderCategorizedMedia(merged);
+        // If match has a recorded score OR its date/time has already elapsed
+        if ((match.score && match.score.trim() !== "") || matchDateTime < now) {
+          finishedMatches.push(match);
+        } else {
+          upcomingMatches.push(match);
         }
-      } catch (err) {
-        console.warn('Live poll fallback: baseline media loaded.');
+      });
+
+      // Sort upcoming (soonest first)
+      upcomingMatches.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+      // Sort finished (most recent first)
+      finishedMatches.sort((a, b) => new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`));
+
+      // Render Upcoming
+      if (upcomingMatches.length === 0) {
+        upcomingContainer.innerHTML = `<div class="empty-state">لا توجد مباريات قادمة حالياً.</div>`;
+      } else {
+        upcomingContainer.innerHTML = upcomingMatches.map(m => createMatchCard(m)).join('');
+      }
+
+      // Render Finished
+      if (finishedMatches.length === 0) {
+        finishedContainer.innerHTML = `<div class="empty-state">لا توجد مباريات منتهية مسجلة بعد.</div>`;
+      } else {
+        finishedContainer.innerHTML = finishedMatches.map(m => createMatchCard(m)).join('');
       }
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      init();
-      fetchLiveMedia();
+    /**
+     * Requirement 1: Render Photos with Title on Hover (title attribute) & Banner, NOT Date & Time
+     */
+    function renderPhotos() {
+      const gallery = document.getElementById('media-gallery-container');
+      
+      gallery.innerHTML = mediaItems.map(item => {
+        // Clean title fallback
+        const cleanTitle = item.title && item.title.trim() !== "" ? item.title.trim() : "صورة الفعالية الرياضية";
+
+        return `
+          <div class="photo-card" title="${cleanTitle}">
+            <img src="${item.imageUrl}" alt="${cleanTitle}" loading="lazy" />
+            <div class="photo-title-banner">${cleanTitle}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /**
+     * Requirement 2: Render Top Calendar Days View
+     */
+    function renderTopCalendar() {
+      const calendarGrid = document.getElementById('main-calendar-grid');
+      const sampleDays = [
+        { day: "الأحد", num: "8 نوفمبر", event: "كرة قدم ثانوي" },
+        { day: "الإثنين", num: "9 نوفمبر", event: "كرة قدم ثانوي" },
+        { day: "الثلاثاء", num: "10 نوفمبر", event: "" },
+        { day: "الأربعاء", num: "11 نوفمبر", event: "" },
+        { day: "الخميس", num: "12 نوفمبر", event: "الألعاب الإلكترونية" },
+        { day: "الجمعة", num: "13 نوفمبر", event: "" },
+        { day: "السبت", num: "14 نوفمبر", event: "" },
+        { day: "الأحد", num: "15 نوفمبر", event: "كرة يد إعدادي" }
+      ];
+
+      calendarGrid.innerHTML = sampleDays.map(d => `
+        <div class="calendar-day-box ${d.event ? 'has-event' : ''}">
+          <span style="font-size:0.75rem; color:#64748B;">${d.day}</span>
+          <span class="date-num">${d.num}</span>
+          ${d.event ? `<span class="event-tag">${d.event}</span>` : `<span style="font-size:0.72rem; color:#CBD5E1;">—</span>`}
+        </div>
+      `).join('');
+    }
+
+    // Initialize all components on DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTopCalendar();
+      renderMatches();
+      renderPhotos();
     });
   </script>
 </body>
