@@ -588,7 +588,6 @@
       border-radius: 8px;
     }
 
-    /* Modal Styling with Interactive Player & Viewer */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -657,7 +656,6 @@
       gap: 10px;
     }
 
-    /* Media Preview Container inside Modal */
     .modal-media-wrapper {
       width: 100%;
       background: #060a10;
@@ -826,7 +824,6 @@
 
   </div>
 
-  <!-- Unified Interactive Modal with Visual Media Player -->
   <div id="detailsModal" class="modal-overlay">
     <div class="modal-box">
       <div class="modal-header">
@@ -834,25 +831,19 @@
         <button class="modal-close-btn" id="closeModalBtn">&times;</button>
       </div>
       <div class="modal-scrollable">
-        
-        <!-- Dedicated Visual Preview Container -->
         <div id="modalMediaContainer" class="modal-media-wrapper" style="display: none;"></div>
-        
         <div class="modal-row"><span class="m-label" id="lblTournament">البطولة / الفعالية:</span> <span id="modalTournament" class="m-val"></span></div>
         <div class="modal-row"><span class="m-label" id="lblTeams">المواجهة / الفرق:</span> <span id="modalTeams" class="m-val"></span></div>
         <div class="modal-row"><span class="m-label" id="lblDateTime">التاريخ والوقت:</span> <span id="modalDateTime" class="m-val"></span></div>
         <div class="modal-row"><span class="m-label" id="lblVenue">الموقع / الصالة:</span> <span id="modalVenue" class="m-val"></span></div>
         <div class="modal-row"><span class="m-label" id="lblScore">النتيجة:</span> <span id="modalScore" class="m-val"></span></div>
-        
         <div class="modal-row" style="flex-direction:column; gap:4px; margin-top:2px;">
           <span class="m-label" id="lblNotes">ملاحظات إضافية:</span>
           <div id="modalNotes" class="m-desc"></div>
         </div>
-
         <a id="modalExternalLink" href="#" target="_blank" class="modal-open-link" style="display: none;">
           ↗ <span id="modalExternalLinkText">عرض الملف بجودة عالية</span>
         </a>
-
       </div>
     </div>
   </div>
@@ -861,7 +852,111 @@
     let currentLang = "ar";
     let currentPage = "home";
     let selectedYear = 2026;
-    let selectedMonth = 11; // November
+    let selectedMonth = 11;
+
+    // Official Bilingual Translation Master Dictionary
+    const bilingualDictionary = {
+      // Schools & Teams
+      "مدرسة مدينة عيسى الثانوية للبنين": "Isa Town Secondary Boys School",
+      "مدرسة مدينة عيسى الثانوية": "Isa Town Secondary School",
+      "مركز ناصر العلمي والتقني": "Nasser Vocational Training Centre (NVTC)",
+      "مدرسة بيان البحرين": "Bahrain Bayan School",
+      "مدرسة الحكمة الدولية": "Al Hekma International School",
+      "مدرسة الشيخ عيسى بن علي الثانوية": "Shaikh Isa bin Ali Secondary School",
+      "مدرسة الشيخ عيسى بن علي": "Shaikh Isa bin Ali Secondary School",
+      "مدرسة الرفاع الشرقي الثانوية": "East Riffa Secondary School",
+      "مدرسة الرفاع الشرقي": "East Riffa Secondary School",
+      "مدرسة المعارف الحديثة": "Modern Knowledge Schools (MKS)",
+      "مدرسة الإبداع الخاصة": "Al Ibdaa Private School",
+      "مدرسة الابداع الخاصة": "Al Ibdaa Private School",
+      "مدرسة أحمد العمران الثانوية": "Ahmed Al Omran Secondary School",
+      "مدرسة أحمد العمران": "Ahmed Al Omran Secondary School",
+      "مدرسة النعيم الثانوية": "Al Naim Secondary School",
+      "مدرسة النور العالمية": "Al Noor International School",
+      "مدارس الفلاح الخاصة": "Al Falah Private Schools",
+      "مدرسة الجابرية الثانوية الصناعية": "Al Jabriya Technical Secondary School",
+      "مدرسة الهداية الخليفية الثانوية": "Al Hidaya Al Khalifia Secondary School",
+      "مدرسة الهداية الخليفية": "Al Hidaya Al Khalifia Secondary School",
+      "المدرسة البريطانية في البحرين": "British School of Bahrain (BSB)",
+      "مدرسة سانت كريستوفر": "St Christopher's School",
+      "مدرسة الشيخ عبد الله بن عيسى": "Shaikh Abdullah bin Isa Secondary School",
+      "مدرسة الشيخ عبدالله بن عيسى": "Shaikh Abdullah bin Isa Secondary School",
+      "مدرسة المحرق الثانوية": "Muharraq Secondary School",
+      "مدرسة التعاون الثانوية": "Al Taawon Secondary School",
+      "مدرسة الرفاع الغربي": "West Riffa Secondary School",
+      "مدرسة غازي القصيبي الثانوية للبنات": "Ghazi Al Gosaibi Secondary Girls School",
+      "مدرسة غازي القصيبي": "Ghazi Al Gosaibi Secondary Girls School",
+      "مدرسة خولة الثانوية": "Khawla Secondary Girls School",
+      "المرحلة الإعدادية - بنين": "Intermediate Boys Division",
+      "تصفيات المرحلة الإعدادية (بنين)": "Intermediate Boys Division",
+      "المرحلة الإعدادية - بنات": "Intermediate Girls Division",
+      "تصفيات المرحلة الإعدادية (بنات)": "Intermediate Girls Division",
+      "المرحلة الثانوية - بنات": "Secondary Girls Division",
+      "تصفيات المرحلة الثانوية (بنات)": "Secondary Girls Division",
+      "تصفيات المرحلة الثانوية (بنين)": "Secondary Boys Division",
+      "مدارس المرحلة الثانوية (بنين)": "Secondary Schools (Boys)",
+      "مدارس المرحلة الثانوية (بنات)": "Secondary Schools (Girls)",
+      "بطولة الجامعات": "Universities Championship",
+      "بطولة الجامعات للألعاب الإلكترونية": "Universities Esports Championship",
+      "منتخبات الجامعات": "University Teams",
+      "جامعات مملكة البحرين": "Bahrain Universities",
+      "تصفيات المدارس": "School Qualifiers",
+      "تصفيات تمهيدية": "Preliminary Qualifiers",
+      "مجموعات الفتيات": "Girls Group Fixtures",
+      "مباريات الدور ربع النهائي": "Quarter-Finals Matches",
+      "المتأهلون من المجموعات": "Group Stage Qualifiers",
+      "المباراة الختامية": "Championship Final",
+      "المباراة الختامية والتتويج": "Grand Finals & Awards Ceremony",
+      "التتويج والتكريم": "Podium & Awards",
+      "المتأهل للنهائي": "Finalists",
+      "سباق F1 للمدارس": "Schools F1 Race Challenge",
+      "سباق F1 والتتويج": "Schools F1 Race & Podium Ceremony",
+      "سباق F1 للمدارس والتتويج": "Schools F1 Race & Podium Ceremony",
+      "ثاني المجموعة الرابعة": "Runner-up Group 4",
+      "أول المجموعة الأولى": "Winner Group 1",
+      "ثاني المجموعة الثالثة": "Runner-up Group 3",
+      "أول المجموعة الثانية": "Winner Group 2",
+      "ثاني المجموعة الثانية": "Runner-up Group 2",
+      "أول المجموعة الثالثة": "Winner Group 3",
+      "ثاني المجموعة الأولى": "Runner-up Group 1",
+      "أول المجموعة الرابعة": "Winner Group 4",
+      "الخاسر من مباراة 29": "Loser Match 29",
+      "الخاسر من مباراة 30": "Loser Match 30",
+      "الفائز من مباراة 29": "Winner Match 29",
+      "الفائز من مباراة 30": "Winner Match 30",
+
+      // Official Venues
+      "نادي مدينة عيسى": "Isa Town Sports Club",
+      "نادي الاتحاد الرياضي": "Al Ittihad Sports Club",
+      "استاد مدينة خليفة الرياضية": "Khalifa Sports City Stadium",
+      "صالة الاتحاد بالماحوز": "BBA Arena (Um Al Hassam)",
+      "صالة وزارة التربية (مدينة عيسى)": "Ministry of Education Hall (Isa Town)",
+      "صالة وزارة التربية والتعليم": "Ministry of Education Hall (Isa Town)",
+
+      // Tournaments & Categories
+      "بطولة ناصر بن حمد للقدم": "Nasser bin Hamad Football Cup",
+      "بطولة ناصر بن حمد لكرة القدم": "Nasser bin Hamad Football Cup",
+      "دوري المجموعات لكرة السلة": "Khalid bin Hamad Basketball Cup",
+      "بطولة خالد بن حمد للسلة": "Khalid bin Hamad Basketball Cup",
+      "بطولة خالد بن حمد لكرة السلة": "Khalid bin Hamad Basketball Cup",
+      "بطولة الألعاب الإلكترونية": "MOE Esports Championship",
+      "جائزة الطالب المتميز": "Student Excellence Award",
+      "جائزة الطالب المتميز في المجال الثقافي والرياضي": "Student Excellence Award in Sports and Culture"
+    };
+
+    function translateText(text) {
+      if (!text) return "";
+      const trimmed = text.trim();
+      if (bilingualDictionary[trimmed]) {
+        return bilingualDictionary[trimmed];
+      }
+      for (const [arKey, enVal] of Object.entries(bilingualDictionary)) {
+        if (trimmed.includes(arKey)) {
+          return trimmed.replace(new RegExp(arKey, "g"), enVal);
+        }
+      }
+      return trimmed;
+    }
 
     const monthsCatalog = [
       { year: 2026, month: 9, ar: "سبتمبر 2026", en: "September 2026" },
@@ -1046,7 +1141,7 @@
     const baseVerifiedMatches = [
       { id: "FB-01", pageKey: "football", date: "2026-11-08", time: "08:30 AM", score: "2 - 1",
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة مدينة عيسى الثانوية للبنين", teamB: "مركز ناصر العلمي والتقني", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الأولى" },
-        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Isa Town Secondary Boys School", teamB: "Nasser Vocational Training Centre (NCST)", location: "Isa Town Sports Club", notes: "Round 1 - Group 1" }
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Isa Town Secondary Boys School", teamB: "Nasser Vocational Training Centre (NVTC)", location: "Isa Town Sports Club", notes: "Round 1 - Group 1" }
       },
       { id: "FB-02", pageKey: "football", date: "2026-11-08", time: "08:30 AM", score: "3 - 0",
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة بيان البحرين", teamB: "مدرسة الحكمة الدولية", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الأولى" },
@@ -1068,9 +1163,17 @@
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة النور العالمية", teamB: "مدارس الفلاح الخاصة", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الثالثة" },
         en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Al Noor International School", teamB: "Al Falah Private Schools", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 3" }
       },
+      { id: "FB-07", pageKey: "football", date: "2026-11-11", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة الجابرية الثانوية الصناعية", teamB: "مدرسة الهداية الخليفية الثانوية", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الرابعة" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Al Jabriya Technical Secondary School", teamB: "Al Hidaya Al Khalifia Secondary School", location: "Isa Town Sports Club", notes: "Round 1 - Group 4" }
+      },
+      { id: "FB-08", pageKey: "football", date: "2026-11-11", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "المدرسة البريطانية في البحرين", teamB: "مدرسة سانت كريستوفر", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الرابعة" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "British School of Bahrain (BSB)", teamB: "St Christopher's School", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 4" }
+      },
       { id: "BB-01", pageKey: "basketball", date: "2026-11-15", time: "08:30 AM", score: "",
         ar: { tournament: "بطولة خالد بن حمد للسلة", teamA: "مدرسة أحمد العمران", teamB: "مدرسة الشيخ عبد الله بن عيسى", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات - مباراة 1" },
-        en: { tournament: "Khalid bin Hamad Basketball", teamA: "Ahmed Al Omran Secondary School", teamB: "Shaikh Abdullah bin Isa Secondary School", location: "BBA Hall (Um Al Hassam)", notes: "Group Stage Opener" }
+        en: { tournament: "Khalid bin Hamad Basketball Cup", teamA: "Ahmed Al Omran Secondary School", teamB: "Shaikh Abdullah bin Isa Secondary School", location: "BBA Arena (Um Al Hassam)", notes: "Group Stage Opener" }
       },
       { id: "ES-01", pageKey: "esports", date: "2026-11-08", time: "08:30 AM", score: "2 - 0",
         ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "تصفيات المرحلة الإعدادية (بنين)", teamB: "تصفيات تمهيدية", location: "صالة وزارة التربية (مدينة عيسى)", notes: "اليوم الأول: إعدادي بنين" },
@@ -1096,7 +1199,6 @@
     let activeRoster = [...baseVerifiedMatches];
     let mediaGallery = [];
 
-    // Extract ID from any Google Drive link format
     function getDriveId(url) {
       if (!url) return null;
       const cleanUrl = url.split(",")[0].trim();
@@ -1104,7 +1206,6 @@
       return match ? match[1] : null;
     }
 
-    // Direct image thumbnail generator
     function formatDriveImage(driveUrl) {
       const fileId = getDriveId(driveUrl);
       if (fileId) {
@@ -1113,7 +1214,6 @@
       return driveUrl ? driveUrl.split(",")[0].trim() : "";
     }
 
-    // Direct embed link for videos and previewable documents
     function formatDrivePreview(driveUrl) {
       const fileId = getDriveId(driveUrl);
       if (fileId) {
@@ -1140,14 +1240,31 @@
               else if (t.includes("إلكترونية") || t.toLowerCase().includes("esport")) pKey = "esports";
               else if (t.includes("طالب") || t.includes("متميز") || t.toLowerCase().includes("award")) pKey = "excellence";
 
+              const rawTeamA = cols[2];
+              const rawTeamB = cols[3];
+              const rawLocation = cols[6] || "صالة وزارة التربية والتعليم";
+              const rawTournament = cols[1] || "بطولة مدرسية";
+
               sheetMatches.push({
                 id: cols[0] || "SH-" + (i + 1),
                 pageKey: pKey,
                 date: cols[4] || "2026-11-15",
                 time: cols[5] || "08:30 AM",
                 score: cols[7] || "",
-                ar: { tournament: cols[1] || "بطولة مدرسية", teamA: cols[2], teamB: cols[3], location: cols[6] || "صالة وزارة التربية والتعليم", notes: cols[9] || "" },
-                en: { tournament: cols[1] || "School Tournament", teamA: cols[2], teamB: cols[3], location: cols[6] || "Ministry of Education Hall", notes: cols[9] || "" }
+                ar: { 
+                  tournament: rawTournament, 
+                  teamA: rawTeamA, 
+                  teamB: rawTeamB, 
+                  location: rawLocation, 
+                  notes: cols[9] || "" 
+                },
+                en: { 
+                  tournament: translateText(rawTournament), 
+                  teamA: translateText(rawTeamA), 
+                  teamB: translateText(rawTeamB), 
+                  location: translateText(rawLocation), 
+                  notes: cols[9] || "" 
+                }
               });
             }
           });
@@ -1200,7 +1317,7 @@
               previewUrl: formatDrivePreview(rawLink),
               mediaType: mediaType.toLowerCase().includes("video") ? "video" : "image",
               ar: { title: title, tournament: tournament, desc: title },
-              en: { title: title, tournament: tournament, desc: title }
+              en: { title: translateText(title), tournament: translateText(tournament), desc: translateText(title) }
             });
           }
         });
@@ -1420,7 +1537,6 @@
       const externalLink = document.getElementById("modalExternalLink");
       const externalLinkText = document.getElementById("modalExternalLinkText");
 
-      // Handle Embedded Media (Photos and Playable Videos)
       if (data.mediaType === "video" && data.previewUrl) {
         mediaContainer.style.display = "flex";
         mediaContainer.innerHTML = `<iframe src="${data.previewUrl}" allow="autoplay" allowfullscreen></iframe>`;
@@ -1432,7 +1548,6 @@
         mediaContainer.innerHTML = "";
       }
 
-      // External original file link
       if (data.rawLink) {
         externalLink.style.display = "inline-flex";
         externalLink.href = data.rawLink;
@@ -1447,7 +1562,6 @@
     function closeModal() {
       const modal = document.getElementById("detailsModal");
       modal.classList.remove("active");
-      // Stop any playing iframe videos when closing
       document.getElementById("modalMediaContainer").innerHTML = "";
     }
 
