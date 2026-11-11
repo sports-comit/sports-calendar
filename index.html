@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>قسم الأنشطة والتربية الرياضية - وزارة التربية والتعليم</title>
+  <title>الفعاليات والبرامج الرياضية - قسم المنتخبات - وزارة التربية والتعليم</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -61,7 +61,27 @@
       justify-content: space-between;
       align-items: center;
       padding: 4px 0;
-      gap: 8px;
+      gap: 12px;
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 600px) {
+      .brand-logo {
+        height: 56px;
+      }
     }
 
     .brand-group {
@@ -306,7 +326,7 @@
 
     .calendar-table {
       width: 100%;
-      min-width: 480px;
+      min-width: 520px;
       border-collapse: collapse;
       text-align: center;
       table-layout: fixed;
@@ -321,7 +341,8 @@
     }
     .calendar-table td {
       border: 1px solid var(--border-dark);
-      height: 64px;
+      min-height: 72px;
+      height: 76px;
       vertical-align: top;
       padding: 3px;
       background: rgba(17, 28, 42, 0.4);
@@ -338,7 +359,7 @@
       color: var(--text-muted);
       text-align: right;
       display: block;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
       font-weight: 600;
     }
     html[dir="ltr"] .calendar-table .cell-date {
@@ -347,20 +368,34 @@
     .calendar-table td.has-event .cell-date {
       color: #ffffff;
     }
+
+    .cell-stripes-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+      max-height: 52px;
+    }
+
     .calendar-table .event-stripe {
-      font-size: 0.62rem;
-      padding: 2px 3px;
+      font-size: 0.60rem;
+      padding: 2px 4px;
       border-radius: 3px;
-      margin-bottom: 2px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       display: block;
       text-align: center;
+      font-weight: 600;
+      line-height: 1.25;
     }
-    .stripe-blue { background: #123d6a; color: #93c5fd; }
-    .stripe-orange { background: #5c2b0c; color: #fdba74; }
-    .stripe-yellow { background: #4d380c; color: #fde047; }
+
+    /* Distinct Sport Stripe Colors */
+    .stripe-football { background: #123d6a; color: #93c5fd; border-left: 2px solid #3b82f6; }
+    .stripe-basketball { background: #5c2b0c; color: #fdba74; border-left: 2px solid #f97316; }
+    .stripe-esports { background: #3d1b5a; color: #d8b4fe; border-left: 2px solid #a855f7; }
+    .stripe-excellence { background: #4d380c; color: #fde047; border-left: 2px solid #eab308; }
+    .stripe-general { background: #1a2d42; color: #cbd5e1; border-left: 2px solid #64748b; }
 
     .about-tournament-box {
       background: var(--card-inner);
@@ -734,9 +769,12 @@
 <body>
 
   <header class="top-bar">
-    <div class="brand-group">
-      <h1 id="brandTitle">قسم الأنشطة والتربية الرياضية</h1>
-      <p id="brandSubtitle">وزارة التربية والتعليم - مملكة البحرين</p>
+    <div class="brand-container">
+      <img src="logo.png" alt="وزارة التربية والتعليم" class="brand-logo" onerror="this.style.display='none';" />
+      <div class="brand-group">
+        <h1 id="brandTitle">الفعاليات والبرامج الرياضية - قسم المنتخبات</h1>
+        <p id="brandSubtitle">وزارة التربية والتعليم - مملكة البحرين</p>
+      </div>
     </div>
     <div class="header-actions">
       <a href="https://docs.google.com/forms/d/1lZHjiN_uzkPByu0bfIARRFyUx3oAFLdUne0uXE-tk6Q/viewform" target="_blank" class="btn-upload" id="uploadBtn">
@@ -854,7 +892,6 @@
     let selectedYear = 2026;
     let selectedMonth = 11;
 
-    // Official Bilingual Translation Master Dictionary
     const bilingualDictionary = {
       // Schools & Teams
       "مدرسة مدينة عيسى الثانوية للبنين": "Isa Town Secondary Boys School",
@@ -889,8 +926,6 @@
       "مدرسة خولة الثانوية": "Khawla Secondary Girls School",
       "المرحلة الإعدادية - بنين": "Intermediate Boys Division",
       "تصفيات المرحلة الإعدادية (بنين)": "Intermediate Boys Division",
-      "المرحلة الإعدادية - بنات": "Intermediate Girls Division",
-      "تصفيات المرحلة الإعدادية (بنات)": "Intermediate Girls Division",
       "المرحلة الثانوية - بنات": "Secondary Girls Division",
       "تصفيات المرحلة الثانوية (بنات)": "Secondary Girls Division",
       "تصفيات المرحلة الثانوية (بنين)": "Secondary Boys Division",
@@ -972,7 +1007,7 @@
 
     const i18n = {
       ar: {
-        brandTitle: "قسم الأنشطة والتربية الرياضية",
+        brandTitle: "الفعاليات والبرامج الرياضية - قسم المنتخبات",
         brandSubtitle: "وزارة التربية والتعليم - مملكة البحرين",
         uploadBtnText: "رفع صور وفيديوهات",
         pillHome: "🏠 الرئيسية والتقويم",
@@ -982,7 +1017,7 @@
         pillExcellence: "🏆 جائزة الطالب المتميز",
         pillMedia: "📷 معرض الوسائط الكامل",
         calendarTitle: "📅 التقويم السنوي الشامل 2026-2027",
-        calendarHint: "اضغط على أي يوم لعرض التفاصيل",
+        calendarHint: "اضغط على أي يوم لعرض المباريات",
         weekDays: ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
         upcomingHeading: "⚡ الفعاليات والمباريات القادمة",
         upcomingHint: "اضغط لعرض التفاصيل",
@@ -1017,7 +1052,7 @@
         ]
       },
       en: {
-        brandTitle: "Physical Education & Sports Section",
+        brandTitle: "Sports Events & Programs - National Teams Section",
         brandSubtitle: "Ministry of Education - Kingdom of Bahrain",
         uploadBtnText: "Upload Media",
         pillHome: "🏠 Home & Calendar",
@@ -1027,7 +1062,7 @@
         pillExcellence: "🏆 Student Excellence Award",
         pillMedia: "📷 Media Gallery",
         calendarTitle: "📅 Comprehensive Calendar 2026-2027",
-        calendarHint: "Click on any day for details",
+        calendarHint: "Click on any day for match details",
         weekDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         upcomingHeading: "⚡ Upcoming Events & Matches",
         upcomingHint: "Click for full details",
@@ -1066,12 +1101,12 @@
     const tournamentPagesData = {
       home: {
         ar: { 
-          title: "عن الفعاليات الرياضية العامة", 
-          desc: "مرحباً بكم في البوابة الرقمية الرسمية لقسم الأنشطة الرياضية بوزارة التربية والتعليم. تصفحوا روزنامة الفعاليات، جداول المباريات الحالية، والنتائج المسجلة لجميع البطولات المدرسية." 
+          title: "عن الفعاليات والبرامج الرياضية", 
+          desc: "مرحباً بكم في البوابة الرقمية الرسمية لقسم المنتخبات المدرسية بإدارة التربية الرياضية في وزارة التربية والتعليم. تصفحوا روزنامة الفعاليات وجداول ومواعيد ونتائج كافة البطولات والمسابقات الرياضية." 
         },
         en: { 
-          title: "About School Sports Activities", 
-          desc: "Welcome to the official digital portal of the Sports Activities Section at the Ministry of Education. Explore event schedules, active tournament fixtures, and official school competition results." 
+          title: "About School Sports Events & Programs", 
+          desc: "Welcome to the official digital portal of the National Teams Section at the Physical Education Directorate - Ministry of Education. Explore full calendars, fixtures, scores, and media for all school championships." 
         },
         showCalendar: true,
         showGallery: true
@@ -1138,6 +1173,7 @@
       }
     };
 
+    // Official Baseline Schedule (Nov 9 & 10 girls matches removed per instructions)
     const baseVerifiedMatches = [
       { id: "FB-01", pageKey: "football", date: "2026-11-08", time: "08:30 AM", score: "2 - 1",
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة مدينة عيسى الثانوية للبنين", teamB: "مركز ناصر العلمي والتقني", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الأولى" },
@@ -1155,11 +1191,11 @@
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة المعارف الحديثة", teamB: "مدرسة الإبداع الخاصة", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الثانية" },
         en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Modern Knowledge Schools (MKS)", teamB: "Al Ibdaa Private School", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 2" }
       },
-      { id: "FB-05", pageKey: "football", date: "2026-11-10", time: "08:30 AM", score: "",
+      { id: "FB-05", pageKey: "football", date: "2026-11-10", time: "08:30 AM", score: "4 - 1",
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة أحمد العمران الثانوية", teamB: "مدرسة النعيم الثانوية", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الثالثة" },
         en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Ahmed Al Omran Secondary School", teamB: "Al Naim Secondary School", location: "Isa Town Sports Club", notes: "Round 1 - Group 3" }
       },
-      { id: "FB-06", pageKey: "football", date: "2026-11-10", time: "08:30 AM", score: "",
+      { id: "FB-06", pageKey: "football", date: "2026-11-10", time: "08:30 AM", score: "2 - 3",
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة النور العالمية", teamB: "مدارس الفلاح الخاصة", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الثالثة" },
         en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Al Noor International School", teamB: "Al Falah Private Schools", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 3" }
       },
@@ -1171,27 +1207,51 @@
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "المدرسة البريطانية في البحرين", teamB: "مدرسة سانت كريستوفر", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الرابعة" },
         en: { tournament: "Nasser bin Hamad Football Cup", teamA: "British School of Bahrain (BSB)", teamB: "St Christopher's School", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 4" }
       },
+      { id: "FB-09", pageKey: "football", date: "2026-11-12", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة الحكمة الدولية", teamB: "مركز ناصر العلمي والتقني", location: "نادي الاتحاد الرياضي", notes: "الجولة الثانية - المجموعة الأولى" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Al Hekma International School", teamB: "Nasser Vocational Training Centre (NVTC)", location: "Al Ittihad Sports Club", notes: "Round 2 - Group 1" }
+      },
+      { id: "FB-10", pageKey: "football", date: "2026-11-12", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة بيان البحرين", teamB: "مدرسة مدينة عيسى الثانوية للبنين", location: "نادي مدينة عيسى", notes: "الجولة الثانية - المجموعة الأولى" },
+        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Bahrain Bayan School", teamB: "Isa Town Secondary Boys School", location: "Isa Town Sports Club", notes: "Round 2 - Group 1" }
+      },
       { id: "BB-01", pageKey: "basketball", date: "2026-11-15", time: "08:30 AM", score: "",
         ar: { tournament: "بطولة خالد بن حمد للسلة", teamA: "مدرسة أحمد العمران", teamB: "مدرسة الشيخ عبد الله بن عيسى", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات - مباراة 1" },
         en: { tournament: "Khalid bin Hamad Basketball Cup", teamA: "Ahmed Al Omran Secondary School", teamB: "Shaikh Abdullah bin Isa Secondary School", location: "BBA Arena (Um Al Hassam)", notes: "Group Stage Opener" }
+      },
+      { id: "BB-02", pageKey: "basketball", date: "2026-11-15", time: "09:30 AM", score: "",
+        ar: { tournament: "بطولة خالد بن حمد للسلة", teamA: "مدرسة الرفاع الشرقي", teamB: "مدرسة المحرق الثانوية", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات - مباراة 2" },
+        en: { tournament: "Khalid bin Hamad Basketball Cup", teamA: "East Riffa Secondary School", teamB: "Muharraq Secondary School", location: "BBA Arena (Um Al Hassam)", notes: "Group Stage (Match 2)" }
       },
       { id: "ES-01", pageKey: "esports", date: "2026-11-08", time: "08:30 AM", score: "2 - 0",
         ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "تصفيات المرحلة الإعدادية (بنين)", teamB: "تصفيات تمهيدية", location: "صالة وزارة التربية (مدينة عيسى)", notes: "اليوم الأول: إعدادي بنين" },
         en: { tournament: "MOE Esports Championship", teamA: "Intermediate Boys Division", teamB: "Preliminary Qualifiers", location: "Ministry of Education Hall (Isa Town)", notes: "Day 1: Intermediate Boys" }
       },
+      { id: "ES-03", pageKey: "esports", date: "2026-11-10", time: "11:30 AM", score: "1 - 0",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "مدرسة الشيخ عيسى بن علي", teamB: "مدرسة مدينة عيسى الثانوية", location: "صالة وزارة التربية (مدينة عيسى)", notes: "تصفيات المرحلة الثانوية (بنين)" },
+        en: { tournament: "MOE Esports Championship", teamA: "Shaikh Isa bin Ali Secondary School", teamB: "Isa Town Secondary School", location: "Ministry of Education Hall (Isa Town)", notes: "Secondary Boys Qualifiers" }
+      },
+      { id: "ES-10", pageKey: "esports", date: "2026-11-19", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "مباريات الدور ربع النهائي", teamB: "المتأهلون من المجموعات", location: "صالة وزارة التربية (مدينة عيسى)", notes: "الدور ربع النهائي للبطولة" },
+        en: { tournament: "MOE Esports Championship", teamA: "Quarter-Finals Matches", teamB: "Group Stage Qualifiers", location: "Ministry of Education Hall (Isa Town)", notes: "Quarter-Finals Championship Round" }
+      },
+      { id: "ES-11", pageKey: "esports", date: "2026-11-22", time: "08:30 AM", score: "",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "بطولة الجامعات للألعاب الإلكترونية", teamB: "جامعات مملكة البحرين", location: "صالة وزارة التربية (مدينة عيسى)", notes: "المنافسات الرسمية لمنتخبات الجامعات" },
+        en: { tournament: "MOE Esports Championship", teamA: "Universities Esports Championship", teamB: "Bahrain Universities", location: "Ministry of Education Hall (Isa Town)", notes: "Universities Official Division" }
+      },
+      { id: "ES-14", pageKey: "esports", date: "2026-11-25", time: "09:00 AM", score: "",
+        ar: { tournament: "بطولة الألعاب الإلكترونية", teamA: "المباراة الختامية والتتويج", teamB: "المتأهل للنهائي", location: "صالة وزارة التربية (مدينة عيسى)", notes: "الحفل الختامي وتتويج أبطال الألعاب الإلكترونية" },
+        en: { tournament: "MOE Esports Championship", teamA: "Grand Finals & Awards Ceremony", teamB: "Finalists", location: "Ministry of Education Hall (Isa Town)", notes: "Grand Final & Podium Ceremony" }
+      },
       { id: "EX-01", pageKey: "excellence", date: "2026-11-29", time: "09:00 AM", score: "",
         ar: { tournament: "جائزة الطالب المتميز", teamA: "مدارس المرحلة الثانوية (بنين)", teamB: "سباق F1 للمدارس", location: "مدرسة غازي القصيبي الثانوية للبنات", notes: "السلام الوطني 9:00، الجولة الأولى 9:05، سباق F1 10:30" },
         en: { tournament: "Student Excellence Award", teamA: "Secondary Schools (Boys)", teamB: "Schools F1 Race Challenge", location: "Ghazi Al Gosaibi Secondary Girls School", notes: "National Anthem 9:00, Round 1 9:05, F1 10:30" }
+      },
+      { id: "EX-02", pageKey: "excellence", date: "2026-11-30", time: "09:00 AM", score: "",
+        ar: { tournament: "جائزة الطالب المتميز", teamA: "مدارس المرحلة الثانوية (بنات)", teamB: "سباق F1 للمدارس والتتويج", location: "مدرسة غازي القصيبي الثانوية للبنات", notes: "نهائيات الفتيات وتتويج الفائزين الساعة 12:00 ظهراً" },
+        en: { tournament: "Student Excellence Award", teamA: "Secondary Schools (Girls)", teamB: "Schools F1 Race & Podium Ceremony", location: "Ghazi Al Gosaibi Secondary Girls School", notes: "Girls Finals & Podium Ceremony at 12:00 PM" }
       }
     ];
-
-    const calendarEventsData = {
-      "2026-11-08": { color: "stripe-blue", ar: { title: "⚽ 2 قدم (إعدادي - بنين)", t: "كرة قدم إعدادي", venue: "نادي مدينة عيسى", notes: "افتتاح بطولة كرة القدم الإعدادية" }, en: { title: "⚽ Football (Inter. Boys)", t: "Intermediate Football", venue: "Isa Town Sports Club", notes: "Intermediate Football Opener" } },
-      "2026-11-09": { color: "stripe-blue", ar: { title: "⚽ 2 قدم (إعدادي - بنات)", t: "كرة قدم إعدادي", venue: "صالة وزارة التربية", notes: "تصفيات مدارس الفتيات لكرة القدم" }, en: { title: "⚽ Football (Inter. Girls)", t: "Intermediate Football", venue: "Ministry of Education Hall", notes: "Girls Intermediate Football" } },
-      "2026-11-10": { color: "stripe-blue", ar: { title: "⚽ 2 قدم (ثانوي - بنين)", t: "كرة قدم ثانوي", venue: "نادي الاتحاد الرياضي", notes: "الجولة الأولى لبطولة ناصر بن حمد" }, en: { title: "⚽ Football (Sec. Boys)", t: "Secondary Football", venue: "Al Ittihad Sports Club", notes: "Nasser bin Hamad Cup Round 1" } },
-      "2026-11-12": { color: "stripe-orange", ar: { title: "🎮 ألعاب إلكترونية", t: "بطولة الألعاب الإلكترونية", venue: "صالة مدينة عيسى", notes: "انطلاق المنافسات الرسمية لبطولة الألعاب الإلكترونية" }, en: { title: "🎮 Esports Championship", t: "MOE Esports", venue: "Isa Town MOE Hall", notes: "Official Esports Competitions Launch" } },
-      "2026-11-15": { color: "stripe-yellow", ar: { title: "🏀 سلة (ابتدائي - بنين)", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "افتتاح دوري المدارس الابتدائية للسلة" }, en: { title: "🏀 Basketball (Prim. Boys)", t: "Basketball League", venue: "BBA Arena (Um Al Hassam)", notes: "Primary Basketball League Opening" } }
-    };
 
     const MATCHES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFrEKvM8AglCT3swkTUdmsnX2zhkMvnS2SrYMCSCHDFLBRFRXT1uCPDmHY2Nr33rNJswpFbfTu-E6A/pub?output=csv";
     const MEDIA_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzaz5nQ6lBjDYfXFICtoT8WKEepIbQJg6a1W9SRwq8dV3rltw97NVLVx-nzvxz3GY737Uuzv7loLOV/pub?output=csv";
@@ -1222,6 +1282,26 @@
       return driveUrl ? driveUrl.split(",")[0].trim() : "";
     }
 
+    // Helper: Determine Sport Stripe Color Class
+    function getSportStripeClass(pageKey, tournamentText = "") {
+      const t = (tournamentText || "").toLowerCase();
+      if (pageKey === "football" || t.includes("قدم") || t.includes("foot")) return "stripe-football";
+      if (pageKey === "basketball" || t.includes("سلة") || t.includes("basket")) return "stripe-basketball";
+      if (pageKey === "esports" || t.includes("إلكترونية") || t.includes("esport")) return "stripe-esports";
+      if (pageKey === "excellence" || t.includes("متميز") || t.includes("award")) return "stripe-excellence";
+      return "stripe-general";
+    }
+
+    // Helper: Format Short Label for Calendar Pill
+    function getShortGameLabel(match, lang) {
+      const d = match[lang] || match.ar;
+      if (match.pageKey === "football") return `⚽ ${d.teamA}`;
+      if (match.pageKey === "basketball") return `🏀 ${d.teamA}`;
+      if (match.pageKey === "esports") return `🎮 ${d.teamA}`;
+      if (match.pageKey === "excellence") return `🏆 ${d.teamA}`;
+      return `${d.tournament || d.teamA}`;
+    }
+
     async function syncGoogleSheetData() {
       try {
         const res = await fetch(MATCHES_CSV_URL);
@@ -1233,22 +1313,29 @@
           rows.forEach((row, i) => {
             const cols = row.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
             if (cols[2] && cols[3]) {
-              const t = cols[1] || "";
-              let pKey = "home";
-              if (t.includes("قدم") || t.includes("ناصر") || t.toLowerCase().includes("foot")) pKey = "football";
-              else if (t.includes("سلة") || t.includes("خالد") || t.toLowerCase().includes("basket")) pKey = "basketball";
-              else if (t.includes("إلكترونية") || t.toLowerCase().includes("esport")) pKey = "esports";
-              else if (t.includes("طالب") || t.includes("متميز") || t.toLowerCase().includes("award")) pKey = "excellence";
-
+              const rawDate = cols[4] || "2026-11-15";
               const rawTeamA = cols[2];
               const rawTeamB = cols[3];
-              const rawLocation = cols[6] || "صالة وزارة التربية والتعليم";
               const rawTournament = cols[1] || "بطولة مدرسية";
+              const rawNotes = cols[9] || "";
+
+              // Remove girls matches on Nov 9 and Nov 10
+              const isGirlsNov9or10 = (rawDate === "2026-11-09" || rawDate === "2026-11-10") &&
+                                      (rawTeamA.includes("بنات") || rawTeamB.includes("بنات") || rawNotes.includes("بنات") || rawNotes.includes("فتيات"));
+              if (isGirlsNov9or10) return;
+
+              let pKey = "home";
+              if (rawTournament.includes("قدم") || rawTournament.includes("ناصر") || rawTournament.toLowerCase().includes("foot")) pKey = "football";
+              else if (rawTournament.includes("سلة") || rawTournament.includes("خالد") || rawTournament.toLowerCase().includes("basket")) pKey = "basketball";
+              else if (rawTournament.includes("إلكترونية") || rawTournament.toLowerCase().includes("esport")) pKey = "esports";
+              else if (rawTournament.includes("طالب") || rawTournament.includes("متميز") || rawTournament.toLowerCase().includes("award")) pKey = "excellence";
+
+              const rawLocation = cols[6] || "صالة وزارة التربية والتعليم";
 
               sheetMatches.push({
                 id: cols[0] || "SH-" + (i + 1),
                 pageKey: pKey,
-                date: cols[4] || "2026-11-15",
+                date: rawDate,
                 time: cols[5] || "08:30 AM",
                 score: cols[7] || "",
                 ar: { 
@@ -1256,14 +1343,14 @@
                   teamA: rawTeamA, 
                   teamB: rawTeamB, 
                   location: rawLocation, 
-                  notes: cols[9] || "" 
+                  notes: rawNotes 
                 },
                 en: { 
                   tournament: translateText(rawTournament), 
                   teamA: translateText(rawTeamA), 
                   teamB: translateText(rawTeamB), 
                   location: translateText(rawLocation), 
-                  notes: cols[9] || "" 
+                  notes: rawNotes 
                 }
               });
             }
@@ -1285,6 +1372,7 @@
       }
 
       distributeMatches(currentPage);
+      renderCalendarGrid();
     }
 
     async function syncMediaData() {
@@ -1353,6 +1441,7 @@
       });
     }
 
+    // Dynamic Calendar Generated directly from all matches in Active Roster across all months
     function renderCalendarGrid() {
       const tbody = document.getElementById("calendarTableBody");
       const firstDay = new Date(selectedYear, selectedMonth - 1, 1).getDay();
@@ -1370,14 +1459,24 @@
         }
 
         const dateStr = `${selectedYear}-${selectedMonth < 10 ? '0' + selectedMonth : selectedMonth}-${day < 10 ? '0' + day : day}`;
-        const event = calendarEventsData[dateStr];
-        const hasEvent = !!event;
-        const evData = hasEvent ? (event[currentLang] || event.ar) : null;
+        
+        // Find all matches on this specific day
+        const dayMatches = activeRoster.filter(m => m.date === dateStr);
+        const hasMatches = dayMatches.length > 0;
+
+        let stripesHtml = "";
+        if (hasMatches) {
+          stripesHtml = `<div class="cell-stripes-container">` + dayMatches.map(m => {
+            const stripeClass = getSportStripeClass(m.pageKey, m.ar ? m.ar.tournament : "");
+            const label = getShortGameLabel(m, currentLang);
+            return `<span class="event-stripe ${stripeClass}" title="${label}">${label}</span>`;
+          }).join('') + `</div>`;
+        }
 
         html += `
-          <td class="${hasEvent ? 'has-event' : ''}" data-date="${dateStr}">
+          <td class="${hasMatches ? 'has-event' : ''}" data-date="${dateStr}">
             <span class="cell-date">${day}</span>
-            ${hasEvent ? `<span class="event-stripe ${event.color}">${evData.title}</span>` : ''}
+            ${stripesHtml}
           </td>
         `;
       }
@@ -1393,18 +1492,32 @@
       tbody.querySelectorAll("td.has-event").forEach(cell => {
         cell.addEventListener("click", () => {
           const dStr = cell.getAttribute("data-date");
-          const ev = calendarEventsData[dStr];
-          const evData = ev[currentLang] || ev.ar;
-          showModal({
-            title: evData.title,
-            tournament: evData.t,
-            teams: currentLang === "ar" ? "فعالية مجدولة بالتقويم" : "Scheduled Tournament Event",
-            date: dStr,
-            time: "08:30 AM",
-            venue: evData.venue,
-            score: currentLang === "ar" ? "مجدولة" : "Scheduled",
-            notes: evData.notes
-          });
+          const matches = activeRoster.filter(m => m.date === dStr);
+          if (matches.length === 1) {
+            openGameModal(matches[0].id);
+          } else if (matches.length > 1) {
+            // If multiple games, open modal summarizing all games on that day
+            const lang = currentLang;
+            const gamesSummary = matches.map((m, idx) => {
+              const d = m[lang] || m.ar;
+              return `${idx + 1}. [${d.tournament}] ${d.teamA} V/S ${d.teamB} (${m.time}) @ ${d.location}`;
+            }).join("\n\n");
+
+            showModal({
+              title: lang === "ar" ? `مباريات يوم ${dStr}` : `Fixtures on ${dStr}`,
+              tournament: lang === "ar" ? `${matches.length} مباريات مجدولة` : `${matches.length} Scheduled Matches`,
+              teams: lang === "ar" ? "جدول المنافسات اليومية" : "Daily Match Schedule",
+              date: dStr,
+              time: matches[0].time,
+              venue: matches[0][lang] ? matches[0][lang].location : matches[0].ar.location,
+              score: lang === "ar" ? "مباريات متعددة" : "Multiple Matches",
+              notes: gamesSummary,
+              mediaType: null,
+              imgUrl: null,
+              previewUrl: null,
+              rawLink: null
+            });
+          }
         });
       });
     }
@@ -1492,7 +1605,7 @@
         const isVideo = item.mediaType === "video";
         return `
           <div class="media-card" onclick="openPhotoModal(${idx})">
-            <span class="media-badge-icon">${isVideo ? '▶ فيديو' : '📷 صورة'}</span>
+            <span class="media-badge-icon">${isVideo ? (currentLang === 'ar' ? '▶ فيديو' : '▶ Video') : (currentLang === 'ar' ? '📷 صورة' : '📷 Photo')}</span>
             <img src="${item.imgUrl}" alt="${itemData.title}" class="media-thumb" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80';" />
             <div class="media-caption-area">
               <div class="media-custom-title">${itemData.title}</div>
@@ -1665,6 +1778,7 @@
       renderMonthSelector();
       renderCalendarGrid();
       switchTournamentPage(currentPage);
+      renderGallery(currentPage === "home" ? null : (currentPage === "media" ? null : currentPage));
     }
 
     document.addEventListener("DOMContentLoaded", () => {
