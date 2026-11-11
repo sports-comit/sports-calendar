@@ -362,7 +362,6 @@
     .stripe-orange { background: #5c2b0c; color: #fdba74; }
     .stripe-yellow { background: #4d380c; color: #fde047; }
 
-    /* About Tournament Box - Heading configured to Theme Orange */
     .about-tournament-box {
       background: var(--card-inner);
       border: 1px solid var(--border-subtle);
@@ -501,6 +500,7 @@
       cursor: pointer;
       display: flex;
       flex-direction: column;
+      position: relative;
       transition: transform 0.15s, border-color 0.15s;
     }
     .media-card:hover {
@@ -513,6 +513,23 @@
       background: #090e15;
       object-fit: cover;
       display: block;
+    }
+    .media-badge-icon {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(10, 17, 26, 0.85);
+      border: 1px solid var(--border-dark);
+      color: var(--accent-orange);
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      pointer-events: none;
+    }
+    html[dir="ltr"] .media-badge-icon {
+      right: auto;
+      left: 6px;
     }
     .media-caption-area {
       padding: 8px 10px;
@@ -571,11 +588,12 @@
       border-radius: 8px;
     }
 
+    /* Modal Styling with Interactive Player & Viewer */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(4, 9, 15, 0.85);
-      backdrop-filter: blur(4px);
+      background: rgba(4, 9, 15, 0.88);
+      backdrop-filter: blur(5px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -594,7 +612,10 @@
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
       width: 100%;
-      max-width: 440px;
+      max-width: 540px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
       overflow: hidden;
     }
@@ -605,11 +626,20 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--border-dark);
+      flex-shrink: 0;
     }
     .modal-header h3 {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 8px;
+    }
+    html[dir="ltr"] .modal-header h3 {
+      padding-left: 0;
+      padding-right: 8px;
     }
     .modal-close-btn {
       background: transparent;
@@ -619,12 +649,63 @@
       line-height: 1;
       cursor: pointer;
     }
-    .modal-body {
+    .modal-scrollable {
+      overflow-y: auto;
       padding: 14px 16px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
+
+    /* Media Preview Container inside Modal */
+    .modal-media-wrapper {
+      width: 100%;
+      background: #060a10;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
+      margin-bottom: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .modal-media-wrapper img {
+      width: 100%;
+      max-height: 340px;
+      object-fit: contain;
+      display: block;
+      background: #060a10;
+    }
+    .modal-media-wrapper iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      background: #000;
+      display: block;
+    }
+    .modal-open-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: #142132;
+      border: 1px solid var(--border-dark);
+      color: var(--accent-orange);
+      text-decoration: none;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 4px;
+      transition: background 0.15s;
+    }
+    .modal-open-link:hover {
+      background: var(--card-inner);
+      border-color: var(--accent-orange);
+    }
+
     .modal-row {
       display: flex;
       align-items: baseline;
@@ -702,7 +783,6 @@
         </div>
       </section>
 
-      <!-- Tournament About Box with Orange Title -->
       <section class="about-tournament-box" id="aboutTournamentBox">
         <div class="about-header-row">
           <h3 id="tournamentAboutTitle">عن الفعاليات الرياضية العامة</h3>
@@ -730,7 +810,7 @@
       <section class="dashboard-card" id="gallerySection">
         <div class="card-title-row">
           <h2 id="galleryHeading">📸 أحدث الصور ومقتطفات الفعاليات</h2>
-          <span class="hint-text" id="galleryHint">اضغط لعرض تفاصيل الصورة</span>
+          <span class="hint-text" id="galleryHint">اضغط لعرض الصورة أو تشغيل الفيديو</span>
         </div>
         <div class="gallery-grid" id="photo-gallery-grid"></div>
       </section>
@@ -746,22 +826,33 @@
 
   </div>
 
+  <!-- Unified Interactive Modal with Visual Media Player -->
   <div id="detailsModal" class="modal-overlay">
     <div class="modal-box">
       <div class="modal-header">
         <h3 id="modalTitle">تفاصيل الحدث</h3>
         <button class="modal-close-btn" id="closeModalBtn">&times;</button>
       </div>
-      <div class="modal-body">
+      <div class="modal-scrollable">
+        
+        <!-- Dedicated Visual Preview Container -->
+        <div id="modalMediaContainer" class="modal-media-wrapper" style="display: none;"></div>
+        
         <div class="modal-row"><span class="m-label" id="lblTournament">البطولة / الفعالية:</span> <span id="modalTournament" class="m-val"></span></div>
         <div class="modal-row"><span class="m-label" id="lblTeams">المواجهة / الفرق:</span> <span id="modalTeams" class="m-val"></span></div>
         <div class="modal-row"><span class="m-label" id="lblDateTime">التاريخ والوقت:</span> <span id="modalDateTime" class="m-val"></span></div>
         <div class="modal-row"><span class="m-label" id="lblVenue">الموقع / الصالة:</span> <span id="modalVenue" class="m-val"></span></div>
         <div class="modal-row"><span class="m-label" id="lblScore">النتيجة:</span> <span id="modalScore" class="m-val"></span></div>
+        
         <div class="modal-row" style="flex-direction:column; gap:4px; margin-top:2px;">
           <span class="m-label" id="lblNotes">ملاحظات إضافية:</span>
           <div id="modalNotes" class="m-desc"></div>
         </div>
+
+        <a id="modalExternalLink" href="#" target="_blank" class="modal-open-link" style="display: none;">
+          ↗ <span id="modalExternalLinkText">عرض الملف بجودة عالية</span>
+        </a>
+
       </div>
     </div>
   </div>
@@ -803,7 +894,7 @@
         finishedHeading: "🏆 المباريات المنتهية والنتائج",
         finishedHint: "تُحدث دورياً",
         galleryHeading: "📸 أحدث الصور ومقتطفات الفعاليات",
-        galleryHint: "اضغط لعرض تفاصيل الصورة",
+        galleryHint: "اضغط لعرض الصورة أو تشغيل الفيديو",
         venuesTitle: "المواقع والملاعب الرسمية",
         btnBackHome: "← العودة للرئيسية",
         scorePending: "قادمة",
@@ -817,6 +908,7 @@
         lblVenue: "الموقع / الصالة:",
         lblScore: "النتيجة:",
         lblNotes: "ملاحظات إضافية:",
+        viewOriginalMedia: "فتح الصورة / الفيديو بحجم كامل",
         noUpcoming: "لا توجد مباريات قادمة لهذه البطولة حالياً.",
         noFinished: "لا توجد نتائج مسجلة لهذه البطولة بعد.",
         noMedia: "لا توجد صور مضافة لهذه البطولة حالياً.",
@@ -847,7 +939,7 @@
         finishedHeading: "🏆 Finished Matches & Results",
         finishedHint: "Updated regularly",
         galleryHeading: "📸 Latest Photos & Media Highlights",
-        galleryHint: "Tap to view photo details",
+        galleryHint: "Click to enlarge photo or play video",
         venuesTitle: "Official Venues & Stadiums",
         btnBackHome: "← Back to Home",
         scorePending: "Upcoming",
@@ -861,6 +953,7 @@
         lblVenue: "Venue / Court:",
         lblScore: "Score:",
         lblNotes: "Additional Notes:",
+        viewOriginalMedia: "Open Full Quality Image / Video",
         noUpcoming: "No upcoming matches currently scheduled.",
         noFinished: "No finished match results recorded yet.",
         noMedia: "No photos available for this section yet.",
@@ -875,7 +968,6 @@
       }
     };
 
-    // Official descriptions from leadership with professional translations
     const tournamentPagesData = {
       home: {
         ar: { 
@@ -951,7 +1043,6 @@
       }
     };
 
-    // Official Tournament Schedule Baseline
     const baseVerifiedMatches = [
       { id: "FB-01", pageKey: "football", date: "2026-11-08", time: "08:30 AM", score: "2 - 1",
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة مدينة عيسى الثانوية للبنين", teamB: "مركز ناصر العلمي والتقني", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الأولى" },
@@ -999,21 +1090,36 @@
       "2026-11-15": { color: "stripe-yellow", ar: { title: "🏀 سلة (ابتدائي - بنين)", t: "دوري كرة السلة", venue: "صالة الاتحاد بالماحوز", notes: "افتتاح دوري المدارس الابتدائية للسلة" }, en: { title: "🏀 Basketball (Prim. Boys)", t: "Basketball League", venue: "BBA Arena (Um Al Hassam)", notes: "Primary Basketball League Opening" } }
     };
 
-    // Connected Sheets CSV feeds
     const MATCHES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFrEKvM8AglCT3swkTUdmsnX2zhkMvnS2SrYMCSCHDFLBRFRXT1uCPDmHY2Nr33rNJswpFbfTu-E6A/pub?output=csv";
     const MEDIA_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzaz5nQ6lBjDYfXFICtoT8WKEepIbQJg6a1W9SRwq8dV3rltw97NVLVx-nzvxz3GY737Uuzv7loLOV/pub?output=csv";
 
     let activeRoster = [...baseVerifiedMatches];
     let mediaGallery = [];
 
+    // Extract ID from any Google Drive link format
+    function getDriveId(url) {
+      if (!url) return null;
+      const cleanUrl = url.split(",")[0].trim();
+      const match = cleanUrl.match(/id=([a-zA-Z0-9_-]+)/) || cleanUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      return match ? match[1] : null;
+    }
+
+    // Direct image thumbnail generator
     function formatDriveImage(driveUrl) {
-      if (!driveUrl) return "";
-      const firstLink = driveUrl.split(",")[0].trim();
-      const match = firstLink.match(/id=([a-zA-Z0-9_-]+)/) || firstLink.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) {
-        return `https://lh3.googleusercontent.com/d/${match[1]}`;
+      const fileId = getDriveId(driveUrl);
+      if (fileId) {
+        return `https://lh3.googleusercontent.com/d/${fileId}`;
       }
-      return firstLink;
+      return driveUrl ? driveUrl.split(",")[0].trim() : "";
+    }
+
+    // Direct embed link for videos and previewable documents
+    function formatDrivePreview(driveUrl) {
+      const fileId = getDriveId(driveUrl);
+      if (fileId) {
+        return `https://drive.google.com/file/d/${fileId}/preview`;
+      }
+      return driveUrl ? driveUrl.split(",")[0].trim() : "";
     }
 
     async function syncGoogleSheetData() {
@@ -1075,6 +1181,7 @@
         rows.forEach(row => {
           const cols = row.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
           const title = cols[1] || "تغطية مصورة للفعاليات";
+          const mediaType = cols[3] || "Photograph";
           const rawLink = cols[5] || "";
           const tournament = cols[8] || "فعالية رياضية مدرسية";
           const status = cols[11] || "";
@@ -1088,7 +1195,10 @@
 
             loadedGallery.push({
               pageKey: pKey,
+              rawLink: rawLink.split(",")[0].trim(),
               imgUrl: formatDriveImage(rawLink),
+              previewUrl: formatDrivePreview(rawLink),
+              mediaType: mediaType.toLowerCase().includes("video") ? "video" : "image",
               ar: { title: title, tournament: tournament, desc: title },
               en: { title: title, tournament: tournament, desc: title }
             });
@@ -1262,9 +1372,11 @@
 
       gallery.innerHTML = items.map((item, idx) => {
         const itemData = item[currentLang] || item.ar;
+        const isVideo = item.mediaType === "video";
         return `
           <div class="media-card" onclick="openPhotoModal(${idx})">
-            <img src="${item.imgUrl}" alt="${itemData.title}" class="media-thumb" loading="lazy" />
+            <span class="media-badge-icon">${isVideo ? '▶ فيديو' : '📷 صورة'}</span>
+            <img src="${item.imgUrl}" alt="${itemData.title}" class="media-thumb" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80';" />
             <div class="media-caption-area">
               <div class="media-custom-title">${itemData.title}</div>
               <div class="media-tournament-tag">${itemData.tournament}</div>
@@ -1278,15 +1390,20 @@
       const item = mediaGallery[idx];
       if (!item) return;
       const data = item[currentLang] || item.ar;
+      
       showModal({
         title: data.title,
         tournament: data.tournament,
-        teams: currentLang === "ar" ? "معرض صور الأنشطة والتربية الرياضية" : "Physical Education Sports Gallery",
+        teams: currentLang === "ar" ? "معرض صور وفيديوهات الأنشطة الرياضية" : "Physical Education Sports Media Gallery",
         date: "2026-11",
         time: "",
         venue: currentLang === "ar" ? "وزارة التربية والتعليم - مملكة البحرين" : "Ministry of Education - Bahrain",
-        score: currentLang === "ar" ? "صورة توثيقية" : "Official Media",
-        notes: data.desc || data.title
+        score: item.mediaType === "video" ? (currentLang === "ar" ? "تسجيل مرئي" : "Video Recording") : (currentLang === "ar" ? "صورة توثيقية" : "Official Photo"),
+        notes: data.desc || data.title,
+        mediaType: item.mediaType,
+        imgUrl: item.imgUrl,
+        previewUrl: item.previewUrl,
+        rawLink: item.rawLink
       });
     }
 
@@ -1299,11 +1416,39 @@
       document.getElementById("modalScore").innerText = data.score || (currentLang === "ar" ? "قادمة" : "Upcoming");
       document.getElementById("modalNotes").innerText = data.notes || "—";
 
+      const mediaContainer = document.getElementById("modalMediaContainer");
+      const externalLink = document.getElementById("modalExternalLink");
+      const externalLinkText = document.getElementById("modalExternalLinkText");
+
+      // Handle Embedded Media (Photos and Playable Videos)
+      if (data.mediaType === "video" && data.previewUrl) {
+        mediaContainer.style.display = "flex";
+        mediaContainer.innerHTML = `<iframe src="${data.previewUrl}" allow="autoplay" allowfullscreen></iframe>`;
+      } else if (data.imgUrl) {
+        mediaContainer.style.display = "flex";
+        mediaContainer.innerHTML = `<img src="${data.imgUrl}" alt="${data.title}" />`;
+      } else {
+        mediaContainer.style.display = "none";
+        mediaContainer.innerHTML = "";
+      }
+
+      // External original file link
+      if (data.rawLink) {
+        externalLink.style.display = "inline-flex";
+        externalLink.href = data.rawLink;
+        externalLinkText.innerText = i18n[currentLang].viewOriginalMedia;
+      } else {
+        externalLink.style.display = "none";
+      }
+
       document.getElementById("detailsModal").classList.add("active");
     }
 
     function closeModal() {
-      document.getElementById("detailsModal").classList.remove("active");
+      const modal = document.getElementById("detailsModal");
+      modal.classList.remove("active");
+      // Stop any playing iframe videos when closing
+      document.getElementById("modalMediaContainer").innerHTML = "";
     }
 
     function openGameModal(matchId) {
@@ -1316,9 +1461,13 @@
         teams: `${data.teamA} V/S ${data.teamB}`,
         date: match.date,
         time: match.time,
-        location: data.location,
+        venue: data.location,
         score: match.score,
-        notes: data.notes
+        notes: data.notes,
+        mediaType: null,
+        imgUrl: null,
+        previewUrl: null,
+        rawLink: null
       });
     }
 
