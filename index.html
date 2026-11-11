@@ -53,6 +53,7 @@
       }
     }
 
+    /* Top Bar Header */
     header.top-bar {
       width: 100%;
       max-width: 1380px;
@@ -67,18 +68,23 @@
     .brand-container {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
+      width: 100%;
     }
 
     .brand-logo {
-      height: 48px;
+      height: 44px;
       width: auto;
       object-fit: contain;
       flex-shrink: 0;
     }
 
-    @media (min-width: 600px) {
+    @media (min-width: 768px) {
+      .brand-container {
+        width: auto;
+        gap: 14px;
+      }
       .brand-logo {
         height: 56px;
       }
@@ -87,21 +93,24 @@
     .brand-group {
       text-align: right;
       min-width: 0;
+      flex-grow: 1;
     }
     html[dir="ltr"] .brand-group {
       text-align: left;
     }
 
     .brand-group h1 {
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       font-weight: 800;
       color: var(--text-white);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      line-height: 1.35;
     }
     @media (min-width: 600px) {
-      .brand-group h1 { font-size: 1.25rem; }
+      .brand-group h1 { 
+        font-size: 1.25rem; 
+        white-space: nowrap;
+      }
     }
 
     .brand-group p {
@@ -112,24 +121,47 @@
       text-overflow: ellipsis;
     }
 
-    .header-actions {
-      display: flex;
-      gap: 6px;
+    /* Desktop Actions: Visible on PC only */
+    .header-actions.desktop-actions {
+      display: none;
+      gap: 8px;
       align-items: center;
       flex-shrink: 0;
+    }
+    @media (min-width: 768px) {
+      .header-actions.desktop-actions {
+        display: flex;
+      }
+    }
+
+    /* Mobile Actions Bar: Placed right under tournaments bar and above calendar */
+    .mobile-actions-bar {
+      width: 100%;
+      max-width: 1380px;
+      margin: 0 auto 12px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    @media (min-width: 768px) {
+      .mobile-actions-bar {
+        display: none !important;
+      }
     }
 
     .btn-lang {
       background: #142132;
       border: 1px solid var(--border-dark);
       color: var(--text-gray);
-      padding: 5px 12px;
+      padding: 6px 14px;
       border-radius: 20px;
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       cursor: pointer;
       font-family: inherit;
       font-weight: 700;
       transition: all 0.2s;
+      white-space: nowrap;
     }
     .btn-lang:hover {
       border-color: var(--accent-orange);
@@ -140,14 +172,14 @@
       background-color: var(--accent-orange);
       color: #fff;
       border: none;
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 20px;
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       font-weight: 700;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       cursor: pointer;
       white-space: nowrap;
       transition: background 0.2s;
@@ -156,10 +188,11 @@
       background-color: var(--accent-orange-hover);
     }
 
+    /* Tournaments Top Switcher */
     .top-tournaments-bar {
       width: 100%;
       max-width: 1380px;
-      margin: 0 auto 14px auto;
+      margin: 0 auto 12px auto;
       background: var(--sidebar-bg);
       border: 1px solid var(--border-dark);
       border-radius: 12px;
@@ -229,6 +262,7 @@
       font-weight: 700;
     }
 
+    /* Layout Grid */
     .dashboard-layout {
       width: 100%;
       max-width: 1380px;
@@ -390,7 +424,7 @@
       line-height: 1.25;
     }
 
-    /* Distinct Sport Stripe Colors */
+    /* Sport Stripe Colors */
     .stripe-football { background: #123d6a; color: #93c5fd; border-left: 2px solid #3b82f6; }
     .stripe-basketball { background: #5c2b0c; color: #fdba74; border-left: 2px solid #f97316; }
     .stripe-esports { background: #3d1b5a; color: #d8b4fe; border-left: 2px solid #a855f7; }
@@ -768,6 +802,7 @@
 </head>
 <body>
 
+  <!-- Top Navigation Header (Uncut desktop view, clean mobile title) -->
   <header class="top-bar">
     <div class="brand-container">
       <img src="logo.png" alt="وزارة التربية والتعليم" class="brand-logo" onerror="this.style.display='none';" />
@@ -776,14 +811,17 @@
         <p id="brandSubtitle">وزارة التربية والتعليم - مملكة البحرين</p>
       </div>
     </div>
-    <div class="header-actions">
-      <a href="https://docs.google.com/forms/d/1lZHjiN_uzkPByu0bfIARRFyUx3oAFLdUne0uXE-tk6Q/viewform" target="_blank" class="btn-upload" id="uploadBtn">
-        &#8593; <span id="uploadBtnText">رفع صور وفيديوهات</span>
+    
+    <!-- Desktop action buttons: aligned on the other side on PC -->
+    <div class="header-actions desktop-actions">
+      <a href="https://docs.google.com/forms/d/1lZHjiN_uzkPByu0bfIARRFyUx3oAFLdUne0uXE-tk6Q/viewform" target="_blank" class="btn-upload uploadBtn">
+        &#8593; <span class="uploadBtnText">رفع صور وفيديوهات</span>
       </a>
-      <button class="btn-lang" id="langToggleBtn">English</button>
+      <button class="btn-lang langToggleBtn">English</button>
     </div>
   </header>
 
+  <!-- Top Tournaments Carousel -->
   <nav class="top-tournaments-bar" aria-label="Tournaments Bar">
     <button class="carousel-nav-btn" id="scrollPrevBtn" title="Previous">&#8250;</button>
     <div class="tournaments-track" id="tournamentsTrack">
@@ -797,6 +835,14 @@
     <button class="carousel-nav-btn" id="scrollNextBtn" title="Next">&#8249;</button>
   </nav>
 
+  <!-- Mobile Action Bar: Located right above the calendar & under tournament names -->
+  <div class="mobile-actions-bar">
+    <a href="https://docs.google.com/forms/d/1lZHjiN_uzkPByu0bfIARRFyUx3oAFLdUne0uXE-tk6Q/viewform" target="_blank" class="btn-upload uploadBtn">
+      &#8593; <span class="uploadBtnText">رفع صور وفيديوهات</span>
+    </a>
+    <button class="btn-lang langToggleBtn">English</button>
+  </div>
+
   <div class="dashboard-layout">
 
     <main class="main-content-col">
@@ -804,7 +850,7 @@
       <section class="dashboard-card" id="calendarSection">
         <div class="card-title-row">
           <h2 id="calendarTitle">📅 التقويم السنوي الشامل 2026-2027</h2>
-          <span class="hint-text" id="calendarHint">اضغط على أي يوم لعرض التفاصيل</span>
+          <span class="hint-text" id="calendarHint">اضغط على أي يوم لعرض المباريات</span>
         </div>
 
         <div class="calendar-month-selector" id="monthSelector"></div>
@@ -893,7 +939,6 @@
     let selectedMonth = 11;
 
     const bilingualDictionary = {
-      // Schools & Teams
       "مدرسة مدينة عيسى الثانوية للبنين": "Isa Town Secondary Boys School",
       "مدرسة مدينة عيسى الثانوية": "Isa Town Secondary School",
       "مركز ناصر العلمي والتقني": "Nasser Vocational Training Centre (NVTC)",
@@ -959,16 +1004,12 @@
       "الخاسر من مباراة 30": "Loser Match 30",
       "الفائز من مباراة 29": "Winner Match 29",
       "الفائز من مباراة 30": "Winner Match 30",
-
-      // Official Venues
       "نادي مدينة عيسى": "Isa Town Sports Club",
       "نادي الاتحاد الرياضي": "Al Ittihad Sports Club",
       "استاد مدينة خليفة الرياضية": "Khalifa Sports City Stadium",
       "صالة الاتحاد بالماحوز": "BBA Arena (Um Al Hassam)",
       "صالة وزارة التربية (مدينة عيسى)": "Ministry of Education Hall (Isa Town)",
       "صالة وزارة التربية والتعليم": "Ministry of Education Hall (Isa Town)",
-
-      // Tournaments & Categories
       "بطولة ناصر بن حمد للقدم": "Nasser bin Hamad Football Cup",
       "بطولة ناصر بن حمد لكرة القدم": "Nasser bin Hamad Football Cup",
       "دوري المجموعات لكرة السلة": "Khalid bin Hamad Basketball Cup",
@@ -1173,7 +1214,6 @@
       }
     };
 
-    // Official Baseline Schedule (Nov 9 & 10 girls matches removed per instructions)
     const baseVerifiedMatches = [
       { id: "FB-01", pageKey: "football", date: "2026-11-08", time: "08:30 AM", score: "2 - 1",
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة مدينة عيسى الثانوية للبنين", teamB: "مركز ناصر العلمي والتقني", location: "نادي مدينة عيسى", notes: "الجولة الأولى - المجموعة الأولى" },
@@ -1206,14 +1246,6 @@
       { id: "FB-08", pageKey: "football", date: "2026-11-11", time: "08:30 AM", score: "",
         ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "المدرسة البريطانية في البحرين", teamB: "مدرسة سانت كريستوفر", location: "نادي الاتحاد الرياضي", notes: "الجولة الأولى - المجموعة الرابعة" },
         en: { tournament: "Nasser bin Hamad Football Cup", teamA: "British School of Bahrain (BSB)", teamB: "St Christopher's School", location: "Al Ittihad Sports Club", notes: "Round 1 - Group 4" }
-      },
-      { id: "FB-09", pageKey: "football", date: "2026-11-12", time: "08:30 AM", score: "",
-        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة الحكمة الدولية", teamB: "مركز ناصر العلمي والتقني", location: "نادي الاتحاد الرياضي", notes: "الجولة الثانية - المجموعة الأولى" },
-        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Al Hekma International School", teamB: "Nasser Vocational Training Centre (NVTC)", location: "Al Ittihad Sports Club", notes: "Round 2 - Group 1" }
-      },
-      { id: "FB-10", pageKey: "football", date: "2026-11-12", time: "08:30 AM", score: "",
-        ar: { tournament: "بطولة ناصر بن حمد للقدم", teamA: "مدرسة بيان البحرين", teamB: "مدرسة مدينة عيسى الثانوية للبنين", location: "نادي مدينة عيسى", notes: "الجولة الثانية - المجموعة الأولى" },
-        en: { tournament: "Nasser bin Hamad Football Cup", teamA: "Bahrain Bayan School", teamB: "Isa Town Secondary Boys School", location: "Isa Town Sports Club", notes: "Round 2 - Group 1" }
       },
       { id: "BB-01", pageKey: "basketball", date: "2026-11-15", time: "08:30 AM", score: "",
         ar: { tournament: "بطولة خالد بن حمد للسلة", teamA: "مدرسة أحمد العمران", teamB: "مدرسة الشيخ عبد الله بن عيسى", location: "صالة الاتحاد بالماحوز", notes: "دور المجموعات - مباراة 1" },
@@ -1282,7 +1314,6 @@
       return driveUrl ? driveUrl.split(",")[0].trim() : "";
     }
 
-    // Helper: Determine Sport Stripe Color Class
     function getSportStripeClass(pageKey, tournamentText = "") {
       const t = (tournamentText || "").toLowerCase();
       if (pageKey === "football" || t.includes("قدم") || t.includes("foot")) return "stripe-football";
@@ -1292,7 +1323,6 @@
       return "stripe-general";
     }
 
-    // Helper: Format Short Label for Calendar Pill
     function getShortGameLabel(match, lang) {
       const d = match[lang] || match.ar;
       if (match.pageKey === "football") return `⚽ ${d.teamA}`;
@@ -1319,7 +1349,7 @@
               const rawTournament = cols[1] || "بطولة مدرسية";
               const rawNotes = cols[9] || "";
 
-              // Remove girls matches on Nov 9 and Nov 10
+              // Remove girls matches on Nov 9 and 10 per instructions
               const isGirlsNov9or10 = (rawDate === "2026-11-09" || rawDate === "2026-11-10") &&
                                       (rawTeamA.includes("بنات") || rawTeamB.includes("بنات") || rawNotes.includes("بنات") || rawNotes.includes("فتيات"));
               if (isGirlsNov9or10) return;
@@ -1441,7 +1471,6 @@
       });
     }
 
-    // Dynamic Calendar Generated directly from all matches in Active Roster across all months
     function renderCalendarGrid() {
       const tbody = document.getElementById("calendarTableBody");
       const firstDay = new Date(selectedYear, selectedMonth - 1, 1).getDay();
@@ -1460,7 +1489,6 @@
 
         const dateStr = `${selectedYear}-${selectedMonth < 10 ? '0' + selectedMonth : selectedMonth}-${day < 10 ? '0' + day : day}`;
         
-        // Find all matches on this specific day
         const dayMatches = activeRoster.filter(m => m.date === dateStr);
         const hasMatches = dayMatches.length > 0;
 
@@ -1496,7 +1524,6 @@
           if (matches.length === 1) {
             openGameModal(matches[0].id);
           } else if (matches.length > 1) {
-            // If multiple games, open modal summarizing all games on that day
             const lang = currentLang;
             const gamesSummary = matches.map((m, idx) => {
               const d = m[lang] || m.ar;
@@ -1744,8 +1771,10 @@
 
       document.getElementById("brandTitle").innerText = dict.brandTitle;
       document.getElementById("brandSubtitle").innerText = dict.brandSubtitle;
-      document.getElementById("uploadBtnText").innerText = dict.uploadBtnText;
-      document.getElementById("langToggleBtn").innerText = lang === "ar" ? "English" : "العربية";
+
+      // Update both desktop & mobile action buttons
+      document.querySelectorAll(".uploadBtnText").forEach(el => el.innerText = dict.uploadBtnText);
+      document.querySelectorAll(".langToggleBtn").forEach(el => el.innerText = lang === "ar" ? "English" : "العربية");
 
       document.getElementById("pillHome").innerText = dict.pillHome;
       document.getElementById("pillFootball").innerText = dict.pillFootball;
@@ -1810,8 +1839,11 @@
         switchTournamentPage("home");
       });
 
-      document.getElementById("langToggleBtn").addEventListener("click", () => {
-        setLanguage(currentLang === "ar" ? "en" : "ar");
+      // Synchronize language toggle listeners across desktop and mobile button sets
+      document.querySelectorAll(".langToggleBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          setLanguage(currentLang === "ar" ? "en" : "ar");
+        });
       });
 
       document.getElementById("closeModalBtn").addEventListener("click", closeModal);
